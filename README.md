@@ -1,12 +1,12 @@
-# Code and Documentation for the ASIACRYPT 2026 Paper "Efficient Polynomial System Solving via Dixon Resultants: Applications to AO Primitives"
+## Code and Documentation for the ASIACRYPT 2026 Paper "Efficient Polynomial System Solving via Dixon Resultants: Applications to AO Primitives"
 
 ---
-## 1. TeX Source and figures
+### 1. TeX Source and figures
 This directory includes the complete LaTeX source and figures in the paper.
 
 ---
 
-## 2. drsolve
+### 2. drsolve
 The `drsolve` directory contains a Dixon resultant computation tool implemented in C.
 - **Dependencies:** FLINT library (required), PML library (included)  
 - **Compilation:** After installing the FLINT library, compile the tool by running:
@@ -24,7 +24,7 @@ Further details are provided in `drsolve/README.md`, or can be accessed by runni
 
 ---
 
-## 3. Attack
+### 3. Attack
 
 The `Attack` directory contains experiment scripts and data files.
 
@@ -39,7 +39,7 @@ drsolve poseidon3-0-3.dr
 
 ---
 
-## 4. OtherTools
+### 4. OtherTools
 The `OtherTools` directory contains various experimental utilities:
 - SageMath scripts for auxiliary testing and verification
 - A Dixon resultant implementation based on Magma, used for cross-validation and comparison.
@@ -48,7 +48,7 @@ These tools are intended for research experimentation and validation.
 
 ---
 
-## Additional note: Correspondence Between Paper Figures/Tables and Source Files
+### Additional note: Correspondence Between Paper Figures/Tables and Source Files
 
 - **Section 3.3, Figure 1** and **Appendix E, Figure 6** → `Complexity_Comparision.ipynb`
 - **Section 4.2, Figure 2** → `benchmark_DixonMagmaMsolve.ipynb`
@@ -68,5 +68,5 @@ drsolve --test 2
 ```
 ---
 
-## AI Tool Disclosure
+### AI Tool Disclosure
 We used generative AI tools, including Claude (Opus) and Codex, to assist in drafting portions of the codebase. All AI-assisted code was carefully reviewed, tested, and validated by the authors. The authors take full responsibility for the correctness of the implementation and all experimental results reported in the paper.
