@@ -506,7 +506,13 @@ We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 		%\label{eq:Cancellation_Matrix}
 	\end{equation}
 	
-	After applying the refined construction of the cancellation matrix from the Dixon polynomial definition, the leading determinantal expansion term is the product $\prod_{i=1}^{n} \widehat{C}_{i,i}$. The factor $\widehat{C}_{1,1}$ has $\bar\xvec$-degree $0$ and contributes no $\bar\xvec$-monomial; the remaining $n-1$ factors realize the Iterated-Simplex Polynomial ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$ with degrees in sorted order $d_2-1 \leq d_3-1 \leq \cdots \leq d_{n}-1$. For any other permutation $\sigma$, the product $\prod_i \widehat{C}_{i,\sigma(i)}$ has its $\bar\xvec$-degree in row $i$ bounded by $d_{\sigma(i)}-1$, so its $\bar\xvec$-support satisfies the inequalities of Lemma~\ref{lem:fc_polytope} with the permuted sequence $(d_{\sigma(2)}-1,\ldots,d_{\sigma(n)}-1)$. By Lemma~\ref{lem:reorder_support} this support is contained in that of the sorted main-diagonal product, so the main-diagonal term carries the maximal monomial set. Therefore, the number of $\bar\xvec$-monomials of $\Delta$ is bounded above by the number of monomials in ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$. The same bound holds for the number of $\xvec$-monomials of $\Delta$ by the dual argument: specializing $\bar x_i=c_i$ (instead of $x_i=c_i$) and repeating the construction yields the identical Iterated-Simplex bound on the $\xvec$-support of $\Delta$, since the cancellation construction is symmetric in the two variable sets up to an overall sign. Both row and column dimensions of $\mathcal{M}$ are therefore bounded above by the iterated-simplex monomial count, which is the claimed bound.
+	After applying the refined construction of the cancellation matrix from the Dixon polynomial definition, the leading determinantal expansion term is the product $\prod_{i=1}^{n} \widehat{C}_{i,i}$. The factor $\widehat{C}_{1,1}$ has $\bar\xvec$-degree $0$ and contributes no $\bar\xvec$-monomial; the remaining $n-1$ factors realize the Iterated-Simplex Polynomial ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$ with degrees in sorted order $d_2-1 \leq d_3-1 \leq \cdots \leq d_{n}-1$. For any other permutation $\sigma$, the product $\prod_i \widehat{C}_{i,\sigma(i)}$ has its $\bar\xvec$-degree in row $i$ bounded by $d_{\sigma(i)}-1$, so its $\bar\xvec$-support satisfies the inequalities of Lemma~\ref{lem:fc_polytope} with the sequence $(d_{\sigma(2)}-1,\ldots,d_{\sigma(n)}-1)$. The multiset $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$ is obtained from $\{d_2,\ldots,d_n\}$ by replacing $d_{\sigma(1)}$ with $d_1\le d_{\sigma(1)}$, so every right-hand side in Lemma~\ref{lem:fc_polytope} is no larger than the corresponding one for a permutation of $(d_2,\ldots,d_n)$; combined with Lemma~\ref{lem:reorder_support}, this support is therefore contained in that of the sorted main-diagonal product, so the main-diagonal term carries the maximal monomial set. Therefore, the number of $\bar\xvec$-monomials of $\Delta$ is bounded above by the number of monomials in ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$.
+	
+	The same bound holds for the number of $\xvec$-monomials of $\Delta$, by means of the order-reversing involution
+	\begin{equation}\notag
+		\tau:\quad x_i \longmapsto \bar{x}_{n-i},\qquad \bar{x}_i \longmapsto x_{n-i},\qquad 1\le i\le n-1 .
+	\end{equation}
+	Let $\mathcal{F}^{\mathrm{rev}}=\{f_1^{\mathrm{rev}},\ldots,f_n^{\mathrm{rev}}\}$ with $f_j^{\mathrm{rev}}(x_1,\ldots,x_{n-1}) := f_j(x_{n-1},\ldots,x_1)$; this system has the same degree sequence $(d_1,\ldots,d_n)$ as $\mathcal{F}$. A direct check shows that applying $\tau$ to the $i$-th row of the cancellation matrix~\eqref{eq:Cancellation Matrix} of $\mathcal{F}$ produces exactly the $(n-i+1)$-st row of the cancellation matrix of $\mathcal{F}^{\mathrm{rev}}$, so $\tau$ merely reverses the row order and preserves $\det(C)$ up to sign, while $\prod_{i=1}^{n-1}(x_i-\bar{x}_i)$ is multiplied by $(-1)^{n-1}$. Hence $\tau\bigl(\Delta_{\mathcal{F}}(\xvec,\bar\xvec)\bigr)=\pm\,\Delta_{\mathcal{F}^{\mathrm{rev}}}(\xvec,\bar\xvec)$, and $\tau$ carries $\xvec$-monomials to $\bar\xvec$-monomials bijectively. Applying the bound just proved to $\mathcal{F}^{\mathrm{rev}}$ therefore bounds the number of $\xvec$-monomials of $\Delta_{\mathcal{F}}$ by the same iterated-simplex count. Both row and column dimensions of $\mathcal{M}$ are therefore bounded above by the iterated-simplex monomial count, which is the claimed bound.
 	
 	%\textbf{Tightness for generic systems.}
 	To establish that the bound is achieved for generic systems, we specialize the system to a nested form $\mathcal{F}^* = \{f_1, \ldots, f_n\}$ where $f_1 = 1$ and for $i=2, \ldots, n$:
@@ -533,7 +539,7 @@ We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 	Each $M_{i,i}$ is (a constant multiple of) a complete homogeneous symmetric form in the two arguments $\bar{X}_{i-2}+x_{i-1}$ and $\bar{X}_{i-2}+\bar{x}_{i-1}$. After specializing $x_{i-1}=c_{i-1}$ for a generic constant $c_{i-1}$, every term in the resulting expansion is a non-negative multinomial coefficient times a monomial in $\bar{x}_1,\ldots,\bar{x}_{i-1}$, so no coefficient cancellation occurs. Thus, the support of $M_{i,i}$ with respect to $\bar{x}_1, \ldots, \bar{x}_{i-1}$ is exactly a simplex of degree $d_i-1$. 
 	The Dixon polynomial is obtained as $\Delta(\xvec, \bar{\xvec}) = \det(\widehat{C}) = \prod_{i=2}^{n} M_{i,i}$. The support of $\Delta$ is precisely characterized by the Iterated-Simplex Polynomial $I_{d_2-1, \ldots, d_{n}-1}$. 
 	
-	Attainment for generic systems follows from a Zariski-density argument. For $\mathcal{F}^*$ the row and column dimensions of $\mathcal{M}$ both equal the iterated-simplex monomial count $N^*$, which by the first part of the proof is the generic maximum. The condition that every iterated-simplex monomial appears in $\Delta$ with a nonzero coefficient is a finite conjunction of nonvanishing polynomial conditions on the coefficients of $\mathcal{F}$, all satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset of the irreducible coefficient space, on which the row and column dimensions of $\mathcal{M}$ equal $N^*$. Hence $D(\mathcal{F}) = N^*$ is attained generically. All multinomial coefficients arising in the relevant expansions have upper index at most $\sum_{i=2}^{n}(d_i-1)$, so the stated characteristic assumption prevents their vanishing modulo $\operatorname{char}(\mathbb{K})$.
+	Attainment for generic systems follows from a Zariski-density argument. For $\mathcal{F}^*$ the number of $\bar\xvec$-monomials of $\Delta$ equals the iterated-simplex monomial count $N^*$, which by the first part of the proof is the generic maximum; since $D(\mathcal{F})$ is by definition the maximum of the two support sizes, this is all that is required (the $\xvec$-support of $\mathcal{F}^*$ may well be strictly smaller). The condition that every iterated-simplex monomial appears in $\Delta$ with a nonzero coefficient is a finite conjunction of nonvanishing polynomial conditions on the coefficients of $\mathcal{F}$, all satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset of the irreducible coefficient space, on which the $\bar\xvec$-support of $\Delta$ has size $N^*$. Hence $D(\mathcal{F}) = N^*$ is attained generically. All multinomial coefficients arising in the relevant expansions have upper index at most $\sum_{i=2}^{n}(d_i-1)$, so the stated characteristic assumption prevents their vanishing modulo $\operatorname{char}(\mathbb{K})$.
 	
 \end{proof}
 
@@ -1289,30 +1295,31 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 	
 	We define the decomposition recursively for $j = 1, \ldots, n$. At step $j$, if
 	\begin{equation}\notag
-		\alpha_{n-j+1} + \sum_{\ell=n-j+2}^{n-1} \alpha_\ell' \leq \sum_{i=1}^{j-1} d_{n-i+1}
+		\alpha_{n-j+1} + \sum_{\ell=n-j+2}^{n-1} \alpha_\ell' \leq \sum_{i=2}^{j} d_{n-i+1}
 	\end{equation}
-	(with the convention that the sums $\sum_{\ell=n-j+2}^{n-1}\alpha_\ell'$ and $\sum_{i=1}^{j-1}d_{n-i+1}$ are empty---and therefore equal to $0$---when $j=1$), set
+	(with the convention that the sums $\sum_{\ell=n-j+2}^{n-1}\alpha_\ell'$ and $\sum_{i=2}^{j}d_{n-i+1}$ are empty---and therefore equal to $0$---when $j=1$), set
 	\begin{equation}\notag
 		\alpha_{n-j+1}' := \alpha_{n-j+1}, \quad \alpha_{n-j+1}'' := 0.
 	\end{equation}
 	Otherwise, set
 	\begin{equation}\notag
-		\alpha_{n-j+1}' := \sum_{i=1}^{j-1} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell', \quad 
+		\alpha_{n-j+1}' := \sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell', \quad 
 		\alpha_{n-j+1}'' := \alpha_{n-j+1} - \alpha_{n-j+1}'.
 	\end{equation}
+	Here $\sum_{i=2}^{j} d_{n-i+1}=\sum_{k=n-j+1}^{n-1} d_k$ is precisely the budget that $Q_{n-1}$ allows for the suffix starting at index $n-j+1$; note also that this budget increases by $d_{n-j+1}\ge 0$ from step $j-1$ to step $j$, so $\alpha_{n-j+1}'\ge 0$ in the second case.
 	
 	In both cases,
 	\begin{equation}\notag
-		\sum_{\ell=n-j+1}^{n-1} \alpha_\ell' \leq \sum_{i=1}^{j-1} d_{n-i+1},
+		\sum_{\ell=n-j+1}^{n-1} \alpha_\ell' \leq \sum_{i=2}^{j} d_{n-i+1},
 	\end{equation}
 	which establishes $(\alpha_1', \ldots, \alpha_{n-1}', 0) \in Q_{n-1}$.
 	
-	To verify $(\alpha_1'', \ldots, \alpha_n'') \in P_n$, we need $\sum_{\ell=1}^{n} \alpha_\ell'' \leq d_n$. This is immediate in the first case. In the second case:
+	To verify $(\alpha_1'', \ldots, \alpha_n'') \in P_n$, we need $\sum_{\ell=1}^{n} \alpha_\ell'' \leq d_n$. If the second case never occurs, then $\alpha''=0$ and there is nothing to prove. Otherwise, let $j$ be the \emph{largest} index at which the second case occurs; then $\alpha_\ell''=0$ for every $\ell<n-j+1$, and since the second case saturates the budget at step $j$ we obtain
 	\begin{align}\notag
-		\sum_{\ell=n-j+1}^{n} \alpha_\ell'' 
-		&= \alpha_{n-j+1} - \left(\sum_{i=1}^{j-1} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell'\right) + \sum_{\ell=n-j+2}^{n} \alpha_\ell'' \\[0.3em]\notag
-		&= \sum_{\ell=n-j+1}^{n} \alpha_\ell - \sum_{i=1}^{j-1} d_{n-i+1} 
-		\leq \sum_{i=1}^{j} d_{n-i+1} - \sum_{i=1}^{j-1} d_{n-i+1} 
+		\sum_{\ell=1}^{n} \alpha_\ell''=\sum_{\ell=n-j+1}^{n} \alpha_\ell'' 
+		&= \alpha_{n-j+1} - \left(\sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell'\right) + \sum_{\ell=n-j+2}^{n} \alpha_\ell'' \\[0.3em]\notag
+		&= \sum_{\ell=n-j+1}^{n} \alpha_\ell - \sum_{i=2}^{j} d_{n-i+1} 
+		\leq \sum_{i=1}^{j} d_{n-i+1} - \sum_{i=2}^{j} d_{n-i+1} 
 		= d_n,
 	\end{align}
 	where the inequality follows from the definition of $Q_n$.
