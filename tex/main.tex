@@ -169,7 +169,7 @@ Another line of work brings classical elimination theory into cryptanalysis. Yan
 
 \paragraph{Dixon resultant.}
 The Dixon resultant, introduced by A.C. Dixon in 1909~\cite{Dixon1909}, offers a different determinant-based elimination mechanism: it can eliminate several variables simultaneously from a polynomial system and thus serves as a compact multipolynomial resultant in our setting. Compared with the Macaulay resultant~\cite{macaulay1902some}, the Dixon construction often leads to substantially smaller matrices while preserving the essential elimination information. Kapur et al.~\cite{DBLP:conf/issac/KapurSY94} also explained how to handle the non-square situation via maximal-rank submatrices, which makes the method viable beyond the classical idealized setting. 
-%Tang and Feng~\cite{cryptoeprint:2005/312} used this construction to solve multivariate systems by keeping one variable as a parameter and solving the resulting eliminant, and Albrecht~\cite{Albrecht2008} implemented the same workflow against a block-cipher system; our direct method (Section~\ref{subsec:method1}) follows this workflow, our additions being the degree-aware submatrix selection of Section~\ref{Subsection:Extraneous} and the fast polynomial-matrix determinant stage. 
+Tang and Feng~\cite{cryptoeprint:2005/312} turned this into a solver by keeping one variable as a parameter, and Albrecht~\cite{Albrecht2008} implemented the same workflow against a block-cipher system; our direct method follows it, the additions being degree-aware submatrix selection and a fast polynomial-matrix determinant stage.
 Subsequently, numerous works~\cite{lewis2015dixon,Lewis2017,Zhao2005extfast,DengQiTangDuan2022,DBLP:journals/jsc/QinZYC22,DBLP:journals/ijcm/QinWTJ17,DBLP:conf/casc/JinaduM22,JinaduMonagan2025} studied both the algebraic and algorithmic aspects of Dixon matrices.
 
 For complexity analysis, the size of the Dixon matrix is the first key parameter. Kapur and Saxena~\cite{DBLP:conf/stoc/KapurS96} gave a Newton-polytope characterization for unmixed systems together with volume-based bounds for multi-homogeneous systems, and Tang and Feng~\cite{cryptoeprint:2005/312} treated the degree-$2$ case. Mixed supports were studied by Chtcherba and Kapur~\cite{ChtcherbaKapur2004} in the bivariate Dixon formulation; we generalize this to an arbitrary number of variables and obtain an explicit ordered mixed-total-degree formula. A second key parameter is the cost of polynomial-matrix determinants themselves, as expansion by minors~\cite{GentlemanJohnson1976}, Bareiss elimination~\cite{HorowitzSahni1975}, Kronecker substitution~\cite{Li2007symbolic}, Hermite normal form~\cite{DBLP:journals/jc/LabahnNZ17}, evaluation-interpolation~\cite{HorowitzSahni1975}, and sparse interpolation~\cite{DBLP:journals/jsc/Huang23} can lead to substantially different complexity estimates, and we accordingly develop a stage-wise complexity model that compares all of them.
@@ -184,7 +184,7 @@ This paper studies Dixon resultants as a method for \emph{solving polynomial sys
 	
 	\item We implement an efficient C library \drsolve\footnote{\url{https://github.com/drsolve/drsolve}} supporting multiple determinant routines and a degree-aware submatrix heuristic. Experiments validate the proposed Dixon-matrix bounds and show competitiveness with Magma and msolve on well-determined random systems, with advantages in the low-variable/high-degree/large-field regime, while Magma and msolve remain superior in the high-variable/low-degree/small-field regime.
 	
-	\item We formulate three Dixon-based elimination strategies for AO-induced systems: direct, iterative, and hybrid reduction. We illustrate them on \poseidon, \vision, and \texttt{XHash12}, respectively, providing concrete algebraic complexity estimates.
+	\item We organize Dixon-based elimination for AO-induced systems into three strategies: direct, iterative, and hybrid reduction. We illustrate them on \poseidon, \vision, and \texttt{XHash12}, respectively, providing concrete algebraic complexity estimates.
 \end{enumerate}
 
 \subsubsection{Outline.} 
@@ -297,7 +297,7 @@ In the presence of extraneous factors, the degree of the eliminant may exceed th
 We summarize the determinant complexity models used in this paper; full details are in Appendix~\ref{appendix:determinant_methods}.
 
 \subsubsection{Univariate determinants.}
-For $P(t)\in\mathbb{K}[t]^{m\times m}$, the Hermite normal form (HNF) method of~\cite{DBLP:journals/jc/LabahnNZ17} has deterministic cost $\mathcal{T}^{\mathrm{HNF}}=\widetilde{O}(m^{\omega}\lceil s\rceil)$, where $s$ is the average column degree.
+For $P(t)\in\mathbb{K}[t]^{m\times m}$, the Hermite normal form (HNF) method of~\cite{DBLP:journals/jc/LabahnNZ17} has deterministic cost $\mathcal{T}^{\mathrm{HNF}}=\widetilde{O}(m^{\omega}\lceil s\rceil)$, where $s$ is the average column degree and $2\le\omega<3$ is the matrix multiplication exponent.
 
 \subsubsection{Multivariate determinants.}
 For $P(\yvec)\in \mathbb{K}[y_1,\ldots,y_t]^{m\times m}$, no single method is universally best: different algorithms can lead to substantially different complexity estimates depending on the matrix size, the number of variables, and the sparsity structure of the entries. We therefore consider several alternatives. Besides direct symbolic expansion by minors~\cite{HorowitzSahni1975,GentlemanJohnson1976} and fraction-free Bareiss elimination~\cite{Bareiss1968}, one may reduce to the univariate case via Kronecker substitution~\cite{Li2007symbolic} and apply HNF, apply evaluation-interpolation on a tensor grid~\cite{HorowitzSahni1975}, or use sparse interpolation~\cite{DBLP:journals/jsc/Huang23}. The corresponding time and space costs are summarized in Table~\ref{tab:determinant_methods}.
@@ -355,7 +355,7 @@ We bound the Dixon matrix size for general $(d_1,\ldots,d_n)$-systems via a latt
 	Then $D(\mathcal{F})$ is bounded above by the number of lattice paths 
 	from $(0,0)$ to $(n-1, a_{n-1})$ such that for every 
 	$i=1,2,\ldots,n-1$, the height $y_i$ of the $i$-th horizontal step is at most $a_i$.
-	Moreover, there is a constant $B(d_2,\ldots,d_n)$ depending only on the degree sequence such that, if $\mathrm{char}(\mathbb{K})=0$ or $\mathrm{char}(\mathbb{K})>B(d_2,\ldots,d_n)$, this bound is attained for generic polynomial systems.
+	Moreover, if $\mathrm{char}(\mathbb{K})$ is zero or sufficiently large, this bound is attained for generic polynomial systems.
 \end{theorem}
 
 \begin{remark}
@@ -488,53 +488,39 @@ To compare different degree sequences, we establish a monotonicity property with
 We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 
 \begin{lemma}\label{lem:dixon_fc_bound}
-	Let $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[x_1, \ldots, x_{n-1}]$ be a system of polynomials with total degrees at most $d_1, d_2, \ldots, d_n$ respectively, where $d_1 \leq d_2 \leq \cdots \leq d_n$. Then $D(\mathcal{F})$ is bounded above by the number $N^{*}$ of monomials in the Iterated-Simplex Polynomial ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$. Moreover, there is a constant $B(d_2,\ldots,d_n)$, depending only on the degree sequence, such that if $\mathrm{char}(\mathbb{K})=0$ or $\mathrm{char}(\mathbb{K})>B(d_2,\ldots,d_n)$, then for generic systems both the row and the column dimension of $\mathcal{M}$ equal $N^{*}$; in particular $\mathcal{M}$ is then square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
+	Let $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[x_1, \ldots, x_{n-1}]$ be a system of polynomials with total degrees at most $d_1, d_2, \ldots, d_n$ respectively, where $d_1 \leq d_2 \leq \cdots \leq d_n$. Then $D(\mathcal{F})$ is bounded above by the number $N^{*}$ of monomials in the Iterated-Simplex Polynomial ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$. Moreover, if $\mathrm{char}(\mathbb{K})$ is zero or sufficiently large, then for generic systems both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
 \end{lemma}
 
 \begin{proof}
-	\emph{Upper bound on the $\bar\xvec$-support.}
-	The Dixon polynomial admits the bilinear form $\Delta(\xvec,\bar\xvec)=X\mathcal{M}\overline{X}^{T}$ of Section~\ref{Section:Preliminaries}, so the numbers of $\bar\xvec$-monomials and of $\xvec$-monomials of $\Delta$ are the column and row dimensions of $\mathcal{M}$. We bound the number of $\bar\xvec$-monomials directly from the degree structure of $\widehat{C}$, without specializing the variables $\xvec$; here $\operatorname{Supp}_{\bar\xvec}(\cdot)$ denotes the set of $\bar\xvec$-exponent vectors occurring in a polynomial of $\mathbb{K}[\avec][\xvec,\bar\xvec]$, the $\xvec$-monomials being absorbed into the coefficients.
-	
-	In the refined construction~\eqref{eq:Dixon_polynomial_improve}, the entry $\widehat{C}_{i,j}$ involves only the dual variables $\bar{x}_1,\ldots,\bar{x}_{i-1}$; its total degree, and hence a fortiori its $\bar\xvec$-degree, is $0$ in $\bar\xvec$ for $i=1$, and at most $d_j-1$ for $i\ge 2$, since the difference quotient lowers the degree by one. Consequently, for every permutation $\sigma\in S_n$ the expansion term $\prod_{i=1}^{n}\widehat{C}_{i,\sigma(i)}$ is a product in which the row-$1$ factor contributes no $\bar\xvec$-monomial and, for $i\ge2$, the row-$i$ factor is a polynomial whose $\bar\xvec$-part lies in $\bar{x}_1,\ldots,\bar{x}_{i-1}$ and has $\bar\xvec$-degree at most $d_{\sigma(i)}-1$. This is exactly the shape of the factors in~\eqref{eq:Iterated_Simplex_Polynomial}, so
+	\emph{Upper bound.}
+	By the bilinear form $\Delta(\xvec,\bar\xvec)=X\mathcal{M}\overline{X}^{T}$, the numbers of $\bar\xvec$- and of $\xvec$-monomials of $\Delta$ are the column and row dimensions of $\mathcal{M}$; write $\operatorname{Supp}_{\bar\xvec}(\cdot)$ for the set of $\bar\xvec$-exponent vectors of a polynomial of $\mathbb{K}[\avec][\xvec,\bar\xvec]$, the $\xvec$-monomials being absorbed into the coefficients. In the refined construction~\eqref{eq:Dixon_polynomial_improve} the entry $\widehat{C}_{i,j}$ involves only $\bar{x}_1,\ldots,\bar{x}_{i-1}$, with $\bar\xvec$-degree $0$ for $i=1$ and at most $d_j-1$ for $i\ge 2$, since the difference quotient lowers the degree by one. Every expansion term $\prod_{i}\widehat{C}_{i,\sigma(i)}$, $\sigma\in S_n$, therefore has exactly the shape of the product in~\eqref{eq:Iterated_Simplex_Polynomial}, whence
 	\begin{equation}\notag
 		\operatorname{Supp}_{\bar\xvec}\Bigl(\prod_{i=1}^{n}\widehat{C}_{i,\sigma(i)}\Bigr)
-		\subseteq \operatorname{Supp}\bigl(I_{d_{\sigma(2)}-1,\,\ldots,\,d_{\sigma(n)}-1}\bigr).
+		\subseteq \operatorname{Supp}\bigl(I_{d_{\sigma(2)}-1,\,\ldots,\,d_{\sigma(n)}-1}\bigr)
+		\subseteq \operatorname{Supp}\bigl(I_{d_{2}-1,\,\ldots,\,d_{n}-1}\bigr),
 	\end{equation}
-	The multiset $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$ is obtained from $\{d_2,\ldots,d_n\}$ by replacing $d_{\sigma(1)}$ with $d_1\le d_{\sigma(1)}$, so the sum of its $k$ largest elements is at most the corresponding sum for $\{d_2,\ldots,d_n\}$, for every $k$. Lemma~\ref{lem:reorder_support}, applied in its multiset-dominance form, therefore gives
-	\begin{equation}\notag
-		\operatorname{Supp}\bigl(I_{d_{\sigma(2)}-1,\,\ldots,\,d_{\sigma(n)}-1}\bigr)\subseteq\operatorname{Supp}\bigl(I_{d_{2}-1,\,\ldots,\,d_{n}-1}\bigr)
-		\qquad\text{for every }\sigma\in S_n,
-	\end{equation}
-	with equality for $\sigma=\mathrm{id}$. Summing over $\sigma$, the number of $\bar\xvec$-monomials of $\Delta$ is at most $N^{*}$.
+	the second inclusion by Lemma~\ref{lem:reorder_support}: the multiset $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$ arises from $\{d_2,\ldots,d_n\}$ by replacing $d_{\sigma(1)}$ with $d_1\le d_{\sigma(1)}$ and is therefore dominated by it, with equality for $\sigma=\mathrm{id}$. Summing over $\sigma$ bounds the number of $\bar\xvec$-monomials of $\Delta$ by $N^{*}$.
 	
-	\emph{The same bound for the $\xvec$-support.}
-	Consider the order-reversing involution
-	\begin{equation}\notag
-		\tau:\quad x_i \longmapsto \bar{x}_{n-i},\qquad \bar{x}_i \longmapsto x_{n-i},\qquad 1\le i\le n-1 ,
-	\end{equation}
-	and let $\mathcal{F}^{\mathrm{rev}}=\{f_1^{\mathrm{rev}},\ldots,f_n^{\mathrm{rev}}\}$ with $f_j^{\mathrm{rev}}(x_1,\ldots,x_{n-1}) := f_j(x_{n-1},\ldots,x_1)$; this system has the same degree sequence $(d_1,\ldots,d_n)$ as $\mathcal{F}$. A direct check shows that applying $\tau$ to the $i$-th row of the cancellation matrix~\eqref{eq:Cancellation Matrix} of $\mathcal{F}$ produces exactly the $(n-i+1)$-st row of the cancellation matrix of $\mathcal{F}^{\mathrm{rev}}$, so $\tau$ merely reverses the row order and preserves $\det(C)$ up to sign, while $\prod_{i=1}^{n-1}(x_i-\bar{x}_i)$ is multiplied by $(-1)^{n-1}$. Hence
+	For the $\xvec$-support, consider the order-reversing involution $\tau: x_i\mapsto\bar{x}_{n-i},\ \bar{x}_i\mapsto x_{n-i}$ and the reversed system $f_j^{\mathrm{rev}}(x_1,\ldots,x_{n-1}) := f_j(x_{n-1},\ldots,x_1)$, which has the same degree sequence. Applying $\tau$ to the $i$-th row of the cancellation matrix~\eqref{eq:Cancellation Matrix} of $\mathcal{F}$ produces the $(n-i+1)$-st row of that of $\mathcal{F}^{\mathrm{rev}}$, so $\tau$ merely reverses the row order and both $\det(C)$ and $\prod_{i}(x_i-\bar{x}_i)$ are preserved up to sign. Hence
 	\begin{equation}\label{eq:tau_symmetry}
 		\tau\bigl(\Delta_{\mathcal{F}}(\xvec,\bar\xvec)\bigr)=\pm\,\Delta_{\mathcal{F}^{\mathrm{rev}}}(\xvec,\bar\xvec),
 	\end{equation}
-	and $\tau$ carries $\xvec$-monomials to $\bar\xvec$-monomials bijectively. Applying Step~1 to $\mathcal{F}^{\mathrm{rev}}$ therefore bounds the number of $\xvec$-monomials of $\Delta_{\mathcal{F}}$ by $N^{*}$ as well, which proves the stated upper bound $D(\mathcal{F})\le N^{*}$. Note that this argument uses no assumption on $\mathbb{K}$.
+	and since $\tau$ carries $\xvec$-monomials bijectively to $\bar\xvec$-monomials, the previous paragraph applied to $\mathcal{F}^{\mathrm{rev}}$ bounds the number of $\xvec$-monomials of $\Delta_{\mathcal{F}}$ by $N^{*}$ as well. This proves $D(\mathcal{F})\le N^{*}$ over an arbitrary field.
 	
 	\emph{Attainment for generic systems.}
-	Specialize to the nested system $\mathcal{F}^* = \{f_1, \ldots, f_n\}$ with $f_1 = 1$ and $f_i = \bigl( \sum_{k=1}^{i-1} x_k \bigr)^{d_i}$ for $i=2,\ldots,n$; since the iterated-simplex count $N^{*}$ does not depend on $d_1$, taking $f_1$ constant is consistent with the coefficient space of $(d_1,\ldots,d_n)$-systems used below. For $j < i$ the polynomial $f_j$ does not involve $x_{i-1}$, so $C_{i,j} = C_{i-1,j}$ and the numerator of the difference quotient in row $i$ vanishes identically, giving $\widehat{C}_{i,j} = 0$ for $j<i$. Thus $\widehat{C}$ is upper-triangular and
+	Take the nested system $\mathcal{F}^* = \{f_1,\ldots,f_n\}$ with $f_1 = 1$ and $f_i = \bigl(\sum_{k=1}^{i-1} x_k\bigr)^{d_i}$ for $i\ge2$; this is consistent with the coefficient space of $(d_1,\ldots,d_n)$-systems, since $N^{*}$ does not depend on $d_1$. For $j<i$ the polynomial $f_j$ does not involve $x_{i-1}$, so the numerator of the difference quotient in row $i$ vanishes identically and $\widehat{C}_{i,j}=0$. Thus $\widehat{C}$ is upper-triangular and, up to an irrelevant sign,
 	\begin{equation}\notag
-		\Delta(\xvec, \bar{\xvec}) = \det(\widehat{C}) = \prod_{i=2}^{n} M_{i,i},
+		\Delta(\xvec, \bar{\xvec}) = \prod_{i=2}^{n} \widehat{C}_{i,i},
 		\qquad
-		M_{i,i} = -\sum_{k=0}^{d_i-1} (\bar{X}_{i-2} + x_{i-1})^k (\bar{X}_{i-2} + \bar{x}_{i-1})^{d_i-1-k},
+		\widehat{C}_{i,i} = -\sum_{k=0}^{d_i-1} (\bar{X}_{i-2} + x_{i-1})^k (\bar{X}_{i-2} + \bar{x}_{i-1})^{d_i-1-k},
 	\end{equation}
-	with $\bar{X}_{i-2} = \sum_{j=1}^{i-2} \bar{x}_j$; the overall sign is irrelevant for the support analysis. We now specialize all original variables to $x_{i}=1$, which is legitimate in this direction: a specialization can only shrink the $\bar\xvec$-support, so exhibiting $N^{*}$ distinct $\bar\xvec$-monomials after the specialization exhibits at least $N^{*}$ of them before it. Over a field of characteristic $0$, expanding $M_{i,i}$ at $x_{i-1}=1$ produces only positive multinomial coefficients times monomials in $\bar{x}_1,\ldots,\bar{x}_{i-1}$, so no cancellation occurs; taking the summand with $d_i-1-k=e$ shows that every monomial of $\bar\xvec$-degree at most $d_i-1$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$ does occur, so the $\bar\xvec$-support of $M_{i,i}$ is exactly the simplex of degree $d_i-1$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$. The same positivity holds for the product $\prod_{i\ge2}M_{i,i}$, whose $\bar\xvec$-support is therefore exactly $\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$, of cardinality $N^{*}$.
+	with $\bar{X}_{i-2} = \sum_{j=1}^{i-2} \bar{x}_j$. Specializing all $x_i$ to $1$ can only shrink the $\bar\xvec$-support, so it suffices to exhibit $N^{*}$ monomials after the specialization. The coefficients produced there are positive multinomial coefficients, so no cancellation occurs as soon as $\operatorname{char}(\mathbb{K})$ is zero or large enough (Remark~\ref{rem:support_vs_rank}). The summand with $d_i-1-k=e$ then shows that $\operatorname{Supp}_{\bar\xvec}(\widehat{C}_{i,i})$ is the full simplex of degree $d_i-1$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$, and by the same positivity $\operatorname{Supp}_{\bar\xvec}(\Delta)=\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$, of cardinality $N^{*}$.
 	
-	Because the specialization point has been fixed to the all-ones point, the coefficients occurring in this expansion form a finite set of positive integers determined by $(d_2,\ldots,d_n)$ alone; let $B(d_2,\ldots,d_n)$ be their maximum. If $\operatorname{char}(\mathbb{K})=0$ or $\operatorname{char}(\mathbb{K})>B(d_2,\ldots,d_n)$, none of them vanishes in $\mathbb{K}$ and the conclusion of the previous paragraph persists, so at most finitely many characteristics are excluded for each fixed degree sequence. 
-%We stress that the weaker condition $\operatorname{char}(\mathbb{K})>\sum_{i=2}^{n}(d_i-1)$ would \emph{not} suffice: the coefficient of a fixed monomial of $\Delta$ is a \emph{sum} of products of multinomial coefficients, and such a sum can be divisible by a prime exceeding the total degree, even though no individual multinomial coefficient is.
-	
-	Finally, the condition that all $N^{*}$ iterated-simplex monomials occur in the $\bar\xvec$-support of $\Delta_{\mathcal{F}}$ is a finite conjunction of nonvanishing polynomial conditions on the coefficients of $\mathcal{F}$, all satisfied at $\mathcal{F}^*$ under the above hypothesis on $\operatorname{char}(\mathbb{K})$; it therefore defines a non-empty, hence dense, Zariski-open subset $U$ of the irreducible coefficient space. The map $\mathcal{F}\mapsto\mathcal{F}^{\mathrm{rev}}$ is a linear automorphism of that space preserving the degree bounds, so $U^{\mathrm{rev}}:=\{\mathcal{F}: \mathcal{F}^{\mathrm{rev}}\in U\}$ is again Zariski-open and dense, and by~\eqref{eq:tau_symmetry} the $\xvec$-support of $\Delta_{\mathcal{F}}$ has exactly $N^{*}$ elements for every $\mathcal{F}\in U^{\mathrm{rev}}$. On the non-empty open dense subset $U\cap U^{\mathrm{rev}}$ both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$ is attained generically.
+	Finally, the requirement that all $N^{*}$ iterated-simplex monomials occur in $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}})$ is a finite conjunction of nonvanishing polynomial conditions on the coefficients of $\mathcal{F}$, satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset $U$ of the irreducible coefficient space. As $\mathcal{F}\mapsto\mathcal{F}^{\mathrm{rev}}$ is a linear automorphism preserving the degree bounds, $U^{\mathrm{rev}}:=\{\mathcal{F}: \mathcal{F}^{\mathrm{rev}}\in U\}$ is again dense and open, and by~\eqref{eq:tau_symmetry} the $\xvec$-support of $\Delta_{\mathcal{F}}$ has $N^{*}$ elements on it. On $U\cap U^{\mathrm{rev}}$ both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
 \end{proof}
 
 \begin{remark}\label{rem:support_vs_rank}
-	Throughout the matrix-size discussion, ``generic'' is understood in the usual Zariski-open sense of Definition~\ref{def:generic}, and $D(\mathcal{F})$ denotes the row/column dimension of $\mathcal{M}$, i.e.\ the size of its monomial support; by Lemma~\ref{lem:dixon_fc_bound} the two dimensions agree generically, so the maximum in the definition of $D(\mathcal{F})$ is not restrictive there. This is an upper bound for, and in general strictly larger than, $\operatorname{rank}\mathcal{M}$: exhibiting all row and column monomials does not exhibit a non-vanishing minor of size $N^{*}$. Support containment, and hence the upper bound, holds over any field; only attainment uses the hypothesis on the characteristic. Over finite fields the formulas should be read as upper-bound templates after specialization rather than as exact equalities for every structured instance.
+	Here ``generic'' is meant in the Zariski sense of Definition~\ref{def:generic}, and $D(\mathcal{F})$ is the row/column dimension of $\mathcal{M}$, i.e.\ the size of its monomial support. It is an upper bound for, and in general strictly larger than, $\operatorname{rank}\mathcal{M}$: exhibiting all row and column monomials does not exhibit a non-vanishing minor of size $N^{*}$. The support containment, and hence the upper bound, holds over any field; only attainment needs a hypothesis on the characteristic. Concretely, it is enough that the finitely many positive integers produced by the all-ones specialization in the proof---multinomial coefficients attached to $(d_2,\ldots,d_n)$ alone---do not vanish in $\mathbb{K}$, so for each degree sequence only finitely many characteristics are excluded. In small characteristic cancellations do occur: over $\mathbb{F}_2$, for instance, $(1+x_1)(1+x_1+x_2)=1+x_2+x_1^2+x_1x_2$ loses a monomial of the predicted support. The formulas should accordingly be read there as upper-bound templates rather than exact equalities.
 \end{remark}
 
 \paragraph{From Polyhedral Constraints to Lattice Paths}
@@ -784,7 +770,7 @@ The GB (per-deg) row does not admit a closed-form asymptotic equivalent that is 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.99\textwidth]{complexity_comparison_d2.png}
-	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2$. The y-axis shows $\log_2(\text{complexity})$. All Gr\"obner-basis variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound, are included for direct empirical comparison with Dixon.}
+	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All Gr\"obner-basis variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound, are included for direct empirical comparison with Dixon.}
 	\label{fig:complexity_comparison_d}
 \end{figure}
 
@@ -859,17 +845,15 @@ This is supported by computational experiments (Appendix~\ref{appendix:degree_op
 We developed a comprehensive, open-source C implementation of the Dixon resultant method, \drsolve, built upon the high-performance \texttt{FLINT} and \texttt{PML} libraries (parts of the code were written with the help of AI coding assistants, as disclosed in the supplementary \texttt{README}), available at \url{https://github.com/drsolve/drsolve}. It supports operations over prime fields $\Fp$ of arbitrary size, general finite fields $\Fq$, and $\mathbb{Q}$. It incorporates most Dixon construction techniques from~\cite{lewis2015dixon,Zhao2005extfast,JinaduMonagan2025} and most polynomial-matrix determinant techniques from~\cite{DBLP:journals/jc/LabahnNZ17,DBLP:journals/jsc/Huang23,HorowitzSahni1975,Li2007symbolic}. It provides:
 
 \begin{itemize}
-	\item \textbf{Dixon resultant elimination:} Eliminate $n-1$ variables from $n$ polynomials using the Dixon resultant.
-	\item \textbf{Polynomial system solving:} Compute all solutions of zero-dimensional systems.
+	\item \textbf{Elimination and solving:} Eliminate $n-1$ variables from $n$ polynomials, and compute all solutions of zero-dimensional systems.
 	\item \textbf{Flexible determinant algorithms:} Support for all determinant computation methods discussed in this paper.
-	\item \textbf{Optimized binary arithmetic:} Highly optimized for binary extension fields $\mathbb{F}_{2^k}$ ($k \in \{8, 16, 32, 64, 128\}$), common in cryptographic applications.
-	\item \textbf{Multi-modular arithmetic:} Support for multi-modular techniques with CRT-based reconstruction over $\mathbb{Q}$ and large prime fields.
-	\item \textbf{Complexity estimation:} A tool for estimating the cost of a polynomial system, or based on parameters such as the number of variables and degrees.
+	\item \textbf{Optimized arithmetic:} Binary extension fields $\mathbb{F}_{2^k}$ ($k \in \{8, 16, 32, 64, 128\}$), and multi-modular techniques with CRT-based reconstruction over $\mathbb{Q}$ and large prime fields.
+	\item \textbf{Complexity estimation:} A tool for estimating the cost of a polynomial system, or of a parameter set such as the number of variables and degrees.
 \end{itemize}
 
 \paragraph{Experimental results.}
 All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma} and msolve~\cite{msolve}. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve shows significant advantages for systems with fewer variables and higher degrees. 
-% We also compared \drsolve\ with the closest Dixon software: on dense $3$-variable systems of degree $8$ over $\Fp$ it terminates in about $0.1$~s, whereas Dixon-EDF inside Fermat~\cite{fermat,lewis2015dixon}, the fastest prior implementation we could run, needs about $15$~s; the Maple${+}$C code of Jinadu and Monagan~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025} targets parametric systems over $\mathbb{Q}$ and is not directly comparable in our setting.
+Against the closest Dixon software the gap is larger still: on dense $3$-variable systems of degree $8$ over $\Fp$, \drsolve\ terminates in about $0.1$~s where Dixon-EDF inside Fermat~\cite{fermat,lewis2015dixon} needs about $15$~s, while the Maple${+}$C code of Jinadu and Monagan~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025} targets parametric systems over $\mathbb{Q}$ and is not directly comparable here. Most of this speedup comes from the fast polynomial-matrix routines of FLINT/PML rather than from a change of elimination strategy.
 
 \begin{figure}[h]
 	\centering
@@ -905,7 +889,7 @@ Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=
 \label{fig:poseidon_complexity}
 \end{figure}
 
-Table~\ref{tab:poseidon-timing} reports small-instance timings. Full-round systems behave close to generic dense systems, while partial-round systems are much more structured, so both the Dixon matrix size and the Gr\"obner-basis degree of regularity fall well below their generic upper bounds. Tight a-priori bounds for non-generic partial-round systems are hard since the drop depends on the specific subspace model; our generic bound (and the corresponding Figure~\ref{fig:poseidon_complexity} curves on partial-round regimes) should therefore be read as an upper-bound template rather than a tight prediction of the best attack. 
+Table~\ref{tab:poseidon-timing} reports small-instance timings. Full-round systems behave close to generic dense systems, while partial-round systems are much more structured, so both the Dixon matrix size and the Gr\"obner-basis degree of regularity fall well below their generic upper bounds. Since the size of this drop depends on the specific subspace model, the generic bound should be read as an upper-bound template rather than as a tight prediction of the best attack. 
 
 \begin{table}[h]
 \centering
@@ -983,8 +967,7 @@ The final merge eliminates the middle block $\mathcal{Z}$ and, with $d_{\max}=\m
 % obtained as follows. We arrange the split so that the middle block $\mathcal{Z}$ consists of two shared variables, with the forward chain contributing one relation in $\mathcal{Z}$ and the backward chain contributing another, of total degrees $D_{\mathrm{fwd}}$ and $D_{\mathrm{bwd}}$ respectively. The merge is then a resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, leaving the final univariate polynomial in the remaining middle variable. The associated Dixon matrix has size $\Theta(d_{\max})$ (driven by the degree of the two middle relations in the eliminated variable), and each of its entries is a polynomial of degree at most $2d_{\max}$ in the retained variable (a Dixon entry is a difference-quotient combination of two row entries, each of degree $\le d_{\max}$). The univariate HNF determinant on such a matrix costs $\widetilde{O}(d_{\max}^{\omega}\cdot 2d_{\max})=\widetilde{O}(d_{\max}^{\omega+1})$.
 % (Step~4 with matrix size $\Theta(d_{\max})$ and average column degree $\Theta(d_{\max})$, $k=1$).
 
-The complexity of Method~2 is the maximum over all stages: every determinant of the forward and backward chains~\eqref{eq:iterative_sequential_complexity} and the final merge~\eqref{eq:MITM Complexity}.
-%, univariate root finding, back-substitution, and the verification of the candidate solutions in the original system, which also discards the spurious candidates possibly introduced by extraneous factors. The verification cost is negligible, and for the parameters reported below the final merge is the dominant stage.
+The complexity of Method~2 is the maximum over all stages: every determinant of the forward and backward chains~\eqref{eq:iterative_sequential_complexity} and the final merge~\eqref{eq:MITM Complexity}. Root finding, back-substitution, and the verification of the candidate solutions in the original system---which also discards the spurious candidates possibly introduced by extraneous factors---are negligible in comparison.
 
 This method is best suited to Type~II (equivalence-relation) primitives, whose ladder-structured CICO systems link successive states through local low-degree relations; we take \vision~as the representative example.
 
@@ -998,7 +981,7 @@ For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make 
 \label{fig:vision_complexity_comparison}
 \end{figure}
 
-The theoretical MITM bound still grows exponentially in the number of rounds, but measured behavior is milder because many quadratic equations do not contribute substantially to degree growth. This is the structured regime where local elimination is preferable to direct elimination.
+For these parameters the final merge~\eqref{eq:MITM Complexity} dominates every forward and backward stage of the chain, so it alone determines the reported complexity; the stage-by-stage figures are collected in Appendix~\ref{appendix:vision}. This is the structured regime where local elimination is preferable to direct elimination.
 
 \begin{table}[hbpt!]
 \centering
@@ -1013,7 +996,7 @@ The theoretical MITM bound still grows exponentially in the number of rounds, bu
 \textbf{Method} & Comp. & Time & Comp. & Time & Comp. & Time \\
 \midrule
 Gr\"obner basis~\cite{DBLP:conf/asiacrypt/LiuMM24} & 31.0 & 1.38s & 42.0 & 1d 4h & 53.0 & --- \\
-Dixon resultant & 25.0 & 0.1s & 36.0 & 15m & 49.0 & 3d \\
+Dixon resultant & 24.1 & 0.1s & 31.0 & 15m & 48.1 & 3d \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -1070,7 +1053,7 @@ again with $D(\mathcal{P}_k)$ from Corollary~\ref{cor:three_bounds}(3), since th
 This method is an improved attack on Type~II (equivalence-relation) primitives, refining Method~2 by interleaving Dixon elimination with ideal reduction; we take \xhash~as the representative example.
 
 \begin{remark}
-	For the special case of CICO-1 the two-polynomial iterative-resultant route of~\cite{DBLP:conf/crypto/BariantBBHOR25} already gives~\eqref{eq:two_poly_complexity_main} and Dixon does not change the picture; we use Dixon here precisely for CICO-$k$ with $k\ge 2$, where the final elimination step combines $k$ reduced relations and is no longer of the two-polynomial form addressed by~\cite{DBLP:conf/crypto/BariantBBHOR25}. Although Method~3 does not yet provide concrete advantages for instances beyond CICO-3, the framework is substantially more flexible and opens additional directions for future elimination strategies.
+	For the special case of CICO-1 the two-polynomial iterative-resultant route of~\cite{DBLP:conf/crypto/BariantBBHOR25} already gives~\eqref{eq:two_poly_complexity_main} and Dixon does not change the picture; we use Dixon here precisely for CICO-$k$ with $k\ge 2$, where the final elimination step combines $k$ reduced relations and is no longer of the two-polynomial form addressed by~\cite{DBLP:conf/crypto/BariantBBHOR25}. Although Method~3 does not yet provide concrete advantages for instances beyond CICO-2, the framework is substantially more flexible and opens additional directions for future elimination strategies.
 \end{remark}
 
 
@@ -1084,7 +1067,7 @@ We focus on \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}; the permutatio
 \label{fig:xhash_complexity}
 \end{figure}
 
-This picture is confirmed by the small-instance timings in Table~\ref{tab:xhash_experimental}. In short: Method~3 explains why CICO-1 instances can be unusually easy, but Method~1 gives the more relevant estimate for the standard XHash12 security parameters. The example also illustrates a broader point: hybrid elimination is powerful only when the reduction phase lowers the degrees faster than it multiplies the number or complexity of the remaining relations. Note that for CICO-2 (2 step), Method~1+3 has lower asymptotic complexity (31.2) than Method~1 (40.7) but a slower measured time, because for small instances the reduction-phase constants dominate the leading-order term.
+This picture is confirmed by the small-instance timings in Table~\ref{tab:xhash_experimental}. In short: Method~3 explains why CICO-1 instances can be unusually easy, but Method~1 gives the more relevant estimate for the standard XHash12 security parameters. The example also illustrates a broader point: hybrid elimination is powerful only when the reduction phase lowers the degrees faster than it multiplies the number or complexity of the remaining relations. Note that for CICO-2 (2 step), Method~1+3 has lower asymptotic complexity (31.2) than Method~1 (33.6) but a slower measured time, because for small instances the reduction-phase constants dominate the leading-order term.
 
 \begin{table}[hbtp!]
 \centering
@@ -1097,7 +1080,7 @@ This picture is confirmed by the small-instance timings in Table~\ref{tab:xhash_
  & Comp. & Time & Comp. & Time & Comp. & Time \\
 \midrule
 Gr\"obner basis & 41.4 & 1.5s & 63.3 & - & 48.8 & 59.7s \\
-Method 1 & 35.1 & 9.4s & 64.4 & - & 40.7 & 4.5s \\
+Method 1 & 35.1 & 9.4s & 64.4 & - & 33.6 & 4.5s \\
 Method 1+3 & 18.6 & 0.04s & 29.6 & 200.4s & 31.2 & 413.2s \\
 \bottomrule
 \end{tabular}
@@ -1136,6 +1119,38 @@ Claude and ChatGPT were used to assist with the implementation of the DRSolve so
 \tableofcontents
 \clearpage
 % \subsubsection*{Acknowledgements.}
+\newpage
+\section{Notation}\label{appendix:notation}
+
+Table~\ref{tab:notation} collects the quantities attached to the Dixon construction that are easy to confuse, in particular the three different sizes associated with $\mathcal{M}$.
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Quantities used throughout the paper.}
+	\label{tab:notation}
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.15}
+	\begin{tabular}{@{}p{0.235\textwidth}p{0.70\textwidth}@{}}
+		\toprule
+		\textbf{Symbol} & \textbf{Meaning} \\
+		\midrule
+		$\mathcal{F}=\{f_1,\ldots,f_n\}$ & System of $n$ polynomials in the $n-1$ eliminated variables $\xvec$ and the $k$ retained parameters $\avec$ \\
+		$\Delta(\xvec,\bar\xvec)$ & Dixon polynomial, $\det(\widehat{C})$ of Step~1 \\
+		$\mathcal{M}$ & Dixon matrix of Step~2; rows indexed by the $\xvec$-monomials and columns by the $\bar\xvec$-monomials of $\Delta$ \\
+		$D(\mathcal{F})$ & Monomial-support dimension of $\mathcal{M}$: the larger of its two dimensions. This is the quantity bounded in Section~\ref{Subsection:Matrix_Size} \\
+		$\operatorname{rank}\mathcal{M}$ & Symbolic rank of $\mathcal{M}$. Always $\operatorname{rank}\mathcal{M}\le D(\mathcal{F})$; equality is \emph{not} claimed (Remark~\ref{rem:support_vs_rank}) \\
+		$\mathcal{M}'$ & Maximal-rank square submatrix extracted in Step~3, of size $\operatorname{rank}\mathcal{M}$ \\
+		$M$ & Value $C_n^{(d)}$ attained generically by $D(\mathcal{F})$ on $(n;d)$-systems; used in the cost formulas as an upper bound for the size of $\mathcal{M}'$, so those formulas are upper bounds \\
+		$\det(\mathcal{M}')$ & Called the \emph{resultant} in the informal sense of Remark~\ref{rem:projective_vs_affine}: an element of $I\cap\mathbb{K}[\avec]$ that may carry extraneous factors, rather than a canonical generator \\
+		$N^{*}$ & Number of monomials of the Iterated-Simplex polynomial $I_{d_2-1,\ldots,d_n-1}$ \\
+		$d_{\mathcal{I}}$, $d_{\mathrm{reg}}$ & Degree of the ideal $\mathcal{I}$; degree of regularity \\
+		$E_4$, $D_4$, $\delta_4$ & Entry-wise parameter degree, total degree of the elimination polynomial, and average column degree after Kronecker substitution, in Step~4 \\
+		$\omega$ & Matrix multiplication exponent, $2\le\omega<3$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
 \newpage
 \section{Background on Algebraic Geometry and Combinatorics}\label{Appendix:A}
 
@@ -1573,7 +1588,7 @@ We present a more comprehensive comparison of the computational complexity of th
 		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w2.png}
 	\end{subfigure}
 	
-	\caption{Complexity comparison between the Dixon resultant and Gr\"obner basis (continued).}
+	\caption*{Figure~\ref{fig:complexity} (continued). The bottom panel uses $\omega=2$, at which the first and the final determinant have the same asymptotic order in $M$; the plotted Dixon curve is the Step~4 term.}
 \end{figure}
 
 \newpage
@@ -1928,7 +1943,7 @@ T_{4}^{\mathrm{HNF}} \;\gg\; T_{1}^{\mathrm{minor}}\quad\text{asymptotically in 
 for every $\omega\ge 2.81$ and every $d\ge 2$ (and more generally whenever~\eqref{eq:minor_threshold} holds).
 
 \paragraph{Boundary case $\omega=2$.}
-At the idealized boundary $\omega=2$, the $M$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by an $M$-exponent gap. The $\omega=2$ value is used in this paper only in the uniform-exponent security plots (Section~\ref{Subsection:Other_Comparison} and Figure~\ref{fig:complexity_comparison_d}), where it is applied identically to Dixon and to every Gr\"obner-basis variant; relative comparisons there should therefore be read as ``uniform-$\omega$ ratios'' rather than literal asymptotic statements about any single method. For any $\omega>2$ already at infinitesimal margin, the $M^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
+At the idealized boundary $\omega=2$, the $M$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by an $M$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}, and in the degree sweep at the bottom of Figure~\ref{fig:complexity}; in both places it is applied identically to Dixon and to every competitor, so the comparisons should be read as ``uniform-$\omega$ ratios'' rather than as literal asymptotic statements about any single method. For \vision\ this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $M^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
 
 \paragraph{Consequence.}
 Combining the two comparisons above, for all parameter ranges considered in the experiments (Strassen $\omega\approx 2.81$, $d\ge 2$, and $n$ moderate to large), neither $T_{1}^{\mathrm{sparse}}$ nor $T_{1}^{\mathrm{minor}}$ exceeds $T_{4}^{\mathrm{HNF}}$, and the measured running times confirm that Step~4 is the dominant phase. We therefore use $T = T_{4}^{\mathrm{HNF}}$, as in~\eqref{eq:dixon_complexity_well}, as the overall complexity estimate for well-determined systems.
@@ -2104,7 +2119,7 @@ and
 \begin{equation}
 	f^{(\mathrm{out})} := \sum_{j=1}^s M[0][j] \cdot B_3(z_{r,j}) + \epsilon_{r,0}.
 \end{equation}
-Altogether this gives $4r-2$ equations in $4r-2$ variables (the $4r$ intermediate variables $w_{i,k},z_{i,k}$ minus the two values fixed by the CICO constraints).
+Altogether this gives $4r-1$ equations in $4r-1$ variables, which is the count split into the forward and backward chains in Table~\ref{tab:vision_equation_distribution}. This is the shape of the ladder~\eqref{eq:iterative_chain}: $|\mathcal{F}_1|=|\mathcal{X}_0|+1=2$, $|\mathcal{F}_i|=2$ for the remaining rungs, plus the single output constraint.
 
 The equation-degree distribution used in the MITM estimate is summarized in Table~\ref{tab:vision_equation_distribution}.
 \begin{table}[hbpt!]
@@ -2126,7 +2141,61 @@ The equation-degree distribution used in the MITM estimate is summarized in Tabl
 	\end{tabular}
 \end{table}
 
-The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:MITM Complexity} in the main text.
+The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:MITM Complexity} in the main text. The same elimination pattern applies to \texttt{Rescue}, where it improves on the pairwise Sylvester resultants of~\cite{DBLP:conf/asiacrypt/YangZYLT24} but stays above the dedicated attack of~\cite{DBLP:conf/crypto/BariantBBHOR25}.
+
+\paragraph{Stage-by-stage figures.}
+Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Here $\rho$ is well below $D(\mathcal{F})$, so Step~3 is not run as a full elimination on $\mathcal{M}$: right-multiplying $\mathcal{M}$ by a random $D(\mathcal{F})\times c\rho$ matrix reveals the rank in $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$ field operations, which is the figure reported below and reduces to~\eqref{eq:complexity_step3} when $\rho=D(\mathcal{F})$, as at the merge.
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Every Dixon elimination performed by Method~2 on \vision\ with $r=4$ ($s=2$), in $\log_2$ field operations, $\omega=2$. The meet-in-the-middle cut is after rung~$4$.}
+	\label{tab:vision_stages_r4}
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.1}
+	\begin{tabular}{lccccccccc}
+		\toprule
+		Stage & $d$ & $\log_2 D_{\mathrm{in}}$ & $\log_2 D_{\mathrm{out}}$ & $\log_2 D(\mathcal{F})$ & $\log_2\rho$ & Step~1 & Step~3 & Step~4 & Cost \\
+		\midrule
+		F1    & $2$ & $0$  & $2$  & $0.0$  & $1.0$  & $3.0$  & $1.0$  & $5.3$  & $5.3$ \\
+		F2    & $8$ & $2$  & $8$  & $4.5$  & $5.0$  & $6.0$  & $9.5$  & $21.0$ & $21.0$ \\
+		F3    & $2$ & $8$  & $10$ & $15.0$ & $9.0$  & $24.0$ & $24.0$ & $29.0$ & $29.0$ \\
+		F4    & $8$ & $10$ & $16$ & $19.0$ & $13.0$ & $30.0$ & $32.0$ & $45.0$ & $45.0$ \\
+		\midrule
+		B7    & $2$ & $2$  & $4$  & $3.3$  & $3.0$  & $6.0$  & $6.3$  & $11.1$ & $11.1$ \\
+		B6    & $8$ & $4$  & $10$ & $7.5$  & $7.0$  & $12.0$ & $14.5$ & $27.0$ & $27.0$ \\
+		B5    & $2$ & $10$ & $12$ & $19.0$ & $11.0$ & $30.0$ & $30.0$ & $35.0$ & $35.0$ \\
+		\midrule
+		Merge & --- & $16$ & ---  & $16.0$ & $16.0$ & $48.0$ & $32.0$ & $48.1$ & $\mathbf{48.1}$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\small
+	\caption{Maximal forward and backward stage cost against the final merge, for \vision\ with $s=2$ and $2\le r\le 10$, in $\log_2$ field operations, $\omega=2$. The last column is the complexity reported for Method~2.}
+	\label{tab:vision_stages_all}
+	\setlength{\tabcolsep}{4pt}
+	\renewcommand{\arraystretch}{1.1}
+	\begin{tabular}{@{}ccccccc@{}}
+		\toprule
+		$r$ & $\log_2 D_{\mathrm{fwd}}$ & $\log_2 D_{\mathrm{bwd}}$ & Max.\ forward & Max.\ backward & Merge & Max.\ over stages \\
+		\midrule
+		$2$  & $8$  & $4$  & $21.0$  & $11.1$  & $24.1$  & $24.1$ \\
+		$3$  & $10$ & $10$ & $29.0$  & $27.0$  & $31.0$  & $31.0$ \\
+		$4$  & $16$ & $12$ & $45.0$  & $35.0$  & $48.1$  & $48.1$ \\
+		$5$  & $18$ & $18$ & $53.0$  & $51.0$  & $55.0$  & $55.0$ \\
+		$6$  & $24$ & $20$ & $69.0$  & $59.0$  & $72.1$  & $72.1$ \\
+		$7$  & $26$ & $26$ & $77.0$  & $75.0$  & $79.0$  & $79.0$ \\
+		$8$  & $32$ & $28$ & $93.0$  & $83.0$  & $96.1$  & $96.1$ \\
+		$9$  & $34$ & $34$ & $101.0$ & $99.0$  & $103.0$ & $103.0$ \\
+		$10$ & $40$ & $36$ & $117.0$ & $107.0$ & $120.1$ & $120.1$ \\
+		\bottomrule
+	\end{tabular}
+\end{table}
+
+The candidate roots of the final univariate eliminant are substituted back into the original system, which removes the spurious ones; the KSY rank condition was checked for every elimination listed above.
 
 
 \section{XHash12}
@@ -2161,7 +2230,7 @@ For an $s$-step instance, let $n=12s$ and write the system in triangular form
 \]
 with $\alpha=7$ for the standard XHash12 instance.
 
-For CICO-1, the reduction method of~\cite{DBLP:conf/crypto/BariantBBHOR25} can be applied directly. For larger $k$, the hybrid strategy first derives reduced relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ from the triangular ideal and then performs a final Dixon elimination on these relations. The main text reports only the resulting complexities and timings because the qualitative conclusion is simple: the hybrid strategy is excellent for very small $k$, but the direct Dixon method remains the relevant estimate for the natural CICO-4 setting.
+For CICO-1, the reduction method of~\cite{DBLP:conf/crypto/BariantBBHOR25} can be applied directly. For larger $k$, the hybrid strategy first derives reduced relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ from the triangular ideal and then performs a final Dixon elimination on these relations. The main text reports only the resulting complexities and timings because the qualitative conclusion is simple: the hybrid strategy is excellent for very small $k$, but the direct Dixon method remains the relevant estimate for the natural CICO-4 setting. The reference point for both is the direct Gr\"obner-basis attack of the designers~\cite{DBLP:journals/iacr/AshurKM23}; the same triangular model, with the power maps of $\mathcal{B}_i$ replaced accordingly, applies verbatim to \texttt{XHash8}.
 
 
 \end{document}
