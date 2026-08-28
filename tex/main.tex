@@ -842,7 +842,7 @@ This is supported by computational experiments (Appendix~\ref{appendix:degree_op
 
 \subsection{Implementation}\label{Implementation}
 
-We developed a comprehensive, open-source C implementation of the Dixon resultant method, \drsolve, built upon the high-performance \texttt{FLINT} and \texttt{PML} libraries (parts of the code were written with the help of AI coding assistants, as disclosed in the supplementary \texttt{README}), available at \url{https://github.com/drsolve/drsolve}. It supports operations over prime fields $\Fp$ of arbitrary size, general finite fields $\Fq$, and $\mathbb{Q}$. It incorporates most Dixon construction techniques from~\cite{lewis2015dixon,Zhao2005extfast,JinaduMonagan2025} and most polynomial-matrix determinant techniques from~\cite{DBLP:journals/jc/LabahnNZ17,DBLP:journals/jsc/Huang23,HorowitzSahni1975,Li2007symbolic}. It provides:
+We developed a comprehensive, open-source C implementation of the Dixon resultant method, \drsolve, built upon the high-performance \texttt{FLINT}~\cite{flint} and \texttt{PML}~\cite{pml,HyunNeigerSchost2019} libraries (parts of the code were written with the help of AI coding assistants, as disclosed in the supplementary \texttt{README}), available at \url{https://github.com/drsolve/drsolve}. It supports operations over prime fields $\Fp$ of arbitrary size, general finite fields $\Fq$, and $\mathbb{Q}$. It incorporates most Dixon construction techniques from~\cite{lewis2015dixon,Zhao2005extfast,JinaduMonagan2025} and most polynomial-matrix determinant techniques from~\cite{DBLP:journals/jc/LabahnNZ17,DBLP:journals/jsc/Huang23,HorowitzSahni1975,Li2007symbolic}. It provides:
 
 \begin{itemize}
 	\item \textbf{Elimination and solving:} Eliminate $n-1$ variables from $n$ polynomials, and compute all solutions of zero-dimensional systems.
@@ -852,13 +852,28 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 \end{itemize}
 
 \paragraph{Experimental results.}
-All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma} and msolve~\cite{msolve}. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve shows significant advantages for systems with fewer variables and higher degrees. 
-Against the closest Dixon software the gap is larger still: on dense $3$-variable systems of degree $8$ over $\Fp$, \drsolve\ terminates in about $0.1$~s where Dixon-EDF inside Fermat~\cite{fermat,lewis2015dixon} needs about $15$~s, while the Maple${+}$C code of Jinadu and Monagan~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025} targets parametric systems over $\mathbb{Q}$ and is not directly comparable here. Most of this speedup comes from the fast polynomial-matrix routines of FLINT/PML rather than from a change of elimination strategy.
+All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the fastest previous Dixon resultant implementation Fermat~\cite{fermat}. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve shows significant advantages for systems with fewer variables and higher degrees.
+Our advantage over Fermat is primarily due to the high-performance polynomial-matrix routines in FLINT/PML, in particular the efficient NHF algorithm.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.95\textwidth]{dixon_vs_magma.png}
-	\caption{Performance comparison (time in seconds) of Gr\"obner basis methods (Magma 2.29-7 and msolve 0.9.5) versus our \drsolve 0.3.0 on randomly generated dense polynomial systems over $\Fp$. Here $n$ denotes the number of variables (equal to the number of equations).}
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GF536870923_n3_comparison.png}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GF536870923_n4_comparison.png}
+	\end{subfigure}\\[2pt]
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GF536870923_n5_comparison.png}
+	\end{subfigure}\hfill
+	\begin{subfigure}[t]{0.49\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{GF536870923_d2_vary_n.png}
+	\end{subfigure}
+	\caption{Performance comparison (time in seconds) of \drsolve, Magma, msolve, and Fermat on randomly generated dense polynomial systems over $\mathbb{F}_{2^{29}+11}$. The four panels show degree sweeps for $n=3,4,5$ and a variable-count sweep for $d=2$; here $n$ denotes the number of variables (equal to the number of equations).}
 	\label{fig:BenchmarkComparison}
 \end{figure}
 
