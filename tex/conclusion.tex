@@ -1,0 +1,16 @@
+\section{Conclusion}
+\label{Section:Conclusion}
+
+In this work, we revisited the Dixon resultant as a practical and theoretically grounded tool for algebraic cryptanalysis. By establishing upper bounds on the Dixon matrix size that are attained for generic systems, we derived refined complexity estimates. Combined with an efficient open-source implementation and a degree-aware submatrix selection strategy, our framework enables reliable elimination for polynomial systems arising in cryptographic applications.
+
+Our results show that Dixon resultants and Gr\"obner basis methods play complementary roles in algebraic cryptanalysis. In well-determined settings, Dixon resultants are comparable to Gr\"obner bases. Gr\"obner basis methods are more effective for overdetermined systems, whereas Dixon resultants provide a structured determinant-based elimination subroutine for under-determined settings. 
+
+There remain several directions for future work.
+\begin{enumerate}[nosep]
+	\item Developing algebraic models and hybrid elimination strategies for AO primitives, including higher-order CICO-$k$ systems, and for Type~III (lookup-table) constructions with recent algebraic techniques~\cite{DBLP:journals/tosc/BakJGP25};
+	
+	\item Precisely estimating the rank of the Dixon matrix to evaluate the Step~4 complexity exactly and optimize Step~3; improving Dixon-resultant techniques, including nonheuristic algorithms for extraneous-factor elimination and possible connections with multivariate subresultants~\cite{DBLP:journals/moc/CoxD23};
+	
+	\item Extending the framework to multivariate public-key schemes such as UOV~\cite{DBLP:conf/eurocrypt/KipnisPG99}. Direct Dixon elimination is asymptotically more efficient than naive Gr\"obner basis methods for MQ systems but still less effective than hybrid strategies~\cite{DBLP:journals/jmc/BettaleFP09}, yet we can investigate whether Method~2/3 can be combined with specialized strategies such as~\cite{DBLP:journals/iacr/MayOR25} for  MQ systems.
+\end{enumerate}
+

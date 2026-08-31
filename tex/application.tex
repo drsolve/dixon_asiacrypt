@@ -1,0 +1,221 @@
+\section{Application to AO Primitives}\label{Section:Application}
+
+This section organizes the applications around three elimination patterns. The goal is to highlight the solving methodology first and to use concrete AO primitives as representative case studies. We focus on solving strategies rather than on new algebraic models for AO primitives, reusing the best-known models from the literature and reevaluating them through the Dixon-resultant viewpoint.
+
+\begin{remark}
+	Although much of the preceding discussion is developed under genericity assumptions, the associated structural bounds---such as degree bounds, Dixon matrix size estimates, and determinant complexity estimates---remain valid as general upper bounds even for non-generic polynomial systems arising in AO primitives. While these bounds may not be tight in structured instances, they still provide a consistent complexity envelope for algebraic analysis.
+\end{remark}
+
+\subsection{Method 1: Direct elimination}\label{subsec:method1}
+Method~1 applies the Dixon resultant directly to a square polynomial system. Starting from $n$ equations in $n$ variables, we eliminate $n-1$ variables, solve the resulting elimination polynomial in the remaining parameter, and then back-substitute recursively. The whole algebraic burden is concentrated in one structured determinant, so the complexity analysis reduces to the matrix-size and determinant models from Section~\ref{Section: Estimate}. This is the classical Dixon solving workflow of~\cite{cryptoeprint:2005/312,Albrecht2008}, instantiated here with the bounds of Section~\ref{Section: Complexity} and the implementation of Section~\ref{Section: Improvements}. This method is most suitable when the primitive admits a dense but still manageable algebraic description, so that the later back-substitution phases operate on lower-dimensional systems and the first elimination dominates. 
+
+This method is best suited to Type~I (low-degree) primitives, whose CICO systems admit a dense but uniformly low-degree algebraic description; we take \poseidon~as the representative example.
+
+\paragraph{Application to Poseidon.}
+We consider the CICO problems of \poseidon~\cite{DBLP:conf/uss/0001KR0S21} and \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} in sponge mode, using the input/output and internal-subspace models from~\cite{DBLP:journals/tosc/GrassiKR25}; the precise models are summarized in Appendix~\ref{appendix:poseidon}. For the pure I/O model, direct Dixon elimination matches the natural square-system viewpoint. For the mixed-degree subspace models, the determinant bound from Section~\ref{Section: Complexity} becomes essential because the polynomial degrees are no longer uniform.
+Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=8$, $c=d=3$, $\alpha=3$ across different numbers of partial rounds.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{poseidon_complexity.png}
+\caption{Complexity comparison for \poseidon~and \poseidonnew~($t=8$, $c=d=3$, $\alpha=3$). Here $\omega = 2.81$ for all curves.}
+\label{fig:poseidon_complexity}
+\end{figure}
+
+Table~\ref{tab:poseidon-timing} reports small-instance timings. Full-round systems behave close to generic dense systems, while partial-round systems are much more structured, so both the Dixon matrix size and the Gr\"obner-basis degree of regularity fall well below their generic upper bounds. Since the size of this drop depends on the specific subspace model, the generic bound should be read as an upper-bound template rather than as a tight prediction of the best attack. 
+
+\begin{table}[h]
+\centering
+\caption{Timing comparison for Poseidon instances ($t=6, c=1$, I/O modeling, bypass one round) over $\mathbb{F}_p$, $p = 2^{62}+169$. $T$ and $E$ denote Theoretical and Experimental values; complexities (Comp.) are in $\log_2$ field operations. Here $\omega = 2.81$. For odd $R_F$, one additional full round is added at the beginning. Both the Comp. and the timed implementation use the HNF determinant model.}
+\label{tab:poseidon-timing}
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccccccccc}
+\toprule
+& \multicolumn{5}{c}{\textbf{Gr\"obner Basis}} & \multicolumn{5}{c}{\textbf{Dixon Resultant}} \\
+\cmidrule(lr){2-6} \cmidrule(lr){7-11}
+\textbf{Configuration} & \multicolumn{2}{c}{$d_{\text{reg}}$} & \multicolumn{2}{c}{Comp.} & Time & \multicolumn{2}{c}{$D(F)$} & \multicolumn{2}{c}{Comp.} & Time \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){7-8} \cmidrule(lr){9-10}
+& T & E & T & E & (s) & T & E & T & E & (s) \\
+\midrule
+$R_F=3, R_P=0, \alpha=3$      & 25  & 25 & 32.8 & 32.8 & 2.2      & 117  & 108  & 24.1 & 23.7 & 0.3    \\
+$R_F=3, R_P=0, \alpha=5$      & 73  & 71 & 45.2 & 44.9 & 94295    & 925  & 875  & 33.9 & 33.7 & 1477   \\
+$R_F=4, R_P=0, \alpha=3$      & 79  & 79 & 46.2 & 46.2 & 188189   & 1080 & 1053 & 34.7 & 34.6 & 1772   \\
+\midrule
+$R_F=2, R_P=1, \alpha=3$ & 25  & 11 & 32.8 & 23.9 & 0.02     & 117   & 36   & 24.1 & 19.3 & 0.006  \\
+$R_F=2, R_P=1, \alpha=5$ & 73  & 27 & 45.2 & 33.7 & 14.3     & 925  & 175  & 33.9 & 27.2 & 2.1    \\
+$R_F=3, R_P=1, \alpha=3$ & 79  & 31 & 46.2 & 35.3 & 178      & 1080 & 891  & 34.7 & 33.9 & 695   \\
+$R_F=2, R_P=2, \alpha=3$ & 79  & 24 & 46.2 & 32.4 & 0.4      & 1080  & 297  & 34.7 & 29.4 & 11.9   \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Method 2: Iterative elimination}\label{subsec:method2}
+Throughout this section calligraphic letters denote blocks: $\mathcal{F},\mathcal{P},\mathcal{R}$ are blocks of polynomials, $\mathcal{X},\mathcal{Z}$ are blocks of variables, and $|\mathcal{X}|$ is the number of variables in the block $\mathcal{X}$.
+
+Method~2 is designed for ladder-structured systems and generalizes iterative two-polynomial elimination to local multipolynomial subsystems. It can be viewed as a generalization of the resultant-based approach of Yang et al.~\cite{DBLP:conf/asiacrypt/YangZYLT24} to multipolynomial Dixon elimination, and as an AO-oriented specialization of hybrid Dixon-matrix construction from~\cite{DengQiTangDuan2022}. We write such a system as
+\begin{equation}
+\mathcal{S}: \quad \mathcal{F}_1(\mathcal{X}_0,\mathcal{X}_1),\ \mathcal{F}_2(\mathcal{X}_1,\mathcal{X}_2),\ \ldots,\ \mathcal{F}_n(\mathcal{X}_{n-1},\mathcal{X}_n),
+\label{eq:iterative_chain}
+\end{equation}
+with $|\mathcal{F}_1|=|\mathcal{X}_0|+1$ and $|\mathcal{F}_i|=|\mathcal{X}_{i-1}|$ for $2\le i\le n$. Eliminating successively,
+\begin{equation}
+R_1 = \mathrm{Res}_{\mathcal{X}_0}(\mathcal{F}_1),\;
+R_2 = \mathrm{Res}_{\mathcal{X}_1}(R_1,\mathcal{F}_2),\;\ldots,\;
+R_n = \mathrm{Res}_{\mathcal{X}_{n-1}}(R_{n-1},\mathcal{F}_n),
+\label{eq:iterative_resultants}
+\end{equation}
+yields a univariate eliminant if $|\mathcal{X}_n|=1$, or a smaller system otherwise.
+
+Assume each block $\mathcal{F}_j$ has common degree $d_j$. By B\'ezout, the ideal-theoretic eliminant produced at step $i$ satisfies
+\begin{equation}
+\deg(R_i)\le \prod_{j=1}^{i} d_j^{|\mathcal{F}_j|}.
+\label{eq:iterative_degree_bound}
+\end{equation}
+The last step produces $R_n$ from $R_{n-1}$ and $\mathcal{F}_n$, by eliminating the variables in $\mathcal{X}_{n-1}$. Here $R_{n-1}$ has degree $D:=\prod_{j=1}^{n-1} d_j^{|\mathcal{F}_j|}$ and each polynomial in $\mathcal{F}_n$ has degree $d_n$. Viewing this as Dixon elimination on one polynomial of degree $D$ and $|\mathcal{F}_n|$ polynomials of degree $d_n$, the Unrestricted Bound~\eqref{eq:unrestricted_bound} gives matrix size at most $\binom{d_n|\mathcal{F}_n|-d_n+D}{|\mathcal{F}_n|}$. The total $\mathcal{X}_n$-degree of the cancellation determinant is at most $D+d_n|\mathcal{F}_n|$ (sum of the per-row degrees in the eliminated block), which in turn upper-bounds the entry-wise $\mathcal{X}_n$-degree of the resulting Step~4 polynomial matrix (Section~\ref{Section: Estimate} Step~4), so HNF gives
+\begin{equation}
+\mathcal{O}\!\left((D+d_n|\mathcal{F}_n|)\binom{d_n|\mathcal{F}_n|-d_n+D}{|\mathcal{F}_n|}^{\omega}\right),
+\label{eq:iterative_sequential_complexity}
+\end{equation}
+with the Determinant Bound~\eqref{eq:determinant_bound} available when the Unrestricted Bound is too coarse.
+
+For meet-in-the-middle (MITM) instances, we split the chain into forward and backward parts meeting in a small middle block $\mathcal{Z}$:
+\begin{equation}
+\mathcal{F}_1(\mathcal{X}_0,\mathcal{X}_1),\ldots,\mathcal{F}_{n}(\mathcal{X}_{n-1},\mathcal{Z}),
+\quad
+\mathcal{F}'_1(\mathcal{Y}_0,\mathcal{Y}_1),\ldots,\mathcal{F}'_{m}(\mathcal{Y}_{m-1},\mathcal{Z}).
+\label{eq:iterative_mitm_chain}
+\end{equation}
+Forward and backward eliminations give two middle-state relations of degrees
+\[
+D_{\mathrm{fwd}}=\prod_{j=1}^{n} d_j^{|\mathcal{F}_j|}, \qquad
+D_{\mathrm{bwd}}=\prod_{j=1}^{m} {d'_j}^{|\mathcal{F}'_j|}.
+\]
+The final merge eliminates the middle block $\mathcal{Z}$ and, with $d_{\max}=\max(D_{\mathrm{fwd}},D_{\mathrm{bwd}})$, admits the coarse bound
+\begin{equation}
+\mathcal{O}\!\left(d_{\max}^{\omega+1}\right).
+\label{eq:MITM Complexity}
+\end{equation}
+% obtained as follows. We arrange the split so that the middle block $\mathcal{Z}$ consists of two shared variables, with the forward chain contributing one relation in $\mathcal{Z}$ and the backward chain contributing another, of total degrees $D_{\mathrm{fwd}}$ and $D_{\mathrm{bwd}}$ respectively. The merge is then a resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, leaving the final univariate polynomial in the remaining middle variable. The associated Dixon matrix has size $\Theta(d_{\max})$ (driven by the degree of the two middle relations in the eliminated variable), and each of its entries is a polynomial of degree at most $2d_{\max}$ in the retained variable (a Dixon entry is a difference-quotient combination of two row entries, each of degree $\le d_{\max}$). The univariate HNF determinant on such a matrix costs $\widetilde{O}(d_{\max}^{\omega}\cdot 2d_{\max})=\widetilde{O}(d_{\max}^{\omega+1})$.
+% (Step~4 with matrix size $\Theta(d_{\max})$ and average column degree $\Theta(d_{\max})$, $k=1$).
+
+The complexity of Method~2 is the maximum over all stages: every determinant of the forward and backward chains~\eqref{eq:iterative_sequential_complexity} and the final merge~\eqref{eq:MITM Complexity}. Root finding, back-substitution, and the verification of the candidate solutions in the original system---which also discards the spurious candidates possibly introduced by extraneous factors---are negligible in comparison.
+
+This method is best suited to Type~II (equivalence-relation) primitives, whose ladder-structured CICO systems link successive states through local low-degree relations; we take \vision~as the representative example.
+
+\paragraph{Application to Vision.}
+For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make the full direct model unattractive, so we adopt a meet-in-the-middle (MITM) approach following the general framework of Liu et al.~\cite{DBLP:conf/asiacrypt/LiuMM24} and apply iterative elimination with Dixon resultant. The detailed model and equation distribution are in Appendix~\ref{appendix:vision}; Figure~\ref{fig:vision_complexity_comparison} and Table~\ref{tab:vision_timing} summarize the outcome.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{vision_complexity.png}
+\caption{Complexity comparison for \vision~($\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}.).}
+\label{fig:vision_complexity_comparison}
+\end{figure}
+
+For these parameters the final merge~\eqref{eq:MITM Complexity} dominates every forward and backward stage of the chain, so it alone determines the reported complexity; the stage-by-stage figures are collected in Appendix~\ref{appendix:vision}. This is the structured regime where local elimination is preferable to direct elimination.
+
+\begin{table}[hbpt!]
+\centering
+\caption{Experimental timing and complexity comparison for \vision~($s=2$). Complexities (Comp.) are in $\log_2$ field operations. $\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}.}
+\label{tab:vision_timing}
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{lcccccc}
+\toprule
+& \multicolumn{2}{c}{\textbf{2 rounds}} & \multicolumn{2}{c}{\textbf{3 rounds}} & \multicolumn{2}{c}{\textbf{4 rounds}} \\
+\cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
+\textbf{Method} & Comp. & Time & Comp. & Time & Comp. & Time \\
+\midrule
+Gr\"obner basis~\cite{DBLP:conf/asiacrypt/LiuMM24} & 31.0 & 1.38s & 42.0 & 1d 4h & 53.0 & --- \\
+Dixon resultant & 24.1 & 0.1s & 31.0 & 15m & 48.1 & 3d \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Method 3: Ideal reduction and hybrid elimination}\label{subsec:method3}
+Method~3 combines Dixon elimination with the reduction machinery developed for FreeLunch-style systems in~\cite{DBLP:conf/crypto/BariantBBHOR25}. Starting from a triangular system
+\begin{equation}
+\mathcal{P}=\left\{
+\begin{array}{l}
+z_1^\alpha-f_1(x)=0,\\
+z_2^\alpha-f_2(x,z_1)=0,\\
+\vdots\\
+z_n^\alpha-f_n(x,z_1,\ldots,z_{n-1})=0,\\
+h(x,z_1,\ldots,z_n)=0,
+\end{array}
+\right.
+\label{eq:freelunch_system}
+\end{equation}
+and use the reduction procedure \texttt{Reduce} of~\cite[Algorithm~1]{DBLP:conf/crypto/BariantBBHOR25}. For a polynomial $g$ of weighted degree $d_{\mathcal{P}_k}(g)$ in a single retained variable, the reduction cost is $\widetilde{O}(d_{\mathcal{P}_k}(g)(2\alpha-1)^n)$, where $n$ is the number of levels in the triangular ideal $\mathcal{P}_k$. For CICO-1, the optimized two-polynomial strategy of~\cite{DBLP:conf/crypto/BariantBBHOR25} applies directly and gives
+\begin{equation}
+\widetilde{O}\!\left(d_I\alpha^2\left(\frac{2\alpha-1}{\alpha}\right)^{n+2}\right).
+\label{eq:two_poly_complexity_main}
+\end{equation}
+For general CICO-$k$ we retain $|\mathcal{X}|=k$ input variables and build $k$ relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ in three phases.
+
+\emph{(P1) Reduction.} Each output constraint $h_j$ is replaced by its normal form modulo the triangular ideal, using~\cite[Algorithm~1]{DBLP:conf/crypto/BariantBBHOR25}. Since the polynomials manipulated here are $k$-variate in $\mathcal{X}$, the coefficient-count factor of~\cite[Lemma~1]{DBLP:conf/crypto/BariantBBHOR25} is replaced by the dense coefficient count $B_k(D):=\binom{D+k}{k}=\Theta(D^{k})$ of a $k$-variate polynomial of degree $D$. Reduction never increases the weighted degree, so with $D_0:=\max_j d_{\mathcal{P}_k}(h_j)$ this phase costs
+\begin{equation}
+	T_{\text{red}} = \widetilde{O}\!\left(k\,B_k(D_0)\,(2\alpha-1)^n\right).
+	\label{eq:reduction_cost}
+\end{equation}
+
+\emph{(P2) Successive elimination.} Reduction only lowers the exponents $\deg_{z_i}$ below $\alpha$; it does not by itself produce an element of $\mathbb{K}[\mathcal{X}]$. The remaining powers of the $z_i$ are removed by successive resultants, each followed by a reduction as in~\cite[Proposition~7]{DBLP:conf/crypto/BariantBBHOR25}, with the same substitution of $B_k(\cdot)$ for the coefficient count. Following the degree-growth bound of~\cite[Proposition~7]{DBLP:conf/crypto/BariantBBHOR25}, let $D_i \le \alpha^{\,n-i}D_0$ denote the weighted-degree bound at the stage with $i$ triangular levels remaining. Summing over all stages and all $k$ constraints,
+\begin{equation}
+	T_{\text{elim}} = \widetilde{O}\!\left(k\sum_{i=1}^{n} B_k(D_i)\,(2\alpha-1)^{i+2}\right).
+	\label{eq:successive_elim_cost}
+\end{equation}
+
+\emph{(P3) Final elimination.} Let $D := \max_j \deg(R_j)$. The final step is a mixed-degree Dixon elimination on $\{R_1,\ldots,R_k\}$, i.e.\ $k$ polynomials in $k$ variables of which $k-1$ are eliminated:
+\begin{equation}
+	T_{\text{final}} = \widetilde{O}\!\left(kD\left(D(\mathcal{R})\right)^{\omega}\right),
+	\label{eq:hybrid_final_complexity}
+\end{equation}
+with $D(\mathcal{R})$ given by Corollary~\ref{cor:three_bounds}(3), which specializes to $C_k^{(D)}$ when all the $R_j$ have the same degree.
+
+The total hybrid cost is the maximum of~\eqref{eq:reduction_cost}--\eqref{eq:hybrid_final_complexity}; in particular the reduction and elimination phases are not absorbed into the final Dixon cost in general. By contrast, direct elimination on the unreduced system of $n+k$ equations gives
+\begin{equation}
+	\widetilde{O}\!\left(\Bigl(\sum_i d_i\Bigr)\left(D(\mathcal{P}_k)\right)^{\omega}\right),
+	\label{eq:hybrid_direct_complexity}
+\end{equation}
+again with $D(\mathcal{P}_k)$ from Corollary~\ref{cor:three_bounds}(3), since the constraints $h_j$ do not have the same degree as the triangular equations; it reduces to $\mathcal{O}\!\left((n+k)\alpha (C_{n+k}^{(\alpha)})^{\omega}\right)$ when all equations have degree $\alpha$. The comparison between the two routes determines whether the reduction phase is worthwhile.
+
+%\paragraph{Relation to the iterative-resultant strategy of~\cite{DBLP:conf/crypto/BariantBBHOR25}.}
+
+This method is an improved attack on Type~II (equivalence-relation) primitives, refining Method~2 by interleaving Dixon elimination with ideal reduction; we take \xhash~as the representative example.
+
+\begin{remark}
+	For the special case of CICO-1 the two-polynomial iterative-resultant route of~\cite{DBLP:conf/crypto/BariantBBHOR25} already gives~\eqref{eq:two_poly_complexity_main} and Dixon does not change the picture; we use Dixon here precisely for CICO-$k$ with $k\ge 2$, where the final elimination step combines $k$ reduced relations and is no longer of the two-polynomial form addressed by~\cite{DBLP:conf/crypto/BariantBBHOR25}. Although Method~3 does not yet provide concrete advantages for instances beyond CICO-2, the framework is substantially more flexible and opens additional directions for future elimination strategies.
+\end{remark}
+
+
+\paragraph{Application to XHash12.}
+We focus on \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}; the permutation and the triangular model we use are recalled in Appendix~\ref{appendix:xhash}. Figure~\ref{fig:xhash_complexity} compares the direct Dixon method with the hybrid reduction-based strategy for $k=1,2,3,4$. The hybrid method is excellent for small-$k$ instances, because the reduction phase keeps the final elimination degrees low. For the natural CICO-4 setting, however, its intermediate degrees become too large; in that regime the direct Dixon elimination remains the more robust option.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.95\textwidth]{xhash_complexity.png}
+\caption{Complexity comparison for \texttt{XHash12}, $\omega = 2.81$.}
+\label{fig:xhash_complexity}
+\end{figure}
+
+This picture is confirmed by the small-instance timings in Table~\ref{tab:xhash_experimental}. In short: Method~3 explains why CICO-1 instances can be unusually easy, but Method~1 gives the more relevant estimate for the standard XHash12 security parameters. The example also illustrates a broader point: hybrid elimination is powerful only when the reduction phase lowers the degrees faster than it multiplies the number or complexity of the remaining relations. Note that for CICO-2 (2 step), Method~1+3 has lower asymptotic complexity (31.2) than Method~1 (33.6) but a slower measured time, because for small instances the reduction-phase constants dominate the leading-order term.
+
+\begin{table}[hbtp!]
+\centering
+\caption{Experimental time comparison for small \xhash~instances with $c=1$, where $\alpha=3$ for the two-step instances and $\alpha=7$ for the three-step instance. The complexities (Comp.) are in $\log_2$ field operations. $\omega = 2.81$.}
+\label{tab:xhash_experimental}
+\begin{tabular}{l|cc|cc|cc}
+\toprule
+\multirow{2}{*}{Method} & \multicolumn{2}{c|}{CICO-1~(2 step)} & \multicolumn{2}{c|}{CICO-1~(3 step)} & \multicolumn{2}{c}{CICO-2~(2 step)} \\
+\cmidrule{2-7}
+ & Comp. & Time & Comp. & Time & Comp. & Time \\
+\midrule
+Gr\"obner basis & 41.4 & 1.5s & 63.3 & - & 48.8 & 59.7s \\
+Method 1 & 35.1 & 9.4s & 64.4 & - & 33.6 & 4.5s \\
+Method 1+3 & 18.6 & 0.04s & 29.6 & 200.4s & 31.2 & 413.2s \\
+\bottomrule
+\end{tabular}
+\end{table}
+

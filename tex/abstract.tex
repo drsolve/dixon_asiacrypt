@@ -1,0 +1,12 @@
+\begin{abstract}
+	\fontsize{10pt}{12pt}\selectfont
+	Solving multivariate polynomial systems is a fundamental problem in cryptanalysis, with increasing relevance in algebraic attacks on arithmetization-oriented (AO) primitives. Current approaches primarily rely on Gr\"obner bases or the Sylvester resultant. However, Gr\"obner basis methods typically rely on FGLM for change of ordering, which applies only to zero-dimensional ideals, while the Sylvester resultant eliminates only one variable at a time, limiting its applicability to flexible multivariate elimination.
+	
+	We revisit the Dixon resultant as an efficient and flexible tool for eliminating several variables simultaneously. We derive refined upper bounds on the Dixon matrix size via lattice-path counting and analyze the complexity under several determinant computation models, yielding explicit complexity estimates. For well-determined systems, the Dixon resultant is a viable alternative to Gr\"obner basis methods, with complementary strengths for under-determined system elimination and over-determined system solving.
+	
+	We present an efficient open-source C implementation, \drsolve, with multiple determinant methods and a degree-aware submatrix selection strategy to mitigate the impact of extraneous factors. Experiments show that our implementation is competitive with the state-of-the-art Gr\"obner basis solvers Magma and msolve on randomly generated well-determined systems, with significant advantages in the low-variable/high-degree regime, while Magma and msolve remain preferable in the high-variable/low-degree regime.
+	
+	Finally, we formulate three elimination strategies for polynomial systems arising from AO primitives: direct elimination, iterative elimination, and reduction-based hybrid elimination. We demonstrate these strategies on \poseidon, \vision, and \xhash, yielding complexity reductions in many cases.
+\end{abstract}
+
+
