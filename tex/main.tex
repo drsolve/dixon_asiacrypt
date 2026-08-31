@@ -1112,7 +1112,7 @@ There remain several directions for future work.
 \begin{enumerate}[nosep]
 	\item Developing algebraic models and hybrid elimination strategies for AO primitives, including higher-order CICO-$k$ systems, and for Type~III (lookup-table) constructions with recent algebraic techniques~\cite{DBLP:journals/tosc/BakJGP25};
 	
-	\item Improving Dixon-resultant techniques, including nonheuristic algorithms for extraneous-factor elimination, exploration of more advanced interpolation strategies, and possible connections with multivariate subresultants~\cite{DBLP:journals/moc/CoxD23};
+	\item Precisely estimating the rank of the Dixon matrix to evaluate the Step~4 complexity exactly and optimize Step~3; improving Dixon-resultant techniques, including nonheuristic algorithms for extraneous-factor elimination and possible connections with multivariate subresultants~\cite{DBLP:journals/moc/CoxD23};
 	
 	\item Extending the framework to multivariate public-key schemes such as UOV~\cite{DBLP:conf/eurocrypt/KipnisPG99}. Direct Dixon elimination is asymptotically more efficient than naive Gr\"obner basis methods for MQ systems but still less effective than hybrid strategies~\cite{DBLP:journals/jmc/BettaleFP09}, yet we can investigate whether Method~2/3 can be combined with specialized strategies such as~\cite{DBLP:journals/iacr/MayOR25} for  MQ systems.
 \end{enumerate}
@@ -1121,7 +1121,7 @@ There remain several directions for future work.
  
 We would like to thank our advisors, Meiqin Wang and Kai Hu, for their guidance and support. We are grateful to all the anonymous reviewers for their valuable comments and suggestions. We thank Biran Lu for an elegant argument for the monomial-counting problem that inspired the proof in Sec.~\ref{Subsection:Matrix_Size}, particularly Lemma~\ref{lem:fc_polytope} in Appendix~\ref{appendix:proof_lemma_fc}. We also thank Robert H. Lewis, Michael Monagan, Ayoola Jinadu, and Guoqiang Deng for their help with the implementation of the Dixon resultant.
 
-Claude and ChatGPT were used to assist with the implementation of the DRSolve software. All proofs, algorithms, and mathematical derivations were developed by the authors. All AI-assisted code was reviewed and tested by the authors.
+Claude and ChatGPT were used to assist with the implementation of the DRSolve software and language polishing. All proofs, algorithms, and mathematical derivations were developed by the authors. All AI-assisted code was reviewed and tested by the authors.
  
 \vspace{-10pt}
 \bibliography{refs}
