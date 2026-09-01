@@ -1,6 +1,6 @@
 \section{Improved Complexity Estimates for Dixon Resultant}\label{Section: Complexity}
 
-Prior work on Dixon resultant bounds ~\cite{DBLP:conf/stoc/KapurS96} focused on multi-homogeneous and unmixed systems. We consider general mixed systems with varying degrees, bound the size of the Dixon matrix via lattice path counting, and obtain bounds that are attained for generic systems, yielding refined complexity estimates.
+Prior work on Dixon resultant bounds~\cite{DBLP:conf/stoc/KapurS96} focused on multi-homogeneous and unmixed systems. We consider general mixed systems with varying degrees, bound the size of the Dixon matrix via lattice path counting, and obtain bounds that are attained for generic systems, yielding refined complexity estimates.
 
 Throughout this section, $D(\mathcal{F})$ denotes the support size of the Dixon matrix $\mathcal{M}$ associated with $\mathcal{F}$, that is, the maximum of the numbers of distinct $\xvec$-monomials and $\overline{\xvec}$-monomials occurring in the Dixon polynomial. It is thus a bound on the \emph{monomial-support dimension} of $\mathcal{M}$ rather than on $\operatorname{rank}\mathcal{M}$ (Remark~\ref{rem:support_vs_rank}); for generic systems the two monomial counts coincide and $\mathcal{M}$ is square (Lemma~\ref{lem:dixon_fc_bound}), which is the situation described by the formulas below. We denote a system of $n$ polynomials with total-degree bounds $d_1, d_2, \ldots, d_n$ as a $(d_1,\ldots,d_n)$-system. The special case $d_1=\cdots=d_n=d$ is referred to as an $(n;d)$-system, following~\cite{DBLP:conf/stoc/KapurS96}.
 
@@ -95,7 +95,7 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 \end{corollary}
 
 \begin{remark}
-	The matrix in~\eqref{eq:determinant_bound} is Hessenberg matrix, hence its determinant can be computed in $\mathcal{O}(n^2)$ using specialized algorithms~\cite{cahill2002fibonacci} or~\cite[Theorem 1.9]{meurant2025hessenberg}.
+	The matrix in~\eqref{eq:determinant_bound} is a Hessenberg matrix, hence its determinant can be computed in $\mathcal{O}(n^2)$ using specialized algorithms~\cite{cahill2002fibonacci} or~\cite[Theorem 1.9]{meurant2025hessenberg}.
 \end{remark}
 
 \paragraph{Outline of proof of Theorem~\ref{thm:dixon_general_bound}.}
@@ -329,7 +329,7 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 \subsubsection{Overall comparison.}
 Let $T_{1}^{\mathrm{best}}$ and $T_{4}^{\mathrm{best}}$ be the minimum cost across all considered models for Steps~1 and~4, respectively. Then
 $T_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
-At the idealized boundary $\omega=2$, the two stages have the same asymptotic rate in $M$. For the practically relevant case $\omega>2$, $T_{4}^{\mathrm{best}}$ asymptotically dominates as $n$ or $d$ grows, and it also dominates the running time in our experiments. We therefore take $T_{4}^{\mathrm{best}}$ as the overall complexity estimate. A more detailed comparison is given in Appendix~\ref{appendix:step_comparison}.
+At the idealized boundary $\omega=2$ the two stages have the same $M$-exponent, and Step~1 then dominates by a polynomial factor in $(n,d)$, since the Dixon polynomial already has $\Theta(M^2)$ coefficient positions. For the practically relevant case $\omega>2$, $T_{4}^{\mathrm{best}}$ asymptotically dominates as $n$ or $d$ grows, and it also dominates the running time in our experiments. We therefore take $T_{4}^{\mathrm{best}}$ as the overall complexity estimate. A more detailed comparison is given in Appendix~\ref{appendix:step_comparison}.
 
 \subsubsection{Well-determined case.}
 For $k=1$, the final determinant is an $M\times M$ univariate polynomial matrix for which the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} is typically optimal:

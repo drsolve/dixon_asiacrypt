@@ -1,34 +1,3 @@
-\section{Notation}\label{appendix:notation}
-
-Table~\ref{tab:notation} collects the quantities attached to the Dixon construction that are easy to confuse, in particular the three different sizes associated with $\mathcal{M}$.
-
-\begin{table}[h]
-	\centering
-	\small
-	\caption{Quantities used throughout the paper.}
-	\label{tab:notation}
-	\setlength{\tabcolsep}{4pt}
-	\renewcommand{\arraystretch}{1.15}
-	\begin{tabular}{@{}p{0.235\textwidth}p{0.70\textwidth}@{}}
-		\toprule
-		\textbf{Symbol} & \textbf{Meaning} \\
-		\midrule
-		$\mathcal{F}=\{f_1,\ldots,f_n\}$ & System of $n$ polynomials in the $n-1$ eliminated variables $\xvec$ and the $k$ retained parameters $\avec$ \\
-		$\Delta(\xvec,\bar\xvec)$ & Dixon polynomial, $\det(\widehat{C})$ of Step~1 \\
-		$\mathcal{M}$ & Dixon matrix of Step~2; rows indexed by the $\xvec$-monomials and columns by the $\bar\xvec$-monomials of $\Delta$ \\
-		$D(\mathcal{F})$ & Monomial-support dimension of $\mathcal{M}$: the larger of its two dimensions. This is the quantity bounded in Section~\ref{Subsection:Matrix_Size} \\
-		$\operatorname{rank}\mathcal{M}$ & Symbolic rank of $\mathcal{M}$. Always $\operatorname{rank}\mathcal{M}\le D(\mathcal{F})$; equality is \emph{not} claimed (Remark~\ref{rem:support_vs_rank}) \\
-		$\mathcal{M}'$ & Maximal-rank square submatrix extracted in Step~3, of size $\operatorname{rank}\mathcal{M}$ \\
-		$M$ & Value $C_n^{(d)}$ attained generically by $D(\mathcal{F})$ on $(n;d)$-systems; used in the cost formulas as an upper bound for the size of $\mathcal{M}'$, so those formulas are upper bounds \\
-		$\det(\mathcal{M}')$ & Called the \emph{resultant} in the informal sense of Remark~\ref{rem:projective_vs_affine}: an element of $I\cap\mathbb{K}[\avec]$ that may carry extraneous factors, rather than a canonical generator \\
-		$N^{*}$ & Number of monomials of the Iterated-Simplex polynomial $I_{d_2-1,\ldots,d_n-1}$ \\
-		$d_{\mathcal{I}}$, $d_{\mathrm{reg}}$ & Degree of the ideal $\mathcal{I}$; degree of regularity \\
-		$E_4$, $D_4$, $\delta_4$ & Entry-wise parameter degree, total degree of the elimination polynomial, and average column degree after Kronecker substitution, in Step~4 \\
-		$\omega$ & Matrix multiplication exponent, $2\le\omega<3$ \\
-		\bottomrule
-	\end{tabular}
-\end{table}
-
 \newpage
 \section{Background on Algebraic Geometry and Combinatorics}\label{Appendix:A}
 
@@ -239,7 +208,7 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 \newpage
 \section{Experimental Validation for Dixon Matrix Size Bound}\label{appendix:experimental_bound}
 
-We provide numerical comparisons between our Fuss-Catalan bound (FC Bound, Corollary~\ref{cor:three_bounds}(2)), Unrestricted bound (Corollary~\ref{cor:three_bounds}(3)), the previous bound~\eqref{eq:Dixon_old_bound} from \cite{DBLP:conf/stoc/KapurS96}, and the trivial variable-based bound~\eqref{eq:Dixon_var_bound}. Table~\ref{tab:dixon_matrix_comparison} shows the bounds alongside the actual Dixon matrix sizes computed from randomly generated dense $(n;d)$-systems over $\mathbb{F}_p$ with $p=2^{31}-159$; the matrix size is field-independent for generic systems, but we record the field used for reproducibility. The ``True Size'' column reports the actual row/column dimension of the Dixon matrix observed in our experiments. For each pair $(n,d)$ we sampled $20$ independent, fully dense systems of $n$ equations, all of total degree $d$, with all coefficients drawn uniformly and independently from $\Fp$; the observed size agreed across all samples. It is the support dimension $D(\mathcal{F})$, not $\operatorname{rank}\mathcal{M}$ (Remark~\ref{rem:support_vs_rank}).
+We provide numerical comparisons between our Fuss-Catalan bound (FC Bound, Corollary~\ref{cor:three_bounds}(2)), Unrestricted bound (Corollary~\ref{cor:three_bounds}(1)), the previous bound~\eqref{eq:Dixon_old_bound} from \cite{DBLP:conf/stoc/KapurS96}, and the trivial variable-based bound~\eqref{eq:Dixon_var_bound}. Table~\ref{tab:dixon_matrix_comparison} shows the bounds alongside the actual Dixon matrix sizes computed from randomly generated dense $(n;d)$-systems over $\mathbb{F}_p$ with $p=2^{31}-159$; the matrix size is field-independent for generic systems, but we record the field used for reproducibility. The ``True Size'' column reports the actual row/column dimension of the Dixon matrix observed in our experiments. For each pair $(n,d)$ we sampled $20$ independent, fully dense systems of $n$ equations, all of total degree $d$, with all coefficients drawn uniformly and independently from $\Fp$; the observed size agreed across all samples. It is the support dimension $D(\mathcal{F})$, not $\operatorname{rank}\mathcal{M}$ (Remark~\ref{rem:support_vs_rank}).
 
 \begin{table}[htbp]
 	\centering
@@ -463,10 +432,10 @@ We present a more comprehensive comparison of the computational complexity of th
 	
 	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w2.png}
+		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w237.png}
 	\end{subfigure}
 	
-	\caption*{Figure~\ref{fig:complexity} (continued). The bottom panel uses $\omega=2$, at which the first and the final determinant have the same asymptotic order in $M$; the plotted Dixon curve is the Step~4 term.}
+	\caption*{Figure~\ref{fig:complexity} (continued). The bottom panel uses $\omega=2.37$. Since the asymptotic dominance of the final determinant sets in only for larger $(n,d)$ than those plotted, the Dixon curve of this panel reports the maximum over the two symbolic stages, $\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}$, which over this range is governed by Step~1.}
 \end{figure}
 
 \newpage
@@ -732,12 +701,13 @@ Since $\omega>2$, we have $\omega(n-1)+1>2n-1$ for every $n\ge 2$, so $T_{4}^{\m
 
 \paragraph{Consequences for the overall comparison.}
 The two formula comparisons above explain the qualitative picture observed in the implementation and in the plots:
+Figures~\ref{fig:step14_vs_degree} and~\ref{fig:step14_vs_variables} illustrate the two regimes:
 \begin{enumerate}
 	\item for low-variable/high-degree systems, the final determinant is clearly the dominant symbolic cost;
 	\item for high-variable/low-degree systems, the first determinant rises sharply, and sparse interpolation is the only first-determinant model that can stay below the final determinant;
 	\item the numerical submatrix-selection phase remains below the symbolic final determinant throughout the parameter ranges considered in the paper.
 \end{enumerate}
-With this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. This is why the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
+For $\omega>2$, with this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. The dominance is however asymptotic: at moderate $(n,d)$ the polynomial prefactors of the Step-1 models can still exceed the $M^{\omega-2}$ gap, and at $\omega=2$ the conclusion is reversed altogether, since the $\Theta(M^2)$ coefficient positions of the Dixon polynomial already match the $M$-exponent of Step~4. This is why the $\omega=2.37$ panel of Figure~\ref{fig:complexity} reports the maximum over the two stages. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. This is why the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
 
 \begin{figure}[h]
 	\centering
@@ -821,7 +791,7 @@ T_{4}^{\mathrm{HNF}} \;\gg\; T_{1}^{\mathrm{minor}}\quad\text{asymptotically in 
 for every $\omega\ge 2.81$ and every $d\ge 2$ (and more generally whenever~\eqref{eq:minor_threshold} holds).
 
 \paragraph{Boundary case $\omega=2$.}
-At the idealized boundary $\omega=2$, the $M$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by an $M$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}, and in the degree sweep at the bottom of Figure~\ref{fig:complexity}; in both places it is applied identically to Dixon and to every competitor, so the comparisons should be read as ``uniform-$\omega$ ratios'' rather than as literal asymptotic statements about any single method. For \vision\ this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $M^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
+At the idealized boundary $\omega=2$, the $M$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by an $M$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}; there it is applied identically to Dixon and to every competitor, so the comparison should be read as a ``uniform-$\omega$ ratio'' rather than as a literal asymptotic statement about any single method. For \vision\ this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $M^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
 
 \paragraph{Consequence.}
 Combining the two comparisons above, for all parameter ranges considered in the experiments (Strassen $\omega\approx 2.81$, $d\ge 2$, and $n$ moderate to large), neither $T_{1}^{\mathrm{sparse}}$ nor $T_{1}^{\mathrm{minor}}$ exceeds $T_{4}^{\mathrm{HNF}}$, and the measured running times confirm that Step~4 is the dominant phase. We therefore use $T = T_{4}^{\mathrm{HNF}}$, as in~\eqref{eq:dixon_complexity_well}, as the overall complexity estimate for well-determined systems.
@@ -997,7 +967,16 @@ and
 \begin{equation}
 	f^{(\mathrm{out})} := \sum_{j=1}^s M[0][j] \cdot B_3(z_{r,j}) + \epsilon_{r,0}.
 \end{equation}
-Altogether this gives $4r-1$ equations in $4r-1$ variables, which is the count split into the forward and backward chains in Table~\ref{tab:vision_equation_distribution}. This is the shape of the ladder~\eqref{eq:iterative_chain}: $|\mathcal{F}_1|=|\mathcal{X}_0|+1=2$, $|\mathcal{F}_i|=2$ for the remaining rungs, plus the single output constraint.
+Imposing the CICO conditions fixes one input and one output coordinate and removes the corresponding pair of intermediate variables together with the two equations attached to it. What remains is one free input variable together with $2r-1$ pairs of intermediate variables, i.e.\ $4r-1$ variables, and the equations
+\[
+\underbrace{2r-2}_{\deg=8,\ \text{shape }F^{(1)}}
+\;+\;
+\underbrace{2r}_{\deg=2,\ \text{shape }F^{(2)}\text{, including }f^{(\mathrm{in})}}
+\;+\;
+\underbrace{1}_{\deg=4,\ f^{(\mathrm{out})}}
+\;=\;4r-1 ,
+\]
+which is the count split into the forward and backward chains in Table~\ref{tab:vision_equation_distribution}. For $r=2$, for instance, this is $2$ equations of degree $8$, $4$ of degree $2$ and $1$ of degree $4$, matching the instance used in our experiments. This is the shape of the ladder~\eqref{eq:iterative_chain}: $|\mathcal{F}_1|=|\mathcal{X}_0|+1=2$, $|\mathcal{F}_i|=2$ for the remaining rungs, plus the single output constraint.
 
 The equation-degree distribution used in the MITM estimate is summarized in Table~\ref{tab:vision_equation_distribution}.
 \begin{table}[hbpt!]
@@ -1019,7 +998,7 @@ The equation-degree distribution used in the MITM estimate is summarized in Tabl
 	\end{tabular}
 \end{table}
 
-The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:MITM Complexity} in the main text. The same elimination pattern applies to \texttt{Rescue}, where it improves on the pairwise Sylvester resultants of~\cite{DBLP:conf/asiacrypt/YangZYLT24} but stays above the dedicated attack of~\cite{DBLP:conf/crypto/BariantBBHOR25}.
+The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:mitm_complexity} in the main text. The same elimination pattern applies to \texttt{Rescue}, where it improves on the pairwise Sylvester resultants of~\cite{DBLP:conf/asiacrypt/YangZYLT24} but stays above the dedicated attack of~\cite{DBLP:conf/crypto/BariantBBHOR25}.
 
 \paragraph{Stage-by-stage figures.}
 Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Here $\rho$ is well below $D(\mathcal{F})$, so Step~3 is not run as a full elimination on $\mathcal{M}$: right-multiplying $\mathcal{M}$ by a random $D(\mathcal{F})\times c\rho$ matrix reveals the rank in $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$ field operations, which is the figure reported below and reduces to~\eqref{eq:complexity_step3} when $\rho=D(\mathcal{F})$, as at the merge.
