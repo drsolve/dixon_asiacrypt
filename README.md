@@ -50,13 +50,13 @@ These tools are intended for research experimentation and validation.
 
 ### Additional note: Correspondence Between Paper Figures/Tables and Source Files
 
-- **Section 3.3, Figure 1** and **Appendix E, Figure 6** → `Complexity_Comparision.ipynb`
+- **Section 3.3, Figure 1** and **Appendix E, Figure 6** → `Complexity_Comparision.ipynb` (or the pure-Python `complexity_figs.py`, which writes the paper's file names directly)
 - **Section 4.2, Figure 2** → `benchmark_DixonMagmaMsolve.ipynb` and `fermat_sage.ipynb`
 - **Section 5, Figures 3/4/5** → `AO_Complexity.ipynb`
 - **Appendix C, Table 6** → `Bound_Comparion.ipynb`
-- **Appendix I, Figures 7/8** → `comp_step1&4.ipynb`
+- **Appendix H, Figures 7/8** → `comp_step1&4.ipynb`
 
-To verify that the Dixon matrix sizes reported in Table 7 match the theoretical predictions:
+To verify that the Dixon matrix sizes reported in Table 6 match the theoretical predictions:
 
 ```bash
 drsolve --test 1
@@ -70,4 +70,4 @@ drsolve --test 2
 ---
 
 ### AI Tool Disclosure
-We used generative AI tools, including Claude (Opus) and Codex, to assist in drafting portions of the codebase. All AI-assisted code was carefully reviewed, tested, and validated by the authors. The authors take full responsibility for the correctness of the implementation and all experimental results reported in the paper.
+We used generative AI tools, including Claude and ChatGPT, to assist in drafting portions of the codebase. All AI-assisted code was carefully reviewed, tested, and validated by the authors. The authors take full responsibility for the correctness of the implementation and all experimental results reported in the paper.

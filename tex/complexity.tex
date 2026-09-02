@@ -23,7 +23,8 @@ We bound the Dixon matrix size for general $(d_1,\ldots,d_n)$-systems via a latt
 \end{theorem}
 
 \begin{remark}
-	Note that the minimum degree $d_1$ does not affect the size of the Dixon matrix. In the refined construction~\eqref{eq:Dixon_polynomial_improve}, the first row of $\widehat{C}$ still contains the original polynomials $f_j$, while the $\bar{\bs x}$-support of $\det \widehat{C}$ is determined solely by the difference-quotient rows $i=2,\ldots,n$ (Lemma~\ref{lem:dixon_fc_bound}). More precisely, in each term $\prod_{i}\widehat{C}_{i,\sigma(i)}$ of the determinant expansion it is the factor taken from the \emph{first row} that has $\bar{\bs x}$-degree zero, so that term only sees the remaining degrees $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$; since $d_1$ is the smallest degree, all these multisets are dominated by $\{d_2,\ldots,d_n\}$, which is the multiset appearing in the bound.
+	Note that the minimum degree $d_1$ does not affect the size of the Dixon matrix. In the refined construction~\eqref{eq:Dixon_polynomial_improve}, the first row of $\widehat{C}$ still contains the original polynomials $f_j$, while the $\bar{\bs x}$-support of $\det \widehat{C}$ is determined solely by the difference-quotient rows $i=2,\ldots,n$ (Lemma~\ref{lem:dixon_fc_bound}).
+%More precisely, in each term $\prod_{i}\widehat{C}_{i,\sigma(i)}$ of the determinant expansion it is the factor taken from the \emph{first row} that has $\bar{\bs x}$-degree zero, so that term only sees the remaining degrees $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$; since $d_1$ is the smallest degree, all these multisets are dominated by $\{d_2,\ldots,d_n\}$, which is the multiset appearing in the bound.
 \end{remark}
 
 This lattice path counting problem admits precise closed-form solutions through classical results in enumerative combinatorics.
@@ -399,13 +400,13 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24}  have established theoretical complexity bounds for Gr\"obner basis algorithms.
 Table~\ref{tab:complexity_formulas} summarizes the complexity formulas for Dixon and various Gr\"obner basis approaches for $(n;d)$-systems, together with the leading-order asymptotic equivalent of each ratio relative to Dixon.
 
-The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $M$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the FGLM term $\mathcal{O}(n\,d_{\mathcal{I}}^{\omega})$ is asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $M=C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. 
+The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $M$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $M=C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of Berthomieu et al.~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor in the present regime.
 %(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $M<d^{\,n}$ often holds.) 
-The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} shows the empirical growth as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
+The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
 
 \begin{table}[h]
 	\centering
-	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$ and $d_{\mathcal{I}} = d^n$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}), and they compare a generically attained Dixon estimate with worst-case Gr\"obner basis bounds.}
+	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\rho_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}), and they compare a generically attained Dixon estimate with worst-case Gr\"obner basis bounds.}
 	\label{tab:complexity_formulas}
 	\begin{tabular}{lcc}
 		\toprule
@@ -423,18 +424,20 @@ The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5
 		\midrule
 		GB (per-deg)~\cite{DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot \sum_{i=0}^{d_{\text{reg}}} \binom{n+i-d-1}{i-d}\binom{n+i-1}{i}^{\omega-1} \right)$ &  \multicolumn{1}{c}{\textemdash}  \\
 		\midrule
-		FGLM~\cite{DBLP:journals/jsc/FaugereGLM93,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot d_{\mathcal{I}}^{\omega}\right)$ & $\operatorname{poly}(n,d)\!\left(\frac{d-1}{d}\right)^{(d-1)n\omega}$ \\
+		FGLM~\cite{DBLP:journals/jsc/FaugereGLM93,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot d_{\mathcal{I}}^{\omega}\right)$ & $\mathcal{O}\!\left(n^{3\omega/2}\rho_d^{\,n\omega}\right)$ \\
+		\midrule
+		BNS order change~\cite{BerthomieuNeigerSafey2022} & $\displaystyle {\mathcal{O}}\left(t^{\,\omega-1} d_{\mathcal{I}}\right)$ & ${\mathcal{O}}\!\left(n^{\omega-1/2}\rho_d^{\,n\omega}\right)$ \\
 		\bottomrule
 	\end{tabular}
 	\vspace{0.5em}
 \end{table}
 
-The GB (per-deg) row does not admit a closed-form asymptotic equivalent that is both simple and accurate: a leading-order estimate of the index-dominated sum gives only a very loose envelope and disagrees substantially with the experimental F4/F5 cost on this model, so we leave the ratio entry blank and direct attention to the empirical comparison in Figure~\ref{fig:complexity_comparison_d} for this case. Detailed derivations of all ratios are in Appendix~\ref{Appendix:Derivation}.
+The GB (per-deg) row admits no closed-form asymptotic equivalent that is both simple and accurate, since a leading-order estimate of the index-dominated sum gives only a very loose envelope; we therefore leave its ratio entry blank and refer to Figure~\ref{fig:complexity_comparison_d}. Detailed derivations of all ratios are in Appendix~\ref{Appendix:Derivation}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.99\textwidth]{complexity_comparison_d2.png}
-	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All Gr\"obner-basis variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound, are included for direct empirical comparison with Dixon.}
+	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound and the HNF change of order of~\cite{BerthomieuNeigerSafey2022}, are evaluated here for direct comparison with Dixon.}
 	\label{fig:complexity_comparison_d}
 \end{figure}
 

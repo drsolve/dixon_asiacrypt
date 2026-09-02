@@ -368,23 +368,35 @@ the ratio is:
 \begin{align*}
 	\frac{\mathcal{T}_{\text{FGLM}}}{\mathcal{T}_{\text{Dixon}}} 
 	&= \frac{n \cdot d^{n\omega}}{nd \cdot \left(\frac{1}{n(d-1)+1} \cdot \frac{1}{\sqrt{2\pi n}} \left(\frac{d^d}{(d-1)^{d-1}}\right)^n\right)^\omega} \\
-	&\propto \text{poly}(n,d) \cdot \left(\frac{d^{n\omega}}{\left(\frac{d^d}{(d-1)^{d-1}}\right)^{n\omega}}\right) \\
-	&= \text{poly}(n,d) \cdot \left(\frac{(d-1)^{d-1}}{d^{d-1}}\right)^{n\omega} \\
-	&= \text{poly}(n,d) \cdot \left(\left(1-\frac{1}{d}\right)^{d-1}\right)^{n\omega}.
+	&= \mathcal{O}_d\!\left(n^{3\omega/2}
+	\left(\frac{d-1}{d}\right)^{(d-1)n\omega}\right),
 \end{align*}
+where $\mathcal{O}_d(\cdot)$ suppresses factors depending only on the fixed degree $d$.
 
-Since:
+Thus
 \[
-\lim_{d\to\infty} \left(1-\frac{1}{d}\right)^{d-1} = e^{-1},
+\frac{\mathcal{T}_{\text{FGLM}}}{\mathcal{T}_{\text{Dixon}}} = \mathcal{O}_d\!\left(n^{3\omega/2}\rho_d^{\,n\omega}\right),
 \]
-the ratio is:
-\[
-\frac{\mathcal{T}_{\text{FGLM}}}{\mathcal{T}_{\text{Dixon}}} \sim \mathcal{O}\!\left(\left(1-\frac{1}{d}\right)^{(d-1)n\omega}\right) \xrightarrow{\,d\to\infty\,} \mathcal{O}\!\left(e^{-n\omega}\right),
-\]
-which shows an exponential decrease as $n$ increases for every fixed $d>1$. The further limit $d\to\infty$ gives the exponential factor $e^{-n\omega}$; for finite $d$ (which is the practical regime for AO primitives), the base is $((d-1)/d)^{d-1} > e^{-1}$.
+which shows an exponential decrease as $n$ increases for every fixed $d>1$. Moreover, $\rho_d\to e^{-1}$ as $d\to\infty$; for finite $d$ (which is the practical regime for AO primitives), $\rho_d>e^{-1}$.
 
-\paragraph{Other elimination and change-of-order algorithms.}
-The FGLM estimate $\mathcal{O}(n\,d_{\mathcal{I}}^{\omega})$ used above does not include the construction of the multiplication matrices, and it can be improved under shape and stability assumptions by the HNF-based change of order of Berthomieu et al.~\cite{BerthomieuNeigerSafey2022}. For two eliminated variables, structured Sylvester-resultant algorithms such as Villard's~\cite{Villard2018} have a better asymptotic complexity, even though the Dixon construction works with a smaller matrix. On the AO systems of Section~\ref{Section:Application} the relevant Gr\"obner competitors are moreover the FreeLunch~\cite{DBLP:conf/crypto/BariantBLAOPR24} and CheapLunch~\cite{DBLP:journals/iacr/BakBBBOP25} attacks, for which the grevlex basis is essentially free and the change-of-order step dominates; Dixon is then attractive in the few-variable/high-degree regime, while CheapLunch is expected to be preferable as the number of variables grows.
+\paragraph{BNS change of order~\cite{BerthomieuNeigerSafey2022}}
+
+Under shape and stability assumptions, the change of order can be performed by computing the Hermite normal form of a $t\times t$ univariate polynomial matrix of average column degree $d_{\mathcal{I}}/t$, in $\widetilde{\mathcal{O}}(t^{\omega-1}d_{\mathcal{I}})$ operations, where $t$ is the number of elements of the grevlex basis whose leading monomial is divisible by the smallest variable. For generic $(n;d)$-systems, \cite[Tbl.~1]{BerthomieuNeigerSafey2022} gives $d_{\mathcal{I}}=d^{\,n}$ and $t=d^{\,n-1}/\sqrt{n}$, whence
+\[
+\mathcal{T}_{\mathrm{BNS}}
+=\widetilde{\mathcal{O}}\!\left(\bigl(d^{\,n-1}n^{-1/2}\bigr)^{\omega-1}d^{\,n}\right)
+=\widetilde{\mathcal{O}}\!\left(n^{-(\omega-1)/2}\,d^{\,n\omega-\omega+1}\right).
+\]
+Using $\mathcal{T}_{\text{Dixon}}=\Theta\bigl(d\,n^{1-3\omega/2}\gamma_d^{\,n\omega}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}$, which follows from~\eqref{eq:fc_stirling}, the ratio is
+\[
+\frac{\mathcal{T}_{\mathrm{BNS}}}{\mathcal{T}_{\text{Dixon}}}
+=\widetilde{\Theta}\!\left(n^{\omega-1/2}d^{-\omega}\rho_d^{\,n\omega}\right)
+=\widetilde{\mathcal{O}}_d\!\left(n^{\omega-1/2}\rho_d^{\,n\omega}\right),
+\]
+i.e.\ the same exponentially decreasing factor as for FGLM, the two differing only by a polynomial factor in $(n,d)$. The gain of~\cite{BerthomieuNeigerSafey2022} over Sparse-FGLM is exponential in $n$, but against the $\widetilde{\mathcal{O}}(n\,d_{\mathcal{I}}^{\omega})$ estimate tabulated here it is only polynomial, so the qualitative comparison with Dixon is unchanged.
+
+\paragraph{Other elimination algorithms.}
+The FGLM estimate $\mathcal{O}(n\,d_{\mathcal{I}}^{\omega})$ used above does not include the construction of the multiplication matrices. For two eliminated variables, structured Sylvester-resultant algorithms such as Villard's~\cite{Villard2018} have a better asymptotic complexity, even though the Dixon construction works with a smaller matrix. On the AO systems of Section~\ref{Section:Application} the relevant Gr\"obner competitors are moreover the FreeLunch~\cite{DBLP:conf/crypto/BariantBLAOPR24} and CheapLunch~\cite{DBLP:journals/iacr/BakBBBOP25} attacks, for which the grevlex basis is essentially free and the change-of-order step dominates; Dixon is then attractive in the few-variable/high-degree regime, while CheapLunch is expected to be preferable as the number of variables grows.
 
 
 % \item \textbf{GB (Six Worlds)~\cite{DBLP:journals/tosc/KoschatkoLR24}:}
@@ -998,10 +1010,29 @@ The equation-degree distribution used in the MITM estimate is summarized in Tabl
 	\end{tabular}
 \end{table}
 
-The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:mitm_complexity} in the main text. The same elimination pattern applies to \texttt{Rescue}, where it improves on the pairwise Sylvester resultants of~\cite{DBLP:conf/asiacrypt/YangZYLT24} but stays above the dedicated attack of~\cite{DBLP:conf/crypto/BariantBBHOR25}.
+The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:mitm_complexity} in the main text.
+
+\paragraph{A rank bound for the ladder rungs.}
+Each rung of the chain eliminates a block of two variables from the incoming relation $R$ together with two local equations. Unlike a generic three-polynomial system, only $R$ has a degree growing with the number of rounds, and this alone already forces the Dixon matrix to be strongly rank-deficient. The next lemma makes this precise; it requires neither genericity nor an assumption on $\operatorname{char}(\mathbb{K})$, so it applies verbatim over $\mathbb{F}_{2^\ell}$ (cf.\ Remark~\ref{rem:support_vs_rank}).
+
+\begin{lemma}[Rung rank bound]\label{lem:rung_rank}
+	Let $\xvec=(x_1,x_2)$ be the eliminated block, let $R\in\mathbb{K}[\xvec]$ have total degree at most $D$, and let $f_1,f_2$ have degree at most $e$ in $\xvec$. Let $\mathcal{M}$ be the Dixon matrix obtained by eliminating $\xvec$ from $\{R,f_1,f_2\}$. Then
+	\begin{equation}\label{eq:rung_rank}
+		\operatorname{rank}\mathcal{M}\;\le\;\frac{e(e+3)}{2}\,D+\frac{e(3e-1)}{2},
+	\end{equation}
+	and the Dixon polynomial $\Delta$ has $\mathcal{O}(e^4D^3)$ terms.
+\end{lemma}
+
+\begin{proof}
+	Write $\Delta=X\mathcal{M}\overline{X}^{T}$ and recall the two elementary facts that a bilinear form $\sum_{a\le r}u_a(\xvec)v_a(\bar\xvec)$ has coefficient matrix of rank at most $r$, and that these ranks are subadditive under sums and submultiplicative under products. In the refined construction~\eqref{eq:Dixon_polynomial_improve} with $n=3$, the entry $\widehat{C}_{1,j}$ has $\bar\xvec$-degree $0$, the entry $\widehat{C}_{2,j}$ involves $\bar{x}_1$ only, and $\widehat{C}_{3,j}$ involves $x_2$ only on the $\xvec$-side; in rows $2$ and $3$ the difference quotient lowers the $\xvec$-degree by one.
+	
+	Expanding $\det\widehat{C}$ along the column of $R$ gives $\Delta=\sum_{i=1}^{3}(-1)^{i+1}\widehat{C}_{i,R}\,m_i$, where $m_i$ is the $2\times 2$ minor formed by the columns of $f_1,f_2$ with row $i$ deleted. The three factors attached to $R$ have ranks at most $1$, $D$ and $D$ respectively (a single $\bar\xvec$-monomial for $i=1$; at most $D$ powers of $\bar x_1$ for $i=2$; at most $D$ powers of $x_2$ for $i=3$). The minors are bounded by their $\bar\xvec$-supports: $m_3$ involves $\bar x_1$ alone with degree $\le e-1$, giving $e$ monomials; $m_2$ has $\bar\xvec$-degree $\le e-1$, giving $\binom{e+1}{2}$ monomials; and $m_1$ has $\bar\xvec$-support inside $\{\bar x_1^{a}\bar x_2^{b}: b\le e-1,\ a+b\le 2e-2\}$, of cardinality $e(3e-1)/2$. Combining the three products yields~\eqref{eq:rung_rank}. Finally, $\widehat{C}_{2,R}$ and $\widehat{C}_{3,R}$ each involve only three of the four variables, with degree below $D$ in each, hence have $\mathcal{O}(D^3)$ terms, while every $m_i$ has $\mathcal{O}(e^4)$ terms.
+\end{proof}
+
+For \vision\ with $s=2$ the two local equations of a rung have block bidegree $(e,e)$ with $e=1$ for the $\deg=2$ rungs and $e=4$ for the $\deg=8$ rungs, so~\eqref{eq:rung_rank} reads $\rho\le 2D_{\mathrm{in}}+1$ and $\rho\le 14D_{\mathrm{in}}+22$ respectively, against a support dimension $D(\mathcal{F})=\Theta(D_{\mathrm{in}}^{2})$.
 
 \paragraph{Stage-by-stage figures.}
-Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Here $\rho$ is well below $D(\mathcal{F})$, so Step~3 is not run as a full elimination on $\mathcal{M}$: right-multiplying $\mathcal{M}$ by a random $D(\mathcal{F})\times c\rho$ matrix reveals the rank in $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$ field operations, which is the figure reported below and reduces to~\eqref{eq:complexity_step3} when $\rho=D(\mathcal{F})$, as at the merge.
+Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the bound~\eqref{eq:rung_rank} on the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count of Lemma~\ref{lem:rung_rank}, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. Since $\rho$ is well below $D(\mathcal{F})$, Step~3 is not run as a full elimination on $\mathcal{M}$: right-multiplying $\mathcal{M}$ by a random $D(\mathcal{F})\times c\rho$ matrix reveals the rank with high probability in $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$ field operations, which is the figure reported below and reduces to~\eqref{eq:complexity_step3} when $\rho=D(\mathcal{F})$, as at the merge.
 
 \begin{table}[h]
 	\centering
@@ -1015,12 +1046,12 @@ Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cos
 		Stage & $d$ & $\log_2 D_{\mathrm{in}}$ & $\log_2 D_{\mathrm{out}}$ & $\log_2 D(\mathcal{F})$ & $\log_2\rho$ & Step~1 & Step~3 & Step~4 & Cost \\
 		\midrule
 		F1    & $2$ & $0$  & $2$  & $0.0$  & $1.0$  & $3.0$  & $1.0$  & $5.3$  & $5.3$ \\
-		F2    & $8$ & $2$  & $8$  & $4.5$  & $5.0$  & $6.0$  & $9.5$  & $21.0$ & $21.0$ \\
+		F2    & $8$ & $2$  & $8$  & $4.5$  & $4.5$  & $6.0$  & $8.9$  & $19.4$ & $19.4$ \\
 		F3    & $2$ & $8$  & $10$ & $15.0$ & $9.0$  & $24.0$ & $24.0$ & $29.0$ & $29.0$ \\
-		F4    & $8$ & $10$ & $16$ & $19.0$ & $13.0$ & $30.0$ & $32.0$ & $45.0$ & $45.0$ \\
+		F4    & $8$ & $10$ & $16$ & $19.0$ & $13.8$ & $30.0$ & $32.8$ & $46.6$ & $46.6$ \\
 		\midrule
-		B7    & $2$ & $2$  & $4$  & $3.3$  & $3.0$  & $6.0$  & $6.3$  & $11.1$ & $11.1$ \\
-		B6    & $8$ & $4$  & $10$ & $7.5$  & $7.0$  & $12.0$ & $14.5$ & $27.0$ & $27.0$ \\
+		B7    & $2$ & $2$  & $4$  & $3.3$  & $3.2$  & $6.0$  & $6.5$  & $11.4$ & $11.4$ \\
+		B6    & $8$ & $4$  & $10$ & $7.5$  & $7.5$  & $12.0$ & $15.0$ & $28.0$ & $28.0$ \\
 		B5    & $2$ & $10$ & $12$ & $19.0$ & $11.0$ & $30.0$ & $30.0$ & $35.0$ & $35.0$ \\
 		\midrule
 		Merge & --- & $16$ & ---  & $16.0$ & $16.0$ & $48.0$ & $32.0$ & $48.1$ & $\mathbf{48.1}$ \\
@@ -1039,20 +1070,20 @@ Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cos
 		\toprule
 		$r$ & $\log_2 D_{\mathrm{fwd}}$ & $\log_2 D_{\mathrm{bwd}}$ & Max.\ forward & Max.\ backward & Merge & Max.\ over stages \\
 		\midrule
-		$2$  & $8$  & $4$  & $21.0$  & $11.1$  & $24.1$  & $24.1$ \\
-		$3$  & $10$ & $10$ & $29.0$  & $27.0$  & $31.0$  & $31.0$ \\
-		$4$  & $16$ & $12$ & $45.0$  & $35.0$  & $48.1$  & $48.1$ \\
-		$5$  & $18$ & $18$ & $53.0$  & $51.0$  & $55.0$  & $55.0$ \\
-		$6$  & $24$ & $20$ & $69.0$  & $59.0$  & $72.1$  & $72.1$ \\
-		$7$  & $26$ & $26$ & $77.0$  & $75.0$  & $79.0$  & $79.0$ \\
-		$8$  & $32$ & $28$ & $93.0$  & $83.0$  & $96.1$  & $96.1$ \\
-		$9$  & $34$ & $34$ & $101.0$ & $99.0$  & $103.0$ & $103.0$ \\
-		$10$ & $40$ & $36$ & $117.0$ & $107.0$ & $120.1$ & $120.1$ \\
+		$2$  & $8$  & $4$  & $19.4$  & $11.4$  & $24.1$  & $24.1$ \\
+		$3$  & $10$ & $10$ & $29.0$  & $28.0$  & $31.0$  & $31.0$ \\
+		$4$  & $16$ & $12$ & $46.6$  & $35.0$  & $48.1$  & $48.1$ \\
+		$5$  & $18$ & $18$ & $53.0$  & $52.6$  & $55.0$  & $55.0$ \\
+		$6$  & $24$ & $20$ & $70.6$  & $59.0$  & $72.1$  & $72.1$ \\
+		$7$  & $26$ & $26$ & $77.0$  & $76.6$  & $79.0$  & $79.0$ \\
+		$8$  & $32$ & $28$ & $94.6$  & $83.0$  & $96.1$  & $96.1$ \\
+		$9$  & $34$ & $34$ & $101.0$ & $100.6$ & $103.0$ & $103.0$ \\
+		$10$ & $40$ & $36$ & $118.6$ & $107.0$ & $120.1$ & $120.1$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
 
-The candidate roots of the final univariate eliminant are substituted back into the original system, which removes the spurious ones; the KSY rank condition was checked for every elimination listed above.
+The candidate roots of the final univariate eliminant are substituted back into the original system, which removes the spurious ones at negligible additional cost.
 
 
 \section{XHash12}
