@@ -1,0 +1,482 @@
+\begin{thebibliography}{10}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{DBLP:conf/esorics/Albrecht0PRRR0S19}
+Albrecht, M.R., Grassi, L., Perrin, L., Ramacher, S., Rechberger, C., Rotaru,
+  D., Roy, A., Schofnegger, M.: Feistel structures for mpc, and more. In:
+  {ESORICS} 2019. Lecture Notes in Computer Science, vol. 11736, pp. 151--171.
+  Springer (2019). \doi{10.1007/978-3-030-29962-0\_8}
+
+\bibitem{DBLP:conf/asiacrypt/Albrecht0R0T16}
+Albrecht, M.R., Grassi, L., Rechberger, C., Roy, A., Tiessen, T.: Mimc:
+  Efficient encryption and cryptographic hashing with minimal multiplicative
+  complexity. In: {ASIACRYPT} 2016. Lecture Notes in Computer Science, vol.
+  10031, pp. 191--219 (2016). \doi{10.1007/978-3-662-53887-6\_7}
+
+\bibitem{Albrecht2008}
+Albrecht, M.: Algebraic attacks on the courtois toy cipher. Cryptologia
+  \textbf{32}(3),  220--276 (2008). \doi{10.1080/01611190802058139},
+  \url{https://doi.org/10.1080/01611190802058139}
+
+\bibitem{DBLP:journals/tosc/AlyABDS20}
+Aly, A., Ashur, T., Ben{-}Sasson, E., Dhooghe, S., Szepieniec, A.: Design of
+  symmetric-key primitives for advanced cryptographic protocols. {IACR} Trans.
+  Symmetric Cryptol.  \textbf{2020}(3),  1--45 (2020).
+  \doi{10.13154/tosc.v2020.i3.1-45}
+
+\bibitem{DBLP:journals/iacr/AshurKM23}
+Ashur, T., Kindi, A., Mahzoun, M.: Xhash8 and xhash12: Efficient stark-friendly
+  hash functions. {IACR} Cryptol. ePrint Arch. p.~1045 (2023),
+  \url{https://eprint.iacr.org/2023/1045}
+
+\bibitem{DBLP:journals/dm/Aval08}
+Aval, J.: Multivariate fuss-catalan numbers. Discret. Math.  \textbf{308}(20),
+  4660--4669 (2008). \doi{10.1016/J.DISC.2007.08.100}
+
+\bibitem{DBLP:journals/iacr/BakBBBOP25}
+Bak, A., Bariant, A., Boeuf, A., Briaud, P., {\O}ygarden, M., Phanse, A.: The
+  algebraic cheaplunch: Extending freelunch attacks on arithmetization-oriented
+  primitives beyond {CICO-1}. {IACR} Cryptol. ePrint Arch. p.~2040 (2025),
+  \url{https://eprint.iacr.org/2025/2040}
+
+\bibitem{DBLP:journals/tosc/BakJGP25}
+Bak, A., Jazeron, G., Galissant, P., Perrin, L.: Attacking
+  split-and-lookup-based primitives using probabilistic polynomial system
+  solving applications to round-reduced monolith and full-round skyscraper.
+  {IACR} Trans. Symmetric Cryptol.  \textbf{2025}(3),  337--367 (2025).
+  \doi{10.46586/TOSC.V2025.I3.337-367},
+  \url{https://doi.org/10.46586/tosc.v2025.i3.337-367}
+
+\bibitem{Faugere2004}
+Bardet, M., Faug{\`e}re, J.C., Salvy, B.: On the complexity of gr{\"o}bner
+  basis computation of semi-regular overdetermined algebraic equations. In:
+  Proceedings of the International Conference on Polynomial System Solving
+  (ICPSS). pp. 71--74 (2004),
+  \url{https://api.semanticscholar.org/CorpusID:7982329}
+
+\bibitem{DBLP:journals/jsc/BardetFS15}
+Bardet, M., Faug{\`{e}}re, J., Salvy, B.: On the complexity of the {F5}
+  gr{\"{o}}bner basis algorithm. J. Symb. Comput.  \textbf{70},  49--70 (2015).
+  \doi{10.1016/J.JSC.2014.09.025}
+
+\bibitem{Bareiss1968}
+Bareiss, E.H.: Sylvester's identity and multistep integer-preserving gaussian
+  elimination. Mathematics of Computation  \textbf{22}(103),  565--578 (1968).
+  \doi{10.1090/S0025-5718-1968-0226829-0}
+
+\bibitem{DBLP:conf/crypto/BariantBBHOR25}
+Bariant, A., Boeuf, A., Briaud, P., Hostettler, M., {\O}ygarden, M., Raddum,
+  H.: Improved resultant attack against arithmetization-oriented primitives.
+  In: Kalai, Y.T., Kamara, S.F. (eds.) Advances in Cryptology - {CRYPTO} 2025 -
+  45th Annual International Cryptology Conference, Santa Barbara, CA, USA,
+  August 17-21, 2025, Proceedings, Part {V}. Lecture Notes in Computer Science,
+  vol. 16004, pp. 335--367. Springer (2025).
+  \doi{10.1007/978-3-032-01901-1\_11}
+
+\bibitem{DBLP:conf/crypto/BariantBLAOPR24}
+Bariant, A., Boeuf, A., Lemoine, A., Ayala, I.M., {\O}ygarden, M., Perrin, L.,
+  Raddum, H.: The algebraic freelunch: Efficient gr{\"{o}}bner basis attacks
+  against arithmetization-oriented primitives. In: Reyzin, L., Stebila, D.
+  (eds.) Advances in Cryptology - {CRYPTO} 2024 - 44th Annual International
+  Cryptology Conference, Santa Barbara, CA, USA, August 18-22, 2024,
+  Proceedings, Part {IV}. Lecture Notes in Computer Science, vol. 14923, pp.
+  139--173. Springer (2024). \doi{10.1007/978-3-031-68385-5\_5}
+
+\bibitem{DBLP:journals/tosc/BariantBLP22}
+Bariant, A., Bouvier, C., Leurent, G., Perrin, L.: Algebraic attacks against
+  some arithmetization-oriented primitives. {IACR} Trans. Symmetric Cryptol.
+  \textbf{2022}(3),  73--101 (2022). \doi{10.46586/TOSC.V2022.I3.73-101}
+
+\bibitem{msolve}
+Berthomieu, J., Eder, C., Safey El~Din, M.: msolve: A library for solving
+  polynomial systems. In: Proceedings of the 2021 on International Symposium on
+  Symbolic and Algebraic Computation. pp. 51--58. ISSAC '21, ACM (2021).
+  \doi{10.1145/3452143.3465545}
+
+\bibitem{BerthomieuNeigerSafey2022}
+Berthomieu, J., Neiger, V., Din, M.S.E.: Faster change of order algorithm for
+  {Gr\"obner} bases under shape and stability assumptions. In: Proceedings of
+  the 2022 International Symposium on Symbolic and Algebraic Computation,
+  {ISSAC} 2022. pp. 409--418. {ACM} (2022). \doi{10.1145/3476446.3535484},
+  \url{https://hal.sorbonne-universite.fr/hal-03580736}
+
+\bibitem{DBLP:conf/eurocrypt/BertoniDPA08}
+Bertoni, G., Daemen, J., Peeters, M., Assche, G.V.: On the indifferentiability
+  of the sponge construction. In: Smart, N.P. (ed.) Advances in Cryptology -
+  {EUROCRYPT} 2008, 27th Annual International Conference on the Theory and
+  Applications of Cryptographic Techniques, Istanbul, Turkey, April 13-17,
+  2008. Proceedings. Lecture Notes in Computer Science, vol.~4965, pp.
+  181--197. Springer (2008). \doi{10.1007/978-3-540-78967-3\_11}
+
+\bibitem{bertoni2007sponge}
+Bertoni, G., Daemen, J., Peeters, M., Van~Assche, G.: Sponge functions. In:
+  ECRYPT Hash Workshop (2007)
+
+\bibitem{DBLP:journals/jmc/BettaleFP09}
+Bettale, L., Faug{\`{e}}re, J., Perret, L.: Hybrid approach for solving
+  multivariate systems over finite fields. J. Math. Cryptol.  \textbf{3}(3),
+  177--197 (2009). \doi{10.1515/JMC.2009.009},
+  \url{https://doi.org/10.1515/JMC.2009.009}
+
+\bibitem{bona2015handbook}
+Bona, M.: Handbook of Enumerative Combinatorics. Discrete Mathematics and Its
+  Applications, CRC Press (2015),
+  \url{https://books.google.com.tw/books?id=j3kZBwAAQBAJ}
+
+\bibitem{magma}
+Bosma, W., Cannon, J., Playoust, C.: The {Magma} algebra system {I}: The user
+  language. Journal of Symbolic Computation  \textbf{24}(3-4),  235--265
+  (1997). \doi{10.1006/jsco.1996.0125}
+
+\bibitem{DBLP:phd/hal/Bouvier23}
+Bouvier, C.: Cryptanalysis and design of symmetric primitives defined over
+  large finite fields. (Cryptanalyse et conception de primitives
+  sym{\'{e}}triques d{\'{e}}finies sur de grands corps finis). Ph.D. thesis,
+  Sorbonne University, Paris, France (2023),
+  \url{https://tel.archives-ouvertes.fr/tel-04327955}
+
+\bibitem{DBLP:conf/crypto/BouvierBCPSVW23}
+Bouvier, C., Briaud, P., Chaidos, P., Perrin, L., Salen, R., Velichkov, V.,
+  Willems, D.: New design techniques for efficient arithmetization-oriented
+  hash functions: ttanemoi permutations and ttjive compression mode. In:
+  Handschuh, H., Lysyanskaya, A. (eds.) Advances in Cryptology - {CRYPTO} 2023
+  - 43rd Annual International Cryptology Conference, {CRYPTO} 2023, Santa
+  Barbara, CA, USA, August 20-24, 2023, Proceedings, Part {III}. Lecture Notes
+  in Computer Science, vol. 14083, pp. 507--539. Springer (2023).
+  \doi{10.1007/978-3-031-38548-3\_17}
+
+\bibitem{cahill2002fibonacci}
+Cahill, N.D., D'Errico, J.R., Narayan, D.A., Narayan, J.Y.: Fibonacci
+  determinants. The college mathematics Journal  \textbf{33}(3),  221--225
+  (2002)
+
+\bibitem{ChtcherbaKapur2004}
+Chtcherba, A.D., Kapur, D.: Constructing {Sylvester}-type resultant matrices
+  using the {Dixon} formulation. Journal of Symbolic Computation
+  \textbf{38}(1),  777--814 (2004). \doi{10.1016/j.jsc.2004.02.002}
+
+\bibitem{DBLP:journals/jsc/CollartKM97}
+Collart, S., Kalkbrener, M., Mall, D.: Converting bases with the gr{\"{o}}bner
+  walk. J. Symb. Comput.  \textbf{24}(3/4),  465--469 (1997).
+  \doi{10.1006/JSCO.1996.0145}
+
+\bibitem{cox2005using}
+Cox, D., Little, J., O'Shea, D.: Using Algebraic Geometry. Graduate Texts in
+  Mathematics, Springer New York (2005),
+  \url{https://books.google.com.tw/books?id=1blxizOS9N0C}
+
+\bibitem{DBLP:journals/moc/CoxD23}
+Cox, D., D'andrea, C.: Subresultants and the shape lemma. Math. Comput.
+  \textbf{92}(343),  2355--2379 (2023). \doi{10.1090/MCOM/3840}
+
+\bibitem{DengQiTangDuan2022}
+Deng, G., Qi, N., Tang, M., Duan, X.: Constructing dixon matrix for sparse
+  polynomial equations based on hybrid and heuristics scheme. Symmetry
+  \textbf{14}(6), ~1174 (2022). \doi{10.3390/sym14061174}
+
+\bibitem{Dixon1909}
+Dixon, A.L.: The eliminant of three quantics in two independent variables.
+  Proceedings of the London Mathematical Society  \textbf{s2-7}(1),  49--69
+  (1909). \doi{https://doi.org/10.1112/plms/s2-7.1.49},
+  \url{https://londmathsoc.onlinelibrary.wiley.com/doi/abs/10.1112/plms/s2-7.1.49}
+
+\bibitem{faugere1999new}
+Faugere, J.C.: A new efficient algorithm for computing gr{\"o}bner bases (f4).
+  Journal of pure and applied algebra  \textbf{139}(1-3),  61--88 (1999)
+
+\bibitem{Faugere2002}
+Faug\`{e}re, J.C.: A new efficient algorithm for computing gr\"{o}bner bases
+  without reduction to zero (f5). In: Proceedings of the 2002 International
+  Symposium on Symbolic and Algebraic Computation. p. 75–83. ISSAC '02,
+  Association for Computing Machinery, New York, NY, USA (2002).
+  \doi{10.1145/780506.780516}
+
+\bibitem{DBLP:journals/jsc/FaugereGLM93}
+Faug{\`{e}}re, J., Gianni, P.M., Lazard, D., Mora, T.: Efficient computation of
+  zero-dimensional gr{\"{o}}bner bases by change of ordering. J. Symb. Comput.
+  \textbf{16}(4),  329--344 (1993). \doi{10.1006/JSCO.1993.1051}
+
+\bibitem{Fulton1998}
+Fulton, W.: Intersection Theory. Ergebnisse der Mathematik und ihrer
+  Grenzgebiete, Springer, 2 edn. (1998). \doi{10.1007/978-1-4612-1700-8}
+
+\bibitem{GentlemanJohnson1976}
+Gentleman, W.M., Johnson, S.C.: Analysis of algorithms, a case study:
+  Determinants of matrices with polynomial entries. ACM Transactions on
+  Mathematical Software  \textbf{2}(3),  232--241 (1976)
+
+\bibitem{Griffin2023}
+Grassi, L., Hao, Y., Rechberger, C., Schofnegger, M., Walch, R., Wang, Q.:
+  Horst meets fluid-{SPN}: Griffin for zero-knowledge applications. In:
+  Handschuh, H., Lysyanskaya, A. (eds.) Advances in Cryptology - {CRYPTO} 2023.
+  Lecture Notes in Computer Science, vol. 14083, pp. 573--606. Springer (2023).
+  \doi{10.1007/978-3-031-38548-3\_19}
+
+\bibitem{ReinforcedConcrete2022}
+Grassi, L., Khovratovich, D., L{\"u}ftenegger, R., Rechberger, C., Schofnegger,
+  M., Walch, R.: Reinforced concrete: {A} fast hash function for verifiable
+  computation. In: Proceedings of the 2022 {ACM} {SIGSAC} Conference on
+  Computer and Communications Security, {CCS} 2022. pp. 1323--1335. {ACM}
+  (2022). \doi{10.1145/3548606.3560686}
+
+\bibitem{Monolith2024}
+Grassi, L., Khovratovich, D., L{\"u}ftenegger, R., Rechberger, C., Schofnegger,
+  M., Walch, R.: Monolith: Circuit-friendly hash functions with new nonlinear
+  layers for fast and constant-time implementations. {IACR} Trans. Symmetric
+  Cryptol. 2024(3); Cryptology ePrint Archive, Paper 2023/1025 (2024),
+  \url{https://eprint.iacr.org/2023/1025}
+
+\bibitem{DBLP:conf/uss/0001KR0S21}
+Grassi, L., Khovratovich, D., Rechberger, C., Roy, A., Schofnegger, M.:
+  Poseidon: {A} new hash function for zero-knowledge proof systems. In: Bailey,
+  M.D., Greenstadt, R. (eds.) 30th {USENIX} Security Symposium, {USENIX}
+  Security 2021, August 11-13, 2021. pp. 519--535. {USENIX} Association (2021),
+  \url{https://www.usenix.org/conference/usenixsecurity21/presentation/grassi}
+
+\bibitem{DBLP:conf/africacrypt/GrassiKS23}
+Grassi, L., Khovratovich, D., Schofnegger, M.: Poseidon2: {A} faster version of
+  the poseidon hash function. In: Mrabet, N.E., Feo, L.D., Duquesne, S. (eds.)
+  Progress in Cryptology - {AFRICACRYPT} 2023 - 14th International Conference
+  on Cryptology in Africa, Sousse, Tunisia, July 19-21, 2023, Proceedings.
+  Lecture Notes in Computer Science, vol. 14064, pp. 177--203. Springer (2023).
+  \doi{10.1007/978-3-031-37679-5\_8}
+
+\bibitem{DBLP:journals/tosc/GrassiKR25}
+Grassi, L., Koschatko, K., Rechberger, C.: Poseidon and neptune: Gr{\"{o}}bner
+  basis cryptanalysis exploiting subspace trails. {IACR} Trans. Symmetric
+  Cryptol.  \textbf{2025}(2),  34--86 (2025).
+  \doi{10.46586/TOSC.V2025.I2.34-86}
+
+\bibitem{DBLP:journals/tosc/GrassiOPS22}
+Grassi, L., Onofri, S., Pedicini, M., Sozzi, L.: Invertible quadratic
+  non-linear layers for mpc-/fhe-/zk-friendly schemes over fnp application to
+  poseidon. {IACR} Trans. Symmetric Cryptol.  \textbf{2022}(3),  20--72 (2022).
+  \doi{10.46586/TOSC.V2022.I3.20-72}
+
+\bibitem{Heintz1983}
+Heintz, J.: Definability and fast quantifier elimination in algebraically
+  closed fields. Theor. Comput. Sci.  \textbf{24},  239--277 (1983).
+  \doi{10.1016/0304-3975(83)90002-6}
+
+\bibitem{hilton1991catalan}
+Hilton, P., Pedersen, J.: Catalan numbers, their generalization, and their
+  uses. The mathematical intelligencer  \textbf{13}(2),  64--75 (1991)
+
+\bibitem{HorowitzSahni1975}
+Horowitz, E., Sahni, S.: On computing the exact determinant of matrices with
+  polynomial entries. Journal of the ACM  \textbf{22}(1),  38--50 (1975).
+  \doi{10.1145/321864.321868}
+
+\bibitem{DBLP:journals/jsc/Huang23}
+Huang, Q.: Sparse polynomial interpolation based on derivatives. J. Symb.
+  Comput.  \textbf{114},  359--375 (2023). \doi{10.1016/J.JSC.2022.06.002}
+
+\bibitem{HyunNeigerSchost2019}
+Hyun, S.G., Neiger, V., Schost, {\'E}.: Implementations of efficient univariate
+  polynomial matrix algorithms and application to bivariate resultants. In:
+  Proceedings ISSAC 2019. pp. 235--242. ACM (2019).
+  \doi{10.1145/3326229.3326272}, \url{https://github.com/vneiger/pml}
+
+\bibitem{JinaduMonagan2025}
+Jinadu, A., Monagan, M.: A new dixon resultant algorithm for solving parametric
+  polynomial systems using sparse multivariate rational function interpolation.
+  Preprint, submitted to the Journal of Symbolic Computation, January 2025
+  (2025), \url{https://www.cecm.sfu.ca/CAG/papers/AyoolaJSC25.pdf}, available
+  online
+
+\bibitem{DBLP:conf/casc/JinaduM22}
+Jinadu, A., Monagan, M.B.: An interpolation algorithm for computing dixon
+  resultants. In: Boulier, F., England, M., Sadykov, T.M., Vorozhtsov, E.V.
+  (eds.) Computer Algebra in Scientific Computing - 24th International
+  Workshop, {CASC} 2022, Gebze, Turkey, August 22-26, 2022, Proceedings.
+  Lecture Notes in Computer Science, vol. 13366, pp. 185--205. Springer (2022).
+  \doi{10.1007/978-3-031-14788-3\_11}
+
+\bibitem{Jinadu2023}
+Jinadu, A.I.: Solving Parametric Systems Using Dixon Resultants and Sparse
+  Interpolation Tools. Ph.D. thesis, Simon Fraser University (Summer 2023)
+
+\bibitem{DBLP:conf/stoc/KapurS96}
+Kapur, D., Saxena, T.: Sparsity considerations in dixon resultants. In: Miller,
+  G.L. (ed.) Proceedings of the Twenty-Eighth Annual {ACM} Symposium on the
+  Theory of Computing, Philadelphia, Pennsylvania, USA, May 22-24, 1996. pp.
+  184--191. {ACM} (1996). \doi{10.1145/237814.237862}
+
+\bibitem{DBLP:conf/issac/KapurS97}
+Kapur, D., Saxena, T.: Extraneous factors in the dixon resultant formulation.
+  In: Char, B.W., Wang, P.S., K{\"{u}}chlin, W. (eds.) Proceedings of the 1997
+  International Symposium on Symbolic and Algebraic Computation, {ISSAC} 1997,
+  Maui, Hawaii, USA, July 21-23, 1997. pp. 141--148. {ACM} (1997).
+  \doi{10.1145/258726.258768}
+
+\bibitem{DBLP:conf/issac/KapurSY94}
+Kapur, D., Saxena, T., Yang, L.: Algebraic and geometric reasoning using dixon
+  resultants. In: MacCallum, M.A.H. (ed.) Proceedings of the International
+  Symposium on Symbolic and Algebraic Computation, {ISSAC} '94, Oxford, UK,
+  July 20-22, 1994. pp. 99--107. {ACM} (1994). \doi{10.1145/190347.190372}
+
+\bibitem{DBLP:conf/eurocrypt/KipnisPG99}
+Kipnis, A., Patarin, J., Goubin, L.: Unbalanced oil and vinegar signature
+  schemes. In: Stern, J. (ed.) Advances in Cryptology - {EUROCRYPT} '99,
+  International Conference on the Theory and Application of Cryptographic
+  Techniques, Prague, Czech Republic, May 2-6, 1999, Proceeding. Lecture Notes
+  in Computer Science, vol.~1592, pp. 206--222. Springer (1999).
+  \doi{10.1007/3-540-48910-X\_15},
+  \url{https://doi.org/10.1007/3-540-48910-X\_15}
+
+\bibitem{DBLP:journals/tosc/KoschatkoLR24}
+Koschatko, K., L{\"{u}}ftenegger, R., Rechberger, C.: Exploring the six worlds
+  of gr{\"{o}}bner basis cryptanalysis: Application to anemoi. {IACR} Trans.
+  Symmetric Cryptol.  \textbf{2024}(4),  138--190 (2024).
+  \doi{10.46586/TOSC.V2024.I4.138-190}
+
+\bibitem{DBLP:journals/jc/LabahnNZ17}
+Labahn, G., Neiger, V., Zhou, W.: Fast, deterministic computation of the
+  hermite normal form and determinant of a polynomial matrix. J. Complex.
+  \textbf{42},  44--71 (2017). \doi{10.1016/J.JCO.2017.03.003}
+
+\bibitem{lewis2015dixon}
+Lewis, R.H.: Dixon-edf: the premier method for solution of parametric
+  polynomial systems. In: Special Sessions in Applications of Computer Algebra,
+  pp. 237--256. Springer (2015)
+
+\bibitem{Lewis2017}
+Lewis, R.H.: Dixon-edf: The premier method for solution of parametric
+  polynomial systems. In: Kotsireas, I.S., Mart{\'i}nez-Moro, E. (eds.)
+  Applications of Computer Algebra. pp. 237--256. Springer International
+  Publishing, Cham (2017)
+
+\bibitem{fermat}
+Lewis, R.H.: Fermat computer algebra system. \url{https://home.bway.net/lewis/}
+  (2024), version 6.5
+
+\bibitem{Li2007symbolic}
+Li, Y.: An effective algorithm of computing symbolic determinants with
+  multivariate polynomial entries. Applied Mathematics and Computation
+  \textbf{192}(2),  382--388 (2007)
+
+\bibitem{DBLP:conf/asiacrypt/LiuMM24}
+Liu, F., Mahzoun, M., Meier, W.: Modelling ciphers with overdefined systems of
+  quadratic equations: Application to friday, vision, {RAIN} and biscuit. In:
+  Chung, K., Sasaki, Y. (eds.) Advances in Cryptology - {ASIACRYPT} 2024 - 30th
+  International Conference on the Theory and Application of Cryptology and
+  Information Security, Kolkata, India, December 9-13, 2024, Proceedings, Part
+  {VII}. Lecture Notes in Computer Science, vol. 15490, pp. 424--456. Springer
+  (2024). \doi{10.1007/978-981-96-0941-3\_14}
+
+\bibitem{macaulay1902some}
+Macaulay, F.S.: Some formulae in elimination. Proceedings of the London
+  Mathematical Society  \textbf{1}(1),  3--27 (1902)
+
+\bibitem{DBLP:journals/iacr/MayOR25}
+May, A., Ostuzzi, M., Ressler, H.: Just guess: Improved (quantum) algorithm for
+  the underdetermined {MQ} problem. {IACR} Cryptol. ePrint Arch.
+  \textbf{2025}, ~1788 (2025), \url{https://eprint.iacr.org/2025/1788}
+
+\bibitem{meurant2025hessenberg}
+Meurant, G.: Hessenberg and Tridiagonal Matrices: Theory and Examples. SIAM
+  (2025), \url{https://epubs.siam.org/doi/10.1137/1.9781611978452}
+
+\bibitem{painvin1874note}
+Painvin, L.: Note sur la m{\'e}thode d'{\'e}limination de bezout. Nouvelles
+  annales de math{\'e}matiques: journal des candidats aux {\'e}coles
+  polytechnique et normale  \textbf{13},  278--285 (1874)
+
+\bibitem{DBLP:journals/ijcm/QinWTJ17}
+Qin, X., Wu, D., Tang, L., Ji, Z.: Complexity of constructing dixon resultant
+  matrix. Int. J. Comput. Math.  \textbf{94}(10),  2074--2088 (2017).
+  \doi{10.1080/00207160.2016.1276572}
+
+\bibitem{DBLP:journals/jsc/QinZYC22}
+Qin, X., Zhang, L., Yang, L., Cao, S.: Heuristics to sift extraneous factors in
+  dixon resultants. J. Symb. Comput.  \textbf{112},  105--121 (2022).
+  \doi{10.1016/J.JSC.2022.01.003}
+
+\bibitem{DBLP:journals/corr/abs-2303-04639}
+Roy, A., Steiner, M.J., Trevisani, S.: Arion: Arithmetization-oriented
+  permutation and hashing from generalized triangular dynamical systems. CoRR
+  \textbf{abs/2303.04639} (2023). \doi{10.48550/ARXIV.2303.04639}
+
+\bibitem{DBLP:journals/iacr/SauerS21}
+Sauer, J.F., Szepieniec, A.: Sok: Gr{\"{o}}bner basis algorithms for
+  arithmetization oriented ciphers. {IACR} Cryptol. ePrint Arch. p.~870 (2021),
+  \url{https://eprint.iacr.org/2021/870}
+
+\bibitem{schwartz1980fast}
+Schwartz, J.T.: Fast probabilistic algorithms for verification of polynomial
+  identities. Journal of the ACM (JACM)  \textbf{27}(4),  701--717 (1980)
+
+\bibitem{DBLP:phd/hal/Spaenlehauer12}
+Spaenlehauer, P.: Solving multi-homogeneous and determinantal systems:
+  algorithms, complexity, applications. (R{\'{e}}solution de syst{\`{e}}mes
+  multi-homog{\`{e}}nes et d{\'{e}}terminantiels : algorithmes,
+  complexit{\'{e}}, applications). Ph.D. thesis, Pierre and Marie Curie
+  University, Paris, France (2012),
+  \url{https://tel.archives-ouvertes.fr/tel-01110756}
+
+\bibitem{DBLP:journals/tosc/Steiner24}
+Steiner, M.J.: Solving degree bounds for iterated polynomial systems. {IACR}
+  Trans. Symmetric Cryptol.  \textbf{2024}(1),  357--411 (2024).
+  \doi{10.46586/TOSC.V2024.I1.357-411}
+
+\bibitem{storjohann2000algorithms}
+Storjohann, A.: Algorithms for matrix canonical forms. Ph.D. thesis, ETH Zurich
+  (2000)
+
+\bibitem{sturmfels2002solving}
+Sturmfels, B.: Solving Systems of Polynomial Equations. Conference Board of the
+  Mathematical Sciences Regional Confe, Conference Board of the Mathematical
+  Sciences (2002), \url{https://books.google.com.tw/books?id=WUAjMQAACAAJ}
+
+\bibitem{Tip5_2023}
+Szepieniec, A., Lemmens, A., Sauer, J.F., Threadbare, B., Al-Kindi: The {Tip5}
+  hash function for recursive {STARKs}. Cryptology ePrint Archive, Paper
+  2023/107 (2023), \url{https://eprint.iacr.org/2023/107}
+
+\bibitem{cryptoeprint:2005/312}
+Tang, X., Feng, Y.: A new efficient algorithm for solving systems of
+  multivariate polynomial equations. Cryptology {ePrint} Archive, Paper
+  2005/312 (2005), \url{https://eprint.iacr.org/2005/312}
+
+\bibitem{flint}
+team, T.F.: {FLINT}: {F}ast {L}ibrary for {N}umber {T}heory (2026), version
+  3.6.0, \url{https://flintlib.org}
+
+\bibitem{pml}
+team, T.P.: {PML}: {P}olynomial {M}atrix {L}ibrary (2025), version 0.5,
+  \url{https://github.com/vneiger/pml}
+
+\bibitem{Villard2018}
+Villard, G.: On computing the resultant of generic bivariate polynomials. In:
+  Proceedings of the 2018 International Symposium on Symbolic and Algebraic
+  Computation, {ISSAC} 2018. pp. 391--398. {ACM} (2018).
+  \doi{10.1145/3208976.3209020},
+  \url{https://perso.ens-lyon.fr/gilles.villard/BIBLIOGRAPHIE/PDF/vil18.pdf}
+
+\bibitem{Wang1996characteristic}
+Wang, D.: Solving polynomial equations: Characteristic sets and triangular
+  systems. Mathematics and Computers in Simulation  \textbf{42}(4-6),  339--351
+  (1996). \doi{10.1016/S0378-4754(96)00008-0}
+
+\bibitem{DBLP:conf/asiacrypt/YangZYLT24}
+Yang, H., Zheng, Q., Yang, J., Liu, Q., Tang, D.: A new security evaluation
+  method based on resultant for arithmetic-oriented algorithms. In: Chung, K.,
+  Sasaki, Y. (eds.) Advances in Cryptology - {ASIACRYPT} 2024 - 30th
+  International Conference on the Theory and Application of Cryptology and
+  Information Security, Kolkata, India, December 9-13, 2024, Proceedings, Part
+  {VII}. Lecture Notes in Computer Science, vol. 15490, pp. 457--489. Springer
+  (2024). \doi{10.1007/978-981-96-0941-3\_15}
+
+\bibitem{Zhao2005extfast}
+Zhao, S., Fu, H.: An extended fast algorithm for constructing the dixon
+  resultant matrix. Science in China Series A: Mathematics  \textbf{48}(1),
+  131--143 (2005)
+
+\bibitem{zippel1979probabilistic}
+Zippel, R.: Probabilistic algorithms for sparse polynomials. In: International
+  symposium on symbolic and algebraic manipulation. pp. 216--226. Springer
+  (1979)
+
+\end{thebibliography}

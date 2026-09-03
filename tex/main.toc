@@ -1,0 +1,112 @@
+\babel@toc {english}{}\relax 
+\authcount {2}
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1.1}%
+\contentsline {subsubsection}{Related works.}{2}{section*.2}%
+\contentsline {paragraph}{Dixon resultant.}{3}{section*.3}%
+\contentsline {subsubsection}{Outline.}{4}{section*.5}%
+\contentsline {section}{\numberline {2}Preliminaries}{4}{section.1.2}%
+\contentsline {subsubsection}{Notation.}{4}{section*.6}%
+\contentsline {subsection}{\numberline {2.1}Resultants}{5}{subsection.1.2.1}%
+\contentsline {subsection}{\numberline {2.2}Dixon Resultant}{5}{subsection.1.2.2}%
+\contentsline {subsubsection}{Step 1: Compute the Dixon polynomial.}{5}{section*.8}%
+\contentsline {subsubsection}{Step 2: Construct the Dixon matrix.}{6}{section*.9}%
+\contentsline {subsubsection}{Step 3: Extract a maximal-rank submatrix.}{6}{section*.10}%
+\contentsline {subsubsection}{Step 4: Compute the Dixon resultant.}{6}{section*.11}%
+\contentsline {subsubsection}{Size of the Dixon matrix.}{6}{section*.12}%
+\contentsline {subsubsection}{Influence of extraneous factors.}{7}{section*.13}%
+\contentsline {subsection}{\numberline {2.3}Polynomial Matrix Determinant Computation}{7}{subsection.1.2.3}%
+\contentsline {subsubsection}{Univariate determinants.}{7}{section*.14}%
+\contentsline {subsubsection}{Multivariate determinants.}{7}{section*.15}%
+\contentsline {subsection}{\numberline {2.4}Security of AO Primitives}{8}{subsection.1.2.4}%
+\contentsline {section}{\numberline {3}Improved Complexity Estimates for Dixon Resultant}{8}{section.1.3}%
+\contentsline {subsection}{\numberline {3.1}A Refined Bound on the Size of the Dixon Matrix}{9}{subsection.1.3.1}%
+\contentsline {paragraph}{Outline of proof of Theorem~\ref {thm:dixon_general_bound}.}{10}{section*.17}%
+\contentsline {paragraph}{Connection to the Dixon Matrix Size.}{11}{section*.18}%
+\contentsline {paragraph}{From Polyhedral Constraints to Lattice Paths}{13}{section*.19}%
+\contentsline {subsubsection}{Comparison with Existing Bounds}{14}{section*.20}%
+\contentsline {subsection}{\numberline {3.2}Complexity Estimates via Our Refined Bound}{14}{subsection.1.3.2}%
+\contentsline {subsubsection}{Step~1: Compute the cancellation determinant.}{15}{section*.21}%
+\contentsline {subsubsection}{Step~2: Construct the Dixon matrix.}{15}{section*.22}%
+\contentsline {subsubsection}{Step~3: Extract a maximal-rank submatrix.}{15}{section*.23}%
+\contentsline {subsubsection}{Step~4: Compute the Dixon resultant.}{16}{section*.24}%
+\contentsline {subsubsection}{Overall comparison.}{16}{section*.25}%
+\contentsline {subsubsection}{Well-determined case.}{16}{section*.26}%
+\contentsline {subsection}{\numberline {3.3}Comparison with Gr\"obner Basis}{17}{subsection.1.3.3}%
+\contentsline {subsubsection}{Well-Determined Systems ($m = n$)}{17}{section*.27}%
+\contentsline {subsubsection}{Overdetermined Systems ($m > n$)}{17}{section*.30}%
+\contentsline {subsubsection}{Underdetermined Systems ($m < n$)}{18}{section*.31}%
+\contentsline {section}{\numberline {4}Optimized Implementation for Dixon Resultant}{18}{section.1.4}%
+\contentsline {subsection}{\numberline {4.1}Eliminating Extraneous Factors via Degree-Aware Submatrix Selection}{19}{subsection.1.4.1}%
+\contentsline {subsubsection}{Degree-aware submatrix selection strategy.}{20}{section*.32}%
+\contentsline {subsubsection}{Degree-aware selection algorithm.}{20}{section*.33}%
+\contentsline {subsection}{\numberline {4.2}Implementation}{21}{subsection.1.4.2}%
+\contentsline {paragraph}{Experimental results.}{21}{section*.35}%
+\contentsline {section}{\numberline {5}Application to AO Primitives}{21}{section.1.5}%
+\contentsline {subsection}{\numberline {5.1}Method 1: Direct elimination}{22}{subsection.1.5.1}%
+\contentsline {paragraph}{Application to Poseidon.}{23}{section*.36}%
+\contentsline {subsection}{\numberline {5.2}Method 2: Iterative elimination}{24}{subsection.1.5.2}%
+\contentsline {paragraph}{Application to Vision.}{25}{section*.39}%
+\contentsline {subsection}{\numberline {5.3}Method 3: Ideal reduction and hybrid elimination}{26}{subsection.1.5.3}%
+\contentsline {paragraph}{Application to XHash12.}{28}{section*.42}%
+\contentsline {section}{\numberline {6}Conclusion}{29}{section.1.6}%
+\contentsline {section}{\numberline {A}Background on Algebraic Geometry and Combinatorics}{39}{section.A.1}%
+\contentsline {section}{\numberline {B}Proof of Lemma~\ref {lem:fc_polytope}}{41}{section.A.2}%
+\contentsline {paragraph}{Setup.}{41}{section*.48}%
+\contentsline {paragraph}{Inclusion $P_1 + \cdots + P_n \subseteq Q_n$.}{41}{section*.49}%
+\contentsline {paragraph}{Inclusion $Q_n \subseteq P_1 + \cdots + P_n$.}{41}{section*.50}%
+\contentsline {paragraph}{Conclusion.}{43}{section*.51}%
+\contentsline {section}{\numberline {C}Experimental Validation for Dixon Matrix Size Bound}{44}{section.A.3}%
+\contentsline {section}{\numberline {D}Detailed Derivation of Complexity Ratios in Table~\ref {tab:complexity_formulas}}{45}{section.A.4}%
+\contentsline {paragraph}{Gr\"obner Basis Classical~\cite {Faugere2004}}{45}{section*.53}%
+\contentsline {paragraph}{Gr\"obner Basis F5 Bound~\cite {DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22}}{46}{section*.54}%
+\contentsline {paragraph}{Gr\"obner Basis F5 Refined~\cite {DBLP:journals/jsc/BardetFS15}}{46}{section*.55}%
+\contentsline {paragraph}{FGLM~\cite {DBLP:journals/jsc/FaugereGLM93}}{47}{section*.56}%
+\contentsline {paragraph}{BNS change of order~\cite {BerthomieuNeigerSafey2022}}{48}{section*.57}%
+\contentsline {paragraph}{Other elimination algorithms.}{48}{section*.58}%
+\contentsline {section}{\numberline {E}Further Comparative Plots}{49}{section.A.5}%
+\contentsline {section}{\numberline {F}Degree-Aware Submatrix Selection Algorithms}{51}{section.A.6}%
+\contentsline {section}{\numberline {G}Experimental Results of Degree-Aware Submatrix Selection}{52}{section.A.7}%
+\contentsline {section}{\numberline {H}Detailed Stage-wise Complexity Parameters}{53}{section.A.8}%
+\contentsline {subsection}{\numberline {H.1}Step 1 Parameter Derivations}{53}{subsection.A.8.1}%
+\contentsline {paragraph}{Dense monomial-count proxy.}{53}{section*.62}%
+\contentsline {paragraph}{Variable-wise degree bounds.}{53}{section*.63}%
+\contentsline {paragraph}{Interpolation parameters.}{54}{section*.64}%
+\contentsline {paragraph}{Sparse term bound.}{54}{section*.65}%
+\contentsline {paragraph}{Step 1 complexity models.}{54}{section*.66}%
+\contentsline {paragraph}{FDixon recursive construction.}{55}{section*.67}%
+\contentsline {subsection}{\numberline {H.2}Step 4 Parameter Derivations}{55}{subsection.A.8.2}%
+\contentsline {paragraph}{Parameter expressions.}{55}{section*.68}%
+\contentsline {paragraph}{Step 4 complexity models.}{56}{section*.69}%
+\contentsline {paragraph}{Full table of stage-wise models.}{56}{section*.70}%
+\contentsline {subsection}{\numberline {H.3}Step 1 vs Step 4 Comparison}{56}{subsection.A.8.3}%
+\contentsline {paragraph}{Notation.}{57}{section*.72}%
+\contentsline {paragraph}{Comparison of $T_{1}^{\mathrm {sparse}}$ and $T_{4}^{\mathrm {HNF}}$ as $n$ grows.}{57}{section*.73}%
+\contentsline {paragraph}{Comparison of $T_{1}^{\mathrm {HNF}}$ and $T_{4}^{\mathrm {HNF}}$ as $d$ grows.}{57}{section*.74}%
+\contentsline {paragraph}{Consequences for the overall comparison.}{58}{section*.75}%
+\contentsline {subsection}{\numberline {H.4}Well-determined Case ($k=1$)}{58}{subsection.A.8.4}%
+\contentsline {paragraph}{Explicit formulas.}{59}{section*.78}%
+\contentsline {paragraph}{Asymptotic size of $M$.}{59}{section*.79}%
+\contentsline {paragraph}{Comparison of $T_{4}^{\mathrm {HNF}}$ with $T_{1}^{\mathrm {sparse}}$.}{60}{section*.80}%
+\contentsline {paragraph}{Comparison of $T_{4}^{\mathrm {HNF}}$ with $T_{1}^{\mathrm {minor}}$.}{60}{section*.81}%
+\contentsline {paragraph}{Boundary case $\omega =2$.}{61}{section*.82}%
+\contentsline {paragraph}{Consequence.}{61}{section*.83}%
+\contentsline {section}{\numberline {I}Alternative Determinant Computation Methods}{61}{section.A.9}%
+\contentsline {paragraph}{Notation.}{61}{section*.84}%
+\contentsline {paragraph}{Intermediate-minor support proxy (modeling convention).}{62}{section*.85}%
+\contentsline {subsection}{\numberline {I.1}Expansion}{62}{subsection.A.9.1}%
+\contentsline {subsection}{\numberline {I.2}Bareiss}{62}{subsection.A.9.2}%
+\contentsline {subsection}{\numberline {I.3}Kronecker}{62}{subsection.A.9.3}%
+\contentsline {paragraph}{Correctness of Kronecker$+$HNF.}{63}{section*.86}%
+\contentsline {subsection}{\numberline {I.4}Interpolation}{63}{subsection.A.9.4}%
+\contentsline {subsection}{\numberline {I.5}Sparse}{63}{subsection.A.9.5}%
+\contentsline {paragraph}{Stage-specific instantiations.}{64}{section*.87}%
+\contentsline {paragraph}{Where the parameters come from.}{64}{section*.88}%
+\contentsline {paragraph}{Recursive block construction.}{65}{section*.89}%
+\contentsline {section}{\numberline {J}Poseidon}{65}{section.A.10}%
+\contentsline {paragraph}{Attack models used in Section~\ref {Section:Application}.}{66}{section*.91}%
+\contentsline {section}{\numberline {K}Vision}{66}{section.A.11}%
+\contentsline {paragraph}{MITM model used in Section~\ref {Section:Application}.}{66}{section*.93}%
+\contentsline {paragraph}{A rank bound for the ladder rungs.}{68}{section*.95}%
+\contentsline {paragraph}{Stage-by-stage figures.}{68}{section*.96}%
+\contentsline {section}{\numberline {L}XHash12}{70}{section.A.12}%
+\contentsline {paragraph}{Hybrid model used in Section~\ref {Section:Application}.}{70}{section*.100}%
