@@ -12,12 +12,12 @@ Method~1 applies the Dixon resultant directly to a square polynomial system. Sta
 This method is best suited to Type~I (low-degree) primitives, whose CICO systems admit a dense but uniformly low-degree algebraic description, so that the first elimination dominates and the later back-substitution phases operate on lower-dimensional systems; we take \poseidon as the representative example.
 
 \paragraph{Application to Poseidon.}
-We consider the CICO problems of \poseidon~\cite{DBLP:conf/uss/0001KR0S21} and \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} in sponge mode, using the input/output and internal-subspace models from~\cite{DBLP:journals/tosc/GrassiKR25}; the precise models are summarized in Appendix~\ref{appendix:poseidon} (see Figure~\ref{fig:poseidon} for an overview of the permutation). For the pure I/O model, direct Dixon elimination matches the natural square-system viewpoint. For the mixed-degree subspace models, the determinant bound from Section~\ref{Section: Complexity} becomes essential because the polynomial degrees are no longer uniform.
+We consider the CICO-3 problems of \poseidon~\cite{DBLP:conf/uss/0001KR0S21} and \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} in sponge mode, using the input/output and internal-subspace models from~\cite{DBLP:journals/tosc/GrassiKR25}; the precise models are summarized in Appendix~\ref{appendix:poseidon} (see Figure~\ref{fig:poseidon} for an overview of the permutation). For the pure I/O model, direct Dixon elimination matches the natural square-system viewpoint. For the mixed-degree subspace models, the determinant bound from Section~\ref{Section: Complexity} becomes essential because the polynomial degrees are no longer uniform.
 Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=8$, $c=d=3$, $\alpha=3$ across different numbers of partial rounds.
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.84\textwidth]{poseidon_complexity.png}
+\includegraphics[width=0.95\textwidth]{poseidon_complexity.png}
 \caption{Complexity comparison for \poseidon and \poseidonnew, with the model parameters $t=8$, $c=d=3$, $\alpha=3$ of~\cite{DBLP:journals/tosc/GrassiKR25}. Here $\omega = 2.81$ for all curves.}
 \label{fig:poseidon_complexity}
 \end{figure}
@@ -26,7 +26,7 @@ Table~\ref{tab:poseidon-timing} reports small-instance timings. Full-round syste
 
 \begin{table}[h]
 \centering
-\caption{Timing comparison for Poseidon instances ($t=6, c=1$, I/O modeling, bypass one round) over $\mathbb{F}_p$, $p = 2^{62}+169$. $T$ and $E$ denote Theoretical and Experimental values, the latter being the observed support dimension rather than $\rho$; complexities (Comp.) are in $\log_2$ field operations. Here $\omega = 2.81$. For odd $R_F$, one additional full round is added at the beginning. Both the Comp. and the timed implementation use the HNF determinant model.}
+\caption{Timing comparison for Poseidon instances ($t=6, c=1, d=3$, I/O modeling, bypass one round) over $\mathbb{F}_p$, $p = 2^{62}+169$. $T$ and $E$ denote Theoretical and Experimental values, the latter being the observed support dimension rather than $\rho$; complexities (Comp.) are in $\log_2$ field operations. Here $\omega = 2.81$. For odd $R_F$, one additional full round is added at the beginning. Both the Comp. and the timed implementation use the HNF determinant model.}
 \label{tab:poseidon-timing}
 \small
 \setlength{\tabcolsep}{4pt}
@@ -109,7 +109,7 @@ For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.80\textwidth]{vision_complexity.png}
+\includegraphics[width=0.90\textwidth]{vision_complexity.png}
 \caption{Complexity comparison for \vision ($\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}.).}
 \label{fig:vision_complexity_comparison}
 \end{figure}
@@ -196,7 +196,7 @@ We focus on \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}; the permutatio
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.84\textwidth]{xhash_complexity.png}
+\includegraphics[width=0.95\textwidth]{xhash_complexity.png}
 \caption{Complexity comparison for \texttt{XHash12}, $\omega = 2.81$.}
 \label{fig:xhash_complexity}
 \end{figure}

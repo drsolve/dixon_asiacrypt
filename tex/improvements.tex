@@ -50,31 +50,31 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 	\item \textbf{Complexity estimation:} A tool for estimating the cost of a polynomial system, or of a parameter set such as the number of variables and degrees.
 \end{itemize}
 
-\paragraph{Experimental results.}
-All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the fastest previous Dixon resultant implementation Fermat~\cite{fermat}. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve shows significant advantages for systems with fewer variables and higher degrees.
-Our advantage over Fermat is primarily due to the high-performance polynomial-matrix routines in FLINT/PML, in particular the efficient HNF algorithm.
-
 \begin{figure}[h]
 	\centering
-	\begin{subfigure}[t]{0.46\textwidth}
+	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_n3_comparison.png}
 	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.46\textwidth}
+	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_n4_comparison.png}
 	\end{subfigure}\\[2pt]
-	\begin{subfigure}[t]{0.46\textwidth}
+	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_n5_comparison.png}
 	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.46\textwidth}
+	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_d2_vary_n.png}
 	\end{subfigure}
-	\caption{Performance comparison (time in seconds) of \drsolve, Magma, msolve, and Fermat on randomly generated dense polynomial systems over $\Fp$ with $p=2^{29}+11$. The four panels show degree sweeps for $n=3,4,5$ and a variable-count sweep for $d=2$; here $n$ denotes the number of variables (equal to the number of equations). A curve stops where the corresponding solver exceeded the time or memory budget of the benchmark.}
+	\caption{Performance comparison (time in seconds) of \drsolve, Magma, msolve, and Fermat on randomly generated dense polynomial systems over $\Fp$ with $p=2^{29}+11$. The four panels show degree sweeps for $n=3,4,5$ and a variable-count sweep for $d=2$; here $n$ denotes the number of variables (equal to the number of equations). A curve stops where the corresponding solver exceeded one hour.}
 	\label{fig:BenchmarkComparison}
 \end{figure}
+
+\paragraph{Experimental results.}
+All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the fastest previous Dixon resultant implementation Fermat~\cite{fermat}. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve shows significant advantages for systems with fewer variables and higher degrees.
+Our advantage over Fermat is primarily due to the high-performance polynomial-matrix routines in FLINT/PML, in particular the efficient HNF algorithm.
 
 
 
