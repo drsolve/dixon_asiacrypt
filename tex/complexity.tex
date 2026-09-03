@@ -2,7 +2,7 @@
 
 Prior work on Dixon resultant bounds~\cite{DBLP:conf/stoc/KapurS96} focused on multi-homogeneous and unmixed systems. We consider general mixed systems with varying degrees, bound the size of the Dixon matrix via lattice path counting, and obtain bounds that are attained for generic systems, yielding refined complexity estimates.
 
-Throughout this section, $D(\mathcal{F})$ denotes the support size of the Dixon matrix $\mathcal{M}$ associated with $\mathcal{F}$, that is, the maximum of the numbers of distinct $\xvec$-monomials and $\overline{\xvec}$-monomials occurring in the Dixon polynomial. It is thus a bound on the \emph{monomial-support dimension} of $\mathcal{M}$ rather than on $\operatorname{rank}\mathcal{M}$ (Remark~\ref{rem:support_vs_rank}); for generic systems the two monomial counts coincide and $\mathcal{M}$ is square (Lemma~\ref{lem:dixon_fc_bound}), which is the situation described by the formulas below. We denote a system of $n$ polynomials with total-degree bounds $d_1, d_2, \ldots, d_n$ as a $(d_1,\ldots,d_n)$-system. The special case $d_1=\cdots=d_n=d$ is referred to as an $(n;d)$-system, following~\cite{DBLP:conf/stoc/KapurS96}.
+Throughout this section, $D(\mathcal{F})$ is the size of the Dixon matrix $\mathcal{M}$ of $\mathcal{F}$ (Table~\ref{tab:notation}); it upper-bounds $\rho=\operatorname{rank}\mathcal{M}$ but is in general strictly larger (Remark~\ref{rem:support_vs_rank}). For generic systems, and under the characteristic hypothesis of Lemma~\ref{lem:dixon_fc_bound}, the two monomial counts coincide and $\mathcal{M}$ is square, which is the situation described by the formulas below. A system of $n$ polynomials with $\deg_{\xvec}(f_i)\le d_i$ is called a $(d_1,\ldots,d_n)$-system, and an $(n;d)$-system when $d_1=\cdots=d_n=d$, following~\cite{DBLP:conf/stoc/KapurS96}.
 
 \subsection{A Refined Bound on the Size of the Dixon Matrix}\label{Subsection:Matrix_Size}
 
@@ -23,7 +23,7 @@ We bound the Dixon matrix size for general $(d_1,\ldots,d_n)$-systems via a latt
 \end{theorem}
 
 \begin{remark}
-	Note that the minimum degree $d_1$ does not affect the size of the Dixon matrix. In the refined construction~\eqref{eq:Dixon_polynomial_improve}, the first row of $\widehat{C}$ still contains the original polynomials $f_j$, while the $\bar{\bs x}$-support of $\det \widehat{C}$ is determined solely by the difference-quotient rows $i=2,\ldots,n$ (Lemma~\ref{lem:dixon_fc_bound}).
+	Note that the minimum degree $d_1$ does not affect the size of the Dixon matrix. In the refined construction~\eqref{eq:Dixon_polynomial_improve}, the first row of $\widehat{C}$ still contains the original polynomials $f_j$, while the $\bar{\bs x}$-support of $\det \widehat{C}$ is bounded by the contribution of the difference-quotient rows $i=2,\ldots,n$ alone (Lemma~\ref{lem:dixon_fc_bound}).
 %More precisely, in each term $\prod_{i}\widehat{C}_{i,\sigma(i)}$ of the determinant expansion it is the factor taken from the \emph{first row} that has $\bar{\bs x}$-degree zero, so that term only sees the remaining degrees $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$; since $d_1$ is the smallest degree, all these multisets are dominated by $\{d_2,\ldots,d_n\}$, which is the multiset appearing in the bound.
 \end{remark}
 
@@ -69,7 +69,7 @@ This lattice path counting problem admits precise closed-form solutions through 
 By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}, we immediately obtain the following bounds.
 
 \begin{corollary}\label{cor:three_bounds}
-	For $(d_1, d_2, \ldots, d_n)$-system $\mathcal{F}$ with $d_1 \leq d_2 \leq \cdots \leq d_n$, the following three bounds of Dixon matrix size hold:
+	For a $(d_1, d_2, \ldots, d_n)$-system $\mathcal{F}$ with $d_1 \leq d_2 \leq \cdots \leq d_n$, the following three bounds of Dixon matrix size hold:
 	\begin{enumerate}
 		
 		\item[(1)] \textbf{Unrestricted Bound:} 
@@ -78,18 +78,18 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 		\end{equation}
 		This bound is obtained by counting all lattice paths from $(0,0)$ to $(n-1, \sum_{i=2}^{n} (d_i - 1))$ without boundary constraints.
 		
-		\item[(2)] \textbf{Fuss-Catalan Bound (for $(n;d)$-systems):}
+		\item[(2)] \textbf{Fuss--Catalan Bound (for $(n;d)$-systems):}
 		Assume $d_1 = \cdots = d_n = d$.
 		\begin{equation}\label{eq:fuss_catalan_bound}
 			D(\mathcal{F}) \leq C_n^{(d)} = \frac{1}{(d-1)n+1}\binom{dn}{n}.
 		\end{equation}
-		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(2).
+		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(2), under the characteristic hypothesis of Lemma~\ref{lem:dixon_fc_bound}.
 		
 		\item[(3)] \textbf{Determinant Bound:} 
 		\begin{equation}\label{eq:determinant_bound}
 			D(\mathcal{F}) \leq \det_{1\leq i,j\leq n-1} \left( \binom{\sum_{k=1}^{i} (d_{n+1-k} - 1) + 1}{j - i + 1} \right).
 		\end{equation}
-		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(3).
+		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(3), under the same hypothesis.
 		
 		
 	\end{enumerate}
@@ -100,12 +100,12 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 \end{remark}
 
 \paragraph{Outline of proof of Theorem~\ref{thm:dixon_general_bound}.}
-We introduce the Iterated-Simplex Polynomial as a bridge connecting the Dixon matrix size to lattice path counting. Lemma~\ref{lem:fc_polytope} gives a polyhedral description of its support via inequalities $\alpha_1+\cdots+\alpha_k \leq \sum_{i=1}^k (d_{n-i+1}-1)$. Using this description, Lemma~\ref{lem:dixon_fc_bound} shows the Dixon matrix size is bounded by the number of monomials of ${I}_{d_2-1, \ldots, d_{n}-1}$, with equality for generic systems. Lemma~\ref{lem:lattice_path_count} then bijects these lattice points with lattice paths below a piecewise linear boundary.
+We introduce the Iterated-Simplex Polynomial as a bridge connecting the Dixon matrix size to lattice path counting. Lemma~\ref{lem:fc_polytope} gives a polyhedral description of its support via the trailing-sum inequalities $\alpha_{n-k+1}+\cdots+\alpha_n \leq \sum_{i=1}^k d_{n-i+1}$. Using this description, Lemma~\ref{lem:dixon_fc_bound} shows the Dixon matrix size is bounded by the number of monomials of ${I}_{d_2-1, \ldots, d_{n}-1}$, with equality for generic systems. Lemma~\ref{lem:lattice_path_count} then bijects these lattice points with lattice paths below a piecewise linear boundary.
 
 \begin{definition}[Iterated-Simplex Polynomial]
 	Let $n \geq 1$ be a positive integer and $(d_1, d_2, \ldots, d_n)$ be a sequence of positive integers. The Iterated-Simplex polynomial is defined as
 	\begin{equation}
-		I_{d_1,d_2,\ldots,d_n}(x_1, \ldots, x_n) := \prod_{k=1}^{n} \left( \sum_{\substack{\alpha_1 + \cdots + \alpha_k \leq d_k}} x_1^{\alpha_1} \cdots x_k^{\alpha_k} \right),
+		I_{d_1,d_2,\ldots,d_n}(x_1, \ldots, x_n) := \prod_{k=1}^{n} \left( \sum_{\substack{\boldsymbol\alpha \in \mathbb{Z}_{\ge 0}^k,\; \alpha_1 + \cdots + \alpha_k \leq d_k}} x_1^{\alpha_1} \cdots x_k^{\alpha_k} \right),
 		\label{eq:Iterated_Simplex_Polynomial}
 	\end{equation}
 	where the $k$-th factor represents the complete sum of monomials in the first $k$ variables with total degree at most $d_k$.
@@ -114,7 +114,7 @@ We introduce the Iterated-Simplex Polynomial as a bridge connecting the Dixon ma
 Now we characterize the support of the Iterated-Simplex polynomial in terms of linear inequalities.
 
 \begin{lemma}\label{lem:fc_polytope}
-	The support of the Iterated-Simplex Polynomial $I_{d_1,\ldots,d_n}$ is given by
+	The support of the Iterated-Simplex Polynomial $I_{d_1,\ldots,d_n}$, taken over $\mathbb{Z}$, is given by
 \begin{equation}
   \mathrm{Supp}(I_{d_1,\ldots,d_n}) = 
   \Bigl\{ \boldsymbol\alpha \in \mathbb{Z}_{\ge 0}^n \;:\;
@@ -136,7 +136,7 @@ To compare different degree sequences, we establish a monotonicity property with
 	\end{equation}
 	Then
 	$$\operatorname{Supp}(I_{d'_1, d'_2, \ldots, d'_n}) \subseteq \operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}).$$
-	In particular, if $d_1 \leq d_2 \leq \cdots \leq d_n$ is sorted, the hypothesis holds whenever $(d'_1,\ldots,d'_n)$ is a permutation of $(d_1,\ldots,d_n)$, and more generally whenever the multiset $\{d'_1,\ldots,d'_n\}$ is obtained from $\{d_1,\ldots,d_n\}$ by decreasing some of its entries.
+	In particular, if $d_1 \leq d_2 \leq \cdots \leq d_n$ is sorted, the hypothesis holds whenever the multiset $\{d'_1,\ldots,d'_n\}$ is obtained from $\{d_1,\ldots,d_n\}$ by decreasing some of its entries, the primed sequence being listed in an arbitrary order; the case of a plain permutation is the one in which no entry is decreased.
 \end{lemma}
 
 \begin{proof}
@@ -146,46 +146,46 @@ To compare different degree sequences, we establish a monotonicity property with
 	$
 	for $k=1,\ldots,n$, and likewise for $I_{d'_1,\ldots,d'_n}$ with the right-hand sides $\sum_{j=1}^{k} d'_{n-j+1}$. The hypothesis states that every right-hand side for the primed sequence is no larger, so the constraints defining $\mathrm{Supp}(I_{d'_1,\dots,d'_n})$ are no weaker than those for $\mathrm{Supp}(I_{d_1,\dots,d_n})$, implying the inclusion.
 	
-	For the two special cases, note that when $(d_1,\ldots,d_n)$ is sorted, $\sum_{j=1}^{k} d_{n-j+1}$ is exactly the sum of the $k$ largest elements of the multiset $\{d_1,\ldots,d_n\}$. If $(d'_1,\ldots,d'_n)$ is a permutation of it, then $\sum_{j=1}^{k} d'_{n-j+1}$ is a sum of $k$ elements of the same multiset and is therefore bounded by the sum of its $k$ largest elements; if the multiset is obtained by decreasing entries, the sum of its $k$ largest elements can only decrease. In both cases the hypothesis holds.
+	For the special case, note that when $(d_1,\ldots,d_n)$ is sorted, $\sum_{j=1}^{k} d_{n-j+1}$ is exactly the sum of the $k$ largest elements of the multiset $\{d_1,\ldots,d_n\}$. Whatever the order in which the primed sequence is listed, $\sum_{j=1}^{k} d'_{n-j+1}$ is a sum of $k$ elements of $\{d'_1,\ldots,d'_n\}$ and is therefore bounded by the sum of its $k$ largest elements, which in turn can only decrease when entries of $\{d_1,\ldots,d_n\}$ are decreased. Hence the hypothesis holds.
 \end{proof}
 
 \paragraph{Connection to the Dixon Matrix Size.}
 We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 
 \begin{lemma}\label{lem:dixon_fc_bound}
-	Let $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[x_1, \ldots, x_{n-1}]$ be a system of polynomials with total degrees at most $d_1, d_2, \ldots, d_n$ respectively, where $d_1 \leq d_2 \leq \cdots \leq d_n$. Then $D(\mathcal{F})$ is bounded above by the number $N^{*}$ of monomials in the Iterated-Simplex Polynomial ${I}_{d_2-1, d_3-1, \ldots, d_{n}-1}$. Moreover, if $\mathrm{char}(\mathbb{K})$ is zero or sufficiently large, then for generic systems both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
+	Let $\mathcal{F} = \{f_1, \ldots, f_n\}$ satisfy $\deg_{\xvec}(f_i)\le d_i$ with $d_1 \leq d_2 \leq \cdots \leq d_n$, and let $N^{*}$ be the number of lattice points~\eqref{eq:support} attached to the sequence $(d_2-1, d_3-1, \ldots, d_{n}-1)$ in $n-1$ variables, that is, the support size of the Iterated-Simplex Polynomial ${I}_{d_2-1, \ldots, d_{n}-1}$ taken over $\mathbb{Z}$. Then $D(\mathcal{F})\le N^{*}$. Moreover, if $\mathrm{char}(\mathbb{K})$ is zero or sufficiently large, then for generic systems both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
 \end{lemma}
 
 \begin{proof}
 	\emph{Upper bound.}
-	By the bilinear form $\Delta(\xvec,\bar\xvec)=X\mathcal{M}\overline{X}^{T}$, the numbers of $\bar\xvec$- and of $\xvec$-monomials of $\Delta$ are the column and row dimensions of $\mathcal{M}$; write $\operatorname{Supp}_{\bar\xvec}(\cdot)$ for the set of $\bar\xvec$-exponent vectors of a polynomial of $\mathbb{K}[\avec][\xvec,\bar\xvec]$, the $\xvec$-monomials being absorbed into the coefficients. In the refined construction~\eqref{eq:Dixon_polynomial_improve} the entry $\widehat{C}_{i,j}$ involves only $\bar{x}_1,\ldots,\bar{x}_{i-1}$, with $\bar\xvec$-degree $0$ for $i=1$ and at most $d_j-1$ for $i\ge 2$, since the difference quotient lowers the degree by one. Every expansion term $\prod_{i}\widehat{C}_{i,\sigma(i)}$, $\sigma\in S_n$, therefore has exactly the shape of the product in~\eqref{eq:Iterated_Simplex_Polynomial}, whence
+	Write $\operatorname{Supp}_{\bar\xvec}(\cdot)$ for the set of $\bar\xvec$-exponent vectors of a polynomial regarded as an element of $\mathbb{K}[\avec,\xvec][\bar\xvec]$; by the bilinear form $\Delta_{\mathcal{F}}=X\mathcal{M}\overline{X}^{T}$, the numbers of $\bar\xvec$- and of $\xvec$-monomials of $\Delta_{\mathcal{F}}$ are the column and row dimensions of $\mathcal{M}$. In the refined construction~\eqref{eq:Dixon_polynomial_improve} the entry $\widehat{C}_{i,j}$ involves no dual variable other than $\bar{x}_1,\ldots,\bar{x}_{i-1}$, with $\bar\xvec$-degree $0$ for $i=1$ and at most $d_j-1$ for $i\ge 2$, since the difference quotient lowers the degree by one. In an expansion term $\prod_{i}\widehat{C}_{i,\sigma(i)}$, $\sigma\in S_n$, the factor $i=1$ therefore carries no dual variable, while the factors $i\ge2$ have exactly the shape of the product in~\eqref{eq:Iterated_Simplex_Polynomial} under the reindexing $k=i-1$: the $k$-th factor lies in $\bar{x}_1,\ldots,\bar{x}_k$ and has degree at most $d_{\sigma(k+1)}-1$. Hence
 	\begin{equation}\notag
 		\operatorname{Supp}_{\bar\xvec}\Bigl(\prod_{i=1}^{n}\widehat{C}_{i,\sigma(i)}\Bigr)
 		\subseteq \operatorname{Supp}\bigl(I_{d_{\sigma(2)}-1,\,\ldots,\,d_{\sigma(n)}-1}\bigr)
 		\subseteq \operatorname{Supp}\bigl(I_{d_{2}-1,\,\ldots,\,d_{n}-1}\bigr),
 	\end{equation}
-	the second inclusion by Lemma~\ref{lem:reorder_support}: the multiset $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$ arises from $\{d_2,\ldots,d_n\}$ by replacing $d_{\sigma(1)}$ with $d_1\le d_{\sigma(1)}$ and is therefore dominated by it, with equality for $\sigma=\mathrm{id}$. Summing over $\sigma$ bounds the number of $\bar\xvec$-monomials of $\Delta$ by $N^{*}$.
+	the second inclusion by Lemma~\ref{lem:reorder_support}, whose hypothesis does not require the primed sequence to be sorted: the multiset $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$ arises from $\{d_2,\ldots,d_n\}$ by replacing $d_{\sigma(1)}$ with $d_1\le d_{\sigma(1)}$ and is therefore dominated by it, with equality when $\sigma(1)=1$. Taking the union over $\sigma\in S_n$ bounds the number of $\bar\xvec$-monomials of $\Delta_{\mathcal{F}}$ by $N^{*}$.
 	
-	For the $\xvec$-support, consider the order-reversing involution $\tau: x_i\mapsto\bar{x}_{n-i},\ \bar{x}_i\mapsto x_{n-i}$ and the reversed system $f_j^{\mathrm{rev}}(x_1,\ldots,x_{n-1}) := f_j(x_{n-1},\ldots,x_1)$, which has the same degree sequence. Applying $\tau$ to the $i$-th row of the cancellation matrix~\eqref{eq:Cancellation Matrix} of $\mathcal{F}$ produces the $(n-i+1)$-st row of that of $\mathcal{F}^{\mathrm{rev}}$, so $\tau$ merely reverses the row order and both $\det(C)$ and $\prod_{i}(x_i-\bar{x}_i)$ are preserved up to sign. Hence
+	For the $\xvec$-support, consider the order-reversing involution $\tau: x_i\mapsto\bar{x}_{n-i},\ \bar{x}_i\mapsto x_{n-i}$ and the reversed system $\mathcal{F}^{\mathrm{rev}}=\{f_1^{\mathrm{rev}},\ldots,f_n^{\mathrm{rev}}\}$ with $f_j^{\mathrm{rev}}(x_1,\ldots,x_{n-1}) := f_j(x_{n-1},\ldots,x_1)$, which has the same degree sequence. Applying $\tau$ to the $i$-th row of the cancellation matrix~\eqref{eq:Cancellation Matrix} of $\mathcal{F}$ produces the $(n-i+1)$-st row of that of $\mathcal{F}^{\mathrm{rev}}$, so $\tau$ merely reverses the row order and both $\det(C)$ and $\prod_{i}(x_i-\bar{x}_i)$ are preserved up to sign. Hence
 	\begin{equation}\label{eq:tau_symmetry}
 		\tau\bigl(\Delta_{\mathcal{F}}(\xvec,\bar\xvec)\bigr)=\pm\,\Delta_{\mathcal{F}^{\mathrm{rev}}}(\xvec,\bar\xvec),
 	\end{equation}
 	and since $\tau$ carries $\xvec$-monomials bijectively to $\bar\xvec$-monomials, the previous paragraph applied to $\mathcal{F}^{\mathrm{rev}}$ bounds the number of $\xvec$-monomials of $\Delta_{\mathcal{F}}$ by $N^{*}$ as well. This proves $D(\mathcal{F})\le N^{*}$ over an arbitrary field.
 	
 	\emph{Attainment for generic systems.}
-	Take the nested system $\mathcal{F}^* = \{f_1,\ldots,f_n\}$ with $f_1 = 1$ and $f_i = \bigl(\sum_{k=1}^{i-1} x_k\bigr)^{d_i}$ for $i\ge2$; this is consistent with the coefficient space of $(d_1,\ldots,d_n)$-systems, since $N^{*}$ does not depend on $d_1$. For $j<i$ the polynomial $f_j$ does not involve $x_{i-1}$, so the numerator of the difference quotient in row $i$ vanishes identically and $\widehat{C}_{i,j}=0$. Thus $\widehat{C}$ is upper-triangular and, up to an irrelevant sign,
+	Write $s_{j} := \sum_{l=1}^{j} \bar{x}_l$ for the partial sums of the dual variables, so that $s_{0}=0$ and $s_{i-2}+\bar{x}_{i-1}=s_{i-1}$. Take the nested system $\mathcal{F}^* = \{f^*_1,\ldots,f^*_n\}$ with $f^*_1 = 1$ and $f^*_i = \bigl(\sum_{l=1}^{i-1} x_l\bigr)^{d_i}$ for $i\ge2$, which lies in the coefficient space of Definition~\ref{def:generic} since $\deg_{\xvec}(f^*_i)\le d_i$. For $j<i$ the polynomial $f^*_j$ does not involve $x_{i-1}$, so the numerator of the difference quotient in row $i$ vanishes identically and $\widehat{C}_{i,j}=0$. Thus $\widehat{C}$ is upper-triangular and, since $\widehat{C}_{1,1}=f^*_1=1$,
 	\begin{equation}\notag
-		\Delta(\xvec, \bar{\xvec}) = \prod_{i=2}^{n} \widehat{C}_{i,i},
+		\Delta_{\mathcal{F}^*} = \prod_{i=2}^{n} \widehat{C}_{i,i},
 		\qquad
-		\widehat{C}_{i,i} = -\sum_{k=0}^{d_i-1} (\bar{X}_{i-2} + x_{i-1})^k (\bar{X}_{i-2} + \bar{x}_{i-1})^{d_i-1-k},
+		\widehat{C}_{i,i} = -\sum_{t=0}^{d_i-1} (s_{i-2} + x_{i-1})^t (s_{i-2} + \bar{x}_{i-1})^{d_i-1-t}.
 	\end{equation}
-	with $\bar{X}_{i-2} = \sum_{j=1}^{i-2} \bar{x}_j$. Specializing all $x_i$ to $1$ can only shrink the $\bar\xvec$-support, so it suffices to exhibit $N^{*}$ monomials after the specialization. The coefficients produced there are positive multinomial coefficients, so no cancellation occurs as soon as $\operatorname{char}(\mathbb{K})$ is zero or large enough (Remark~\ref{rem:support_vs_rank}). The summand with $d_i-1-k=e$ then shows that $\operatorname{Supp}_{\bar\xvec}(\widehat{C}_{i,i})$ is the full simplex of degree $d_i-1$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$, and by the same positivity $\operatorname{Supp}_{\bar\xvec}(\Delta)=\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$, of cardinality $N^{*}$.
+	Specializing all $x_i$ to $1$ can only shrink the $\bar\xvec$-support, so it suffices to exhibit $N^{*}$ monomials in $\Delta_{\mathcal{F}^*}|_{\xvec=\mathbf{1}}$. All its coefficients are integers of the same sign $(-1)^{n-1}$, so no cancellation occurs as soon as $\operatorname{char}(\mathbb{K})$ is zero or large enough (Remark~\ref{rem:support_vs_rank}). The summand of index $t$ of $\widehat{C}_{i,i}|_{\xvec=\mathbf{1}}$ is $(s_{i-2}+1)^{t}\,s_{i-1}^{\,d_i-1-t}$, whose support contains all monomials of degree $d_i-1-t$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$; letting $t$ run over $0,\ldots,d_i-1$ shows that $\operatorname{Supp}_{\bar\xvec}(\widehat{C}_{i,i}|_{\xvec=\mathbf{1}})$ is the full simplex of degree $d_i-1$, and by the same absence of cancellation $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}^*}|_{\xvec=\mathbf{1}})=\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$, of cardinality $N^{*}$.
 	
-	Finally, the requirement that all $N^{*}$ iterated-simplex monomials occur in $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}})$ is a finite conjunction of nonvanishing polynomial conditions on the coefficients of $\mathcal{F}$, satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset $U$ of the irreducible coefficient space. As $\mathcal{F}\mapsto\mathcal{F}^{\mathrm{rev}}$ is a linear automorphism preserving the degree bounds, $U^{\mathrm{rev}}:=\{\mathcal{F}: \mathcal{F}^{\mathrm{rev}}\in U\}$ is again dense and open, and by~\eqref{eq:tau_symmetry} the $\xvec$-support of $\Delta_{\mathcal{F}}$ has $N^{*}$ elements on it. On $U\cap U^{\mathrm{rev}}$ both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
+	Finally, the requirement that all $N^{*}$ iterated-simplex monomials occur in $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}})$ is a finite intersection of Zariski-open conditions on the coefficients of $\mathcal{F}$, satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset $U$ of the irreducible coefficient space. As $\mathcal{F}\mapsto\mathcal{F}^{\mathrm{rev}}$ is a linear automorphism preserving the degree bounds, $U^{\mathrm{rev}}:=\{\mathcal{F}: \mathcal{F}^{\mathrm{rev}}\in U\}$ is again dense and open, and by~\eqref{eq:tau_symmetry} the $\xvec$-support of $\Delta_{\mathcal{F}}$ has $N^{*}$ elements for every $\mathcal{F}\in U^{\mathrm{rev}}$. On $U\cap U^{\mathrm{rev}}$ both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
 \end{proof}
 
 \begin{remark}\label{rem:support_vs_rank}
-	Here ``generic'' is meant in the Zariski sense of Definition~\ref{def:generic}, and $D(\mathcal{F})$ is the row/column dimension of $\mathcal{M}$, i.e.\ the size of its monomial support. It is an upper bound for, and in general strictly larger than, $\operatorname{rank}\mathcal{M}$: exhibiting all row and column monomials does not exhibit a non-vanishing minor of size $N^{*}$. The support containment, and hence the upper bound, holds over any field; only attainment needs a hypothesis on the characteristic. Concretely, it is enough that the finitely many positive integers produced by the all-ones specialization in the proof---multinomial coefficients attached to $(d_2,\ldots,d_n)$ alone---do not vanish in $\mathbb{K}$, so for each degree sequence only finitely many characteristics are excluded. In small characteristic cancellations do occur: over $\mathbb{F}_2$, for instance, $(1+x_1)(1+x_1+x_2)=1+x_2+x_1^2+x_1x_2$ loses a monomial of the predicted support. The formulas should accordingly be read there as upper-bound templates rather than exact equalities.
+	Here ``generic'' is meant in the Zariski sense of Definition~\ref{def:generic}. The support dimension $D(\mathcal{F})$ is an upper bound for, and in general strictly larger than, $\rho=\operatorname{rank}\mathcal{M}$: exhibiting all row and column monomials does not exhibit a non-vanishing minor of size $N^{*}$. The support containment, and hence the upper bound, holds over any field; attainment only requires that the integers produced by the all-ones specialization do not vanish in $\mathbb{K}$, and since $\widehat{C}_{i,i}|_{\xvec=\bar\xvec=\mathbf{1}}=-d_i(i-1)^{d_i-1}$, the explicit condition $\operatorname{char}(\mathbb{K})=0$ or $\operatorname{char}(\mathbb{K})>\prod_{i=2}^{n}d_i(i-1)^{d_i-1}$ suffices, so for each degree sequence only finitely many characteristics are excluded. In small characteristic cancellations do occur: over $\mathbb{F}_2$, for instance, $(1+x_1)(1+x_1+x_2)=1+x_2+x_1^2+x_1x_2$ loses a monomial of the predicted support, and the formulas should be read there as upper-bound templates.
 \end{remark}
 
 \paragraph{From Polyhedral Constraints to Lattice Paths}
@@ -227,7 +227,7 @@ We now establish a bijection between lattice points satisfying the polyhedral co
 \end{proof}
 
 
-We now combine the three lemmas above into a proof of Theorem~\ref{thm:dixon_general_bound}. By Lemma~\ref{lem:dixon_fc_bound} the Dixon matrix size is bounded by the monomial count of $I_{d_2-1,d_3-1,\ldots,d_n-1}$ (in $n-1$ variables and with $n-1$ subscripts), with equality for generic systems. By Lemma~\ref{lem:fc_polytope} applied with $n$ replaced by $n-1$ and degree sequence $(d_2-1,\ldots,d_n-1)$, this monomial count equals the number of lattice points $(\alpha_1,\ldots,\alpha_{n-1})\in\mathbb{Z}_{\ge 0}^{n-1}$ satisfying
+We now combine the three lemmas above into a proof of Theorem~\ref{thm:dixon_general_bound}. By Lemma~\ref{lem:dixon_fc_bound} the Dixon matrix size is bounded by the support size of $I_{d_2-1,d_3-1,\ldots,d_n-1}$ (in $n-1$ variables and with $n-1$ subscripts), with equality for generic systems. By Lemma~\ref{lem:fc_polytope} applied with $n$ replaced by $n-1$ and degree sequence $(d_2-1,\ldots,d_n-1)$, this support size equals the number of lattice points $(\alpha_1,\ldots,\alpha_{n-1})\in\mathbb{Z}_{\ge 0}^{n-1}$ satisfying
 \[
 \sum_{\ell=n-j}^{n-1}\alpha_\ell \;\le\; \sum_{i=1}^{j}(d_{n-i+1}-1),\qquad j=1,\ldots,n-1.
 \]
@@ -240,7 +240,7 @@ i.e.\ the prefix-sum form to which Lemma~\ref{lem:lattice_path_count} applies (w
 \subsubsection{Comparison with Existing Bounds}
 
 Previous work~\cite[Theorem~3.4]{DBLP:conf/stoc/KapurS96} presents a Newton polytope characterization of unmixed polynomial systems, whereas~\cite[Theorem~4.3]{DBLP:conf/stoc/KapurS96} provides volume-based bounds~\eqref{eq:Dixon_old_bound} for multi-homogeneous systems. These bounds can exhibit some deviation from actual Dixon matrix sizes for large $n$.
-In this work, we consider general mixed systems with varying polynomial degrees and establish precise bounds on the Dixon matrix size by formulating it as a lattice path counting problem. The case of $(n;d)$-systems can be viewed as a common specialization of both approaches, where the Fuss-Catalan bound provides the exact value achieved for generic systems. Our formula can also be viewed as a generalization of results in~\cite{cryptoeprint:2005/312} from $d=2$ to arbitrary degree $d$.
+In this work, we consider general mixed systems with varying polynomial degrees and establish precise bounds on the Dixon matrix size by formulating it as a lattice path counting problem. The case of $(n;d)$-systems can be viewed as a common specialization of both approaches, where the Fuss--Catalan bound provides the exact value achieved for generic systems. Our formula can also be viewed as a generalization of results in~\cite{cryptoeprint:2005/312} from $d=2$ to arbitrary degree $d$.
 
 Appendix~\ref{appendix:experimental_bound} provides a comparison of all bounds and experimental validation confirming that our bounds match actual Dixon matrix sizes for generic systems.
 
@@ -260,19 +260,19 @@ For clarity of exposition, we focus on $(n;d)$-systems where all polynomials hav
 \[
 M := C_n^{(d)} = \frac{1}{n(d-1)+1}\binom{nd}{n}
 \]
-be the generic Dixon matrix size from Corollary~\ref{cor:three_bounds}(2). Since $\operatorname{rank}\mathcal{M}\le D(\mathcal{F})$, the quantity $M$ also upper-bounds the size of the extracted submatrix $\mathcal{M}'$, so the estimates below are upper bounds on the actual cost. 
+be the generic Dixon matrix size from Corollary~\ref{cor:three_bounds}(2). Since $\rho\le D(\mathcal{F})$, the quantity $M$ also upper-bounds the size of the extracted submatrix $\mathcal{M}'$, so the estimates below are upper bounds on the actual cost. 
 
 We give a stage-by-stage outline of the relevant model choices below; here we consider the determinant methods with the lowest theoretical complexity or the fastest experimental performance. The detailed parameter derivations, complexity formulas for all five determinant models, and the full Step~1 vs Step~4 comparison are deferred to Appendix~\ref{appendix:stage_details}.
 
 \subsubsection{Step~1: Compute the cancellation determinant.}
 This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,M)$ (full derivation in Appendix~\ref{appendix:stage_details}):
-\begin{equation}\notag
+\begin{equation}
 	\mu_1 \le \binom{n-1+k+d}{n-1+k},\quad
 	S_1 \le M^2\binom{nd+k}{k},\quad
 	L_1 = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}\right),
 	\label{eq:step1_params}
 \end{equation}
-where $\mu_1$ is the dense monomial count of one polynomial of total degree $d$ in $n-1+k$ variables, the factor $M^2$ in $S_1$ comes from the Dixon bilinear support and $\binom{nd+k}{k}$ from the parameter monomials of total degree at most $B_1=nd$, and the constant-determinant cost $n^\omega$ inside $L_1$ is absorbed into the $n^2\mu_1$ matrix-evaluation term, using $\omega<3$ together with $\mu_1\ge n-1+k\ge n^{\omega-2}$. Substituting~\eqref{eq:step1_params} into the two preferred determinant models yields
+where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ in $n-1+k$ variables, the factor $M^2$ in $S_1$ comes from the Dixon bilinear support and $\binom{nd+k}{k}$ from the parameter monomials of degree at most $B_1$, and the constant-determinant cost inside $L_1$ is absorbed into the matrix-evaluation term. Substituting~\eqref{eq:step1_params} into the two preferred determinant models yields
 \begin{equation}
 	T_{1}^{\mathrm{minor}}  = \widetilde{O}(n2^n\mu_1S_1) = \widetilde{O}\!\left(n\,2^n\binom{n-1+k+d}{n-1+k}M^2\binom{nd+k}{k}\right),
 	\label{eq:step1_minor}
@@ -281,15 +281,15 @@ where $\mu_1$ is the dense monomial count of one polynomial of total degree $d$ 
 	T_{1}^{\mathrm{sparse}} = \widetilde{O}(L_1S_1 + S_1\log q) = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}M^2\binom{nd+k}{k}\right)
 	\label{eq:step1_sparse}
 \end{equation}
-(the $S_1\log q$ term in the sparse model is polylogarithmic in the problem size and absorbed into $\widetilde{O}(\cdot)$). The sparse model has the lower asymptotic complexity in the polynomial-in-$(n,d)$ factor (saving $2^n/n$ relative to expansion), but in all our experiments, cached expansion by minors is consistently faster, likely due to the larger constant factors inherent in the sparse interpolation approach.
+(the term $S_1\log q$ is dominated by $L_1S_1$ up to polylogarithmic factors). The sparse model saves a factor $2^n/n$ over expansion, but in all our experiments cached expansion by minors is faster, its constant factors being much smaller.
 
 \subsubsection{Step~2: Construct the Dixon matrix.}
-Extracting the Dixon matrix coefficients from the cancellation determinant is dominated by Step~1. An alternative is the recursive construction of Zhao and Fu~\cite{Zhao2005extfast}, which builds the Dixon matrix directly via a block recursion; following Qin et al.~\cite{DBLP:journals/ijcm/QinWTJ17}, the resulting surrogate $T_{2}^{\mathrm{FDixon}}$ is attractive when few variables are eliminated and degrees are high, but for many eliminated variables the inherent $(n!)^3$ factor (Appendix~\ref{appendix:stage_details}) makes it less competitive than the direct Step~1 path.
+Extracting the Dixon matrix coefficients from the cancellation determinant is dominated by Step~1. The block recursion of Zhao and Fu~\cite{Zhao2005extfast} builds $\mathcal{M}$ directly; following Qin et al.~\cite{DBLP:journals/ijcm/QinWTJ17}, the resulting surrogate $T_{2}^{\mathrm{FDixon}}$ is attractive when few variables are eliminated and degrees are high, but its $(n!)^3$ factor (Appendix~\ref{appendix:stage_details}) makes it less competitive otherwise.
 
 \subsubsection{Step~3: Extract a maximal-rank submatrix.}
 Step~3 extracts a maximal-rank submatrix numerically after finite-field evaluation, with cost
 \begin{equation}
-	\mathcal{T}_3 = \mathcal{O}(M^{\omega}).
+	T_3 = \mathcal{O}(M^{\omega}).
 	\label{eq:complexity_step3}
 \end{equation}
 The degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by a single pass over the $M^2$ entries, dominated by~\eqref{eq:complexity_step3}.
@@ -297,12 +297,12 @@ The degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by 
 \subsubsection{Step~4: Compute the Dixon resultant.}
 
 This step computes the symbolic determinant of $\mathcal{M}'$, a polynomial matrix of size at most $M$ in the $k$ retained parameters $\avec$. In the Kronecker$+$HNF model, the complexity is governed by the entry-wise parameter degree $E_4\le nd$, while in the evaluation-interpolation model it is governed by the total degree $D_4$ of the elimination polynomial.
-Assuming that the degree-aware selection of Section~\ref{Subsection:Extraneous} removes the extraneous factors (Heuristic~\ref{hyp:bezout_attainment}), the elimination polynomial coincides (up to units) with a generator of $\mathcal{I}\cap\mathbb{K}[\avec]$. By Theorem~\ref{thm:bezout_bound},
+Assuming that the degree-aware selection of Section~\ref{Subsection:Extraneous} removes the extraneous factors (Heuristic~\ref{hyp:bezout_attainment}), the elimination polynomial is an element of $J=\mathcal{I}\cap\mathbb{K}[\avec]$ of total degree at most $d_{\mathcal{I}}$. By Theorem~\ref{thm:bezout_bound},
 $
 D_4 \le d_\mathcal{I} \le d^{\,n}.
 $
 The corresponding parameters are
-\begin{equation}\notag
+\begin{equation}
 	N_4 \le (d^{\,n}+1)^k,\qquad
 	L_4 = \widetilde{O}(M^\omega),\qquad
 	\delta_4 = nd\,(M\cdot nd+1)^{k-1},
@@ -329,7 +329,7 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 
 \subsubsection{Overall comparison.}
 Let $T_{1}^{\mathrm{best}}$ and $T_{4}^{\mathrm{best}}$ be the minimum cost across all considered models for Steps~1 and~4, respectively. Then
-$T_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
+$\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
 At the idealized boundary $\omega=2$ the two stages have the same $M$-exponent, and Step~1 then dominates by a polynomial factor in $(n,d)$, since the Dixon polynomial already has $\Theta(M^2)$ coefficient positions. For the practically relevant case $\omega>2$, $T_{4}^{\mathrm{best}}$ asymptotically dominates as $n$ or $d$ grows, and it also dominates the running time in our experiments. We therefore take $T_{4}^{\mathrm{best}}$ as the overall complexity estimate. A more detailed comparison is given in Appendix~\ref{appendix:step_comparison}.
 
 \subsubsection{Well-determined case.}
@@ -354,7 +354,7 @@ Similar to the general case, due to the rapid growth of $\binom{nd}{n}$, for eve
 %For $k\geq 2$, Kronecker substitution must use, in each variable $a_j$, a base $b_j$ exceeding $\deg_{a_j}(\det)$ to avoid overflow in the encoded determinant; since $\deg_{a_j}(\det)\le M\cdot E_4$, the choice $b_j = M E_4 + 1\le M\cdot nd+1$ is sufficient. After substitution the average column degree of the resulting univariate matrix is bounded by $\delta_4 = nd\,(M\cdot nd + 1)^{k-1}$, recovering~\eqref{eq:step4_hnf}. We use~\eqref{eq:dixon_complexity_well} as the overall Dixon complexity for square systems in the comparison with Gr\"obner-basis methods.
 
 \begin{remark}\label{rem:mixed_degree_complexity}
-	For general $(d_1,\ldots,d_n)$-systems, the same argument yields $T_{\mathrm{Dixon}} = \widetilde{O}\!\left(\big(\sum_{i=1}^n d_i\big)\,D(\mathcal{F})^{\omega}\right)$, with $D(\mathcal{F})$ given by Corollary~\ref{cor:three_bounds}(3).
+	For general $(d_1,\ldots,d_n)$-systems with $k=1$, the same argument yields $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}\!\left(\big(\sum_{i=1}^n d_i\big)\,D(\mathcal{F})^{\omega}\right)$, with $D(\mathcal{F})$ given by Corollary~\ref{cor:three_bounds}(3).
 \end{remark}
 
 \subsection{Comparison with Gr\"obner Basis}\label{Subsection:Other_Comparison}
@@ -371,17 +371,17 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 	% \item Compute a grevlex order Gr\"obner basis with the F4 algorithm~\cite{faugere2004complexity}. 
 	% Under the hypothesis that the polynomial system is regular, the complexity is bounded by
 	% \begin{equation} 
-		% \mathcal{T}_{\text{GB}} = \mathcal{O}\left( \binom{n + d_{\text{reg}}}{d_{\text{reg}}}^{\omega} \right)
+		% \mathcal{T}_{\mathrm{GB}} = \mathcal{O}\left( \binom{n + d_{\text{reg}}}{d_{\text{reg}}}^{\omega} \right)
 		% \label{eq:GB_Complexity}
 		% \end{equation} 
 	% arithmetic operations over $\mathbb{F}_p$, where $d_{\text{reg}}$ denotes the degree 
 	% of regularity and $2\leq \omega <3$ is the matrix multiplication exponent.
 	
 	% \item For well-determined systems ($m=n$), convert the grevlex order Gr\"obner basis to a 
-	% lexicographic order one using the FGLM algorithm~\cite{fglm}, with complexity $\mathcal{T}_{\text{FGLM}} = \mathcal{O}(n\cdot {d_{\mathcal{I}}}^\omega)$ arithmetic operations~\cite{faugere2017sparse}.
+	% lexicographic order one using the FGLM algorithm~\cite{fglm}, with complexity $\mathcal{T}_{\mathrm{FGLM}} = \mathcal{O}(n\cdot {d_{\mathcal{I}}}^\omega)$ arithmetic operations~\cite{faugere2017sparse}.
 	% For overdetermined systems ($m>n$), the FGLM conversion step is typically unnecessary as the grevlex Gr\"obner basis often contains univariate polynomials directly.
 	
-	% \item Find the roots using univariate system resolution~\cite{cantor1981new} and substitution with complexity around $\mathcal{T}_{\text{uni}} = d\log(d)\cdot (\log(d)+\log(p))\cdot \log(\log(d))$ arithmetic operations over $\mathbb{F}_p$.
+	% \item Find the roots using univariate system resolution~\cite{cantor1981new} and substitution with complexity around $\mathcal{T}_{\mathrm{uni}} = d\log(d)\cdot (\log(d)+\log(p))\cdot \log(\log(d))$ arithmetic operations over $\mathbb{F}_p$.
 	% \end{enumerate}
 
 % \paragraph{Positive-dimensional ideals ($m < n$).}
@@ -397,16 +397,16 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 
 \subsubsection{Well-Determined Systems ($m = n$)}
 
-Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24}  have established theoretical complexity bounds for Gr\"obner basis algorithms.
+Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} have established theoretical complexity bounds for Gr\"obner basis algorithms.
 Table~\ref{tab:complexity_formulas} summarizes the complexity formulas for Dixon and various Gr\"obner basis approaches for $(n;d)$-systems, together with the leading-order asymptotic equivalent of each ratio relative to Dixon.
 
-The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $M$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $M=C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of Berthomieu et al.~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor in the present regime.
+The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $M$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $M=C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor here.
 %(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $M<d^{\,n}$ often holds.) 
 The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
 
 \begin{table}[h]
 	\centering
-	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\rho_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}), and they compare a generically attained Dixon estimate with worst-case Gr\"obner basis bounds.}
+	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\eta_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}), and they compare a generically attained Dixon estimate with worst-case Gr\"obner basis bounds.}
 	\label{tab:complexity_formulas}
 	\begin{tabular}{lcc}
 		\toprule
@@ -424,19 +424,19 @@ The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5
 		\midrule
 		GB (per-deg)~\cite{DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot \sum_{i=0}^{d_{\text{reg}}} \binom{n+i-d-1}{i-d}\binom{n+i-1}{i}^{\omega-1} \right)$ &  \multicolumn{1}{c}{\textemdash}  \\
 		\midrule
-		FGLM~\cite{DBLP:journals/jsc/FaugereGLM93,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot d_{\mathcal{I}}^{\omega}\right)$ & $\mathcal{O}\!\left(n^{3\omega/2}\rho_d^{\,n\omega}\right)$ \\
+		FGLM~\cite{DBLP:journals/jsc/FaugereGLM93,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot d_{\mathcal{I}}^{\omega}\right)$ & $\mathcal{O}\!\left(n^{3\omega/2}\eta_d^{\,n\omega}\right)$ \\
 		\midrule
-		BNS order change~\cite{BerthomieuNeigerSafey2022} & $\displaystyle {\mathcal{O}}\left(t^{\,\omega-1} d_{\mathcal{I}}\right)$ & ${\mathcal{O}}\!\left(n^{\omega-1/2}\rho_d^{\,n\omega}\right)$ \\
+		BNS order change~\cite{BerthomieuNeigerSafey2022} & $\displaystyle {\mathcal{O}}\left(t^{\,\omega-1} d_{\mathcal{I}}\right)$ & ${\mathcal{O}}\!\left(n^{\omega-1/2}\eta_d^{\,n\omega}\right)$ \\
 		\bottomrule
 	\end{tabular}
-	\vspace{0.5em}
+
 \end{table}
 
 The GB (per-deg) row admits no closed-form asymptotic equivalent that is both simple and accurate, since a leading-order estimate of the index-dominated sum gives only a very loose envelope; we therefore leave its ratio entry blank and refer to Figure~\ref{fig:complexity_comparison_d}. Detailed derivations of all ratios are in Appendix~\ref{Appendix:Derivation}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.99\textwidth]{complexity_comparison_d2.png}
+	\includegraphics[width=0.88\textwidth]{complexity_comparison_d2.png}
 	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound and the HNF change of order of~\cite{BerthomieuNeigerSafey2022}, are evaluated here for direct comparison with Dixon.}
 	\label{fig:complexity_comparison_d}
 \end{figure}
@@ -445,7 +445,7 @@ The GB (per-deg) row admits no closed-form asymptotic equivalent that is both si
 % \paragraph{General mixed systems.}
 % For general $(d_1, d_2, \ldots, d_n)$-systems with non-uniform degrees, complexity estimation can be performed using the bounds from Theorem~\ref{thm:dixon_general_bound}. Even using the simple Unrestricted Bound $D(\mathcal{F}) \leq \binom{D + n - 1}{n - 1}$ where $D = \sum_{i=2}^{n} (d_i - 1)$, we obtain:
 % \begin{equation}
-	% \frac{\mathcal{T}_{\text{Dixon}}^{\text{trivial}}}{\mathcal{T}_{\text{GB}}} 
+	% \frac{\mathcal{T}_{\mathrm{Dixon}}^{\text{trivial}}}{\mathcal{T}_{\mathrm{GB}}} 
 	% = \frac{\binom{\sum_{i=2}^n (d_i - 1) + n - 1}{n - 1}^{\omega}}{\binom{\sum_{i=1}^n d_i}{n}^{\omega}}
 	% \approx \left(\frac{n}{\sum_{i=1}^n d_i}\right)^{\omega}.
 	% \end{equation}
@@ -453,16 +453,11 @@ The GB (per-deg) row admits no closed-form asymptotic equivalent that is both si
 
 \subsubsection{Overdetermined Systems ($m > n$)}
 
-Gr\"obner basis methods are typically preferable for overdetermined systems. According to~\cite{Faugere2004}, the degree of regularity $d_{\text{reg}}$ is significantly lower than for well-determined systems, dramatically reducing Macaulay matrix dimensions; overdetermined systems also often yield univariate polynomials directly in the grevlex Gr\"obner basis, eliminating the FGLM conversion step. In contrast, the Dixon resultant requires exactly $n$ equations to eliminate $n-1$ variables and cannot directly leverage redundancy: when given $m > n$ equations, one selects $n$ equations and verifies the rest afterward, with slightly higher complexity than the well-determined case.
+Gr\"obner basis methods are typically preferable here: the degree of regularity is significantly lower than for well-determined systems~\cite{Faugere2004}, dramatically reducing Macaulay matrix dimensions, and the grevlex basis often yields univariate polynomials directly, eliminating the FGLM step. The Dixon resultant, in contrast, needs exactly $n$ equations to eliminate $n-1$ variables and cannot leverage redundancy: one selects $n$ equations and verifies the rest afterward, at slightly higher cost than the well-determined case.
 
 \subsubsection{Underdetermined Systems ($m < n$)}
 
-In the underdetermined setting, from the viewpoint of complete solving, a common cryptanalytic strategy is to guess values for $n-m$ variables and reduce to a (well- or over-)determined subsystem, which is then solved by Gr\"obner bases. We do not propose Dixon as a replacement here: solving a positive-dimensional ideal in full generality is usually best handled by guess-and-reduce when one solution suffices.
-
-Instead, from the viewpoint of elimination, Dixon provides a flexible determinant-based approach: from a system with more variables, it removes several variables at once and produces explicit relations in fewer variables, which can then be combined with guessing or meet-in-the-middle decompositions. By contrast, changing term orders for positive-dimensional Gr\"obner basis computations typically requires Gr\"obner walks~\cite{DBLP:journals/jsc/CollartKM97}, whose complexity is hard to predict in general.
-
-\smallskip\noindent
-In summary, the two methods are complementary: Dixon and Gr\"obner basis are comparable on well-determined systems; Gr\"obner basis is typically preferable for overdetermined systems; Dixon is attractive for underdetermined systems as a determinant-based elimination method.
+For complete solving, the common cryptanalytic strategy is to guess $n-m$ variables and reduce to a (well- or over-)determined subsystem solved by Gr\"obner bases, and we do not propose Dixon as a replacement. From the viewpoint of elimination, however, Dixon removes several variables at once and produces explicit relations in fewer variables, which can then be combined with guessing or meet-in-the-middle decompositions; by contrast, changing term orders for positive-dimensional ideals typically requires Gr\"obner walks~\cite{DBLP:journals/jsc/CollartKM97}, whose complexity is hard to predict.
 
 %!TEX root = main.tex
 
