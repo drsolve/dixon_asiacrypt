@@ -63,7 +63,7 @@ This lattice path counting problem admits precise closed-form solutions through 
 \end{lemma}
 
 \begin{proof}
-	Parts (1) and (2) are classical results in enumerative combinatorics; see~\cite{hilton1991catalan,DBLP:journals/dm/Aval08}. Part (3) is a special case of Theorem 10.7.1 in~\cite{bona2015handbook} with $b_j = 0$ for all $j$. 
+	Parts (1)(2) are classical results in enumerative combinatorics; see~\cite{hilton1991catalan,DBLP:journals/dm/Aval08}. Part (3) is a special case of Theorem 10.7.1 in~\cite{bona2015handbook} with $b_j = 0$ for all $j$. 
 \end{proof}
 
 By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}, we immediately obtain the following bounds.
@@ -129,25 +129,18 @@ The proof is deferred to Appendix~\ref{appendix:proof_lemma_fc}, since it requir
 To compare different degree sequences, we establish a monotonicity property with respect to the trailing partial sums; it covers both reorderings and entry-wise decreases of the degrees.
 
 \begin{lemma}\label{lem:reorder_support}
-	Let $(d_1, \ldots, d_n)$ and $(d'_1, \ldots, d'_n)$ be sequences of nonnegative integers such that
-	\begin{equation}\notag
-		\sum_{j=1}^{k} d'_{n-j+1} \;\le\; \sum_{j=1}^{k} d_{n-j+1}
-		\qquad\text{for every } k=1,\ldots,n.
-	\end{equation}
-	Then
-	$$\operatorname{Supp}(I_{d'_1, d'_2, \ldots, d'_n}) \subseteq \operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}).$$
-	In particular, if $d_1 \leq d_2 \leq \cdots \leq d_n$ is sorted, the hypothesis holds whenever the multiset $\{d'_1,\ldots,d'_n\}$ is obtained from $\{d_1,\ldots,d_n\}$ by decreasing some of its entries, the primed sequence being listed in an arbitrary order; the case of a plain permutation is the one in which no entry is decreased.
+Let $(d_1,\ldots,d_n)$ and $(d'_1,\ldots,d'_n)$ be sequences of nonnegative integers satisfying $\sum_{j=1}^{k} d'_{n-j+1} \leq \sum_{j=1}^{k} d_{n-j+1}$ for every $k=1,\ldots,n$. Then $$\operatorname{Supp}(I_{d'_1,\ldots,d'_n}) \subseteq \operatorname{Supp}(I_{d_1,\ldots,d_n}).$$
+
+In particular, if $d_1\leq\cdots\leq d_n$, the hypothesis holds for any permutation of a sequence obtained by decreasing some of the $d_i$.
 \end{lemma}
 
 \begin{proof}
-	By Lemma~\ref{lem:fc_polytope}, the support of $I_{d_1,\ldots,d_n}$ is cut out by the inequalities
-	$
-	\alpha_{n-k+1} + \cdots + \alpha_n \le \sum_{j=1}^{k} d_{n-j+1}
-	$
-	for $k=1,\ldots,n$, and likewise for $I_{d'_1,\ldots,d'_n}$ with the right-hand sides $\sum_{j=1}^{k} d'_{n-j+1}$. The hypothesis states that every right-hand side for the primed sequence is no larger, so the constraints defining $\mathrm{Supp}(I_{d'_1,\dots,d'_n})$ are no weaker than those for $\mathrm{Supp}(I_{d_1,\dots,d_n})$, implying the inclusion.
-	
-	For the special case, note that when $(d_1,\ldots,d_n)$ is sorted, $\sum_{j=1}^{k} d_{n-j+1}$ is exactly the sum of the $k$ largest elements of the multiset $\{d_1,\ldots,d_n\}$. Whatever the order in which the primed sequence is listed, $\sum_{j=1}^{k} d'_{n-j+1}$ is a sum of $k$ elements of $\{d'_1,\ldots,d'_n\}$ and is therefore bounded by the sum of its $k$ largest elements, which in turn can only decrease when entries of $\{d_1,\ldots,d_n\}$ are decreased. Hence the hypothesis holds.
+By Lemma~\ref{lem:fc_polytope}, the two supports are characterized by the trailing-sum inequalities $\alpha_{n-k+1}+\cdots+\alpha_n \leq \sum_{j=1}^{k} d_{n-j+1}$ and their primed counterparts. Since every primed right-hand side is no larger, every point in $\operatorname{Supp}(I_{d'_1,\ldots,d'_n})$ also belongs to $\operatorname{Supp}(I_{d_1,\ldots,d_n})$.
+
+For the final statement, $\sum_{j=1}^{k} d_{n-j+1}$ is the sum of the $k$ largest original entries. Any suffix sum of $k$ primed entries is at most the sum of the $k$ largest primed entries, which cannot exceed the sum of the $k$ largest original entries after some entries are decreased. Hence the hypothesis holds.
 \end{proof}
+
+
 
 \paragraph{Connection to the Dixon Matrix Size.}
 We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.

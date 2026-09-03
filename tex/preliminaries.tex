@@ -79,14 +79,17 @@ for $i=1,\ldots,n-1$. Each numerator is divisible by $x_i-\overline{x}_i$ in $\m
 The Dixon polynomial admits a bilinear form $\Delta(\xvec, \overline{\xvec}) = X \mathcal{M} \overline{X}^{T}$, where $X$ and $\overline{X}$ list monomials in $\xvec$ and $\overline{\xvec}$, respectively. The coefficient matrix $\mathcal{M}$ is the \textbf{Dixon matrix}: its rows are indexed by the $\xvec$-monomials and its columns by the $\overline{\xvec}$-monomials occurring in $\Delta$, so it is in general rectangular and rank-deficient. Alternatively, $\mathcal{M}$ can be constructed directly via the recursive block method of Zhao and Fu~\cite{Zhao2005extfast}, particularly relevant when few variables are eliminated and degrees are high~\cite{DBLP:journals/ijcm/QinWTJ17}.
 
 \subsubsection{Step 3: Extract a maximal-rank submatrix.}\label{dixon_step3}
-In practice, the Dixon matrix $\mathcal{M}$ is often rectangular or rank-deficient. To obtain a valid elimination polynomial, we extract a maximal-rank square submatrix $\mathcal{M}'$, of size $\operatorname{rank}\mathcal{M}$, by selecting linearly independent rows and columns from $\mathcal{M}$. Following~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025}, this selection is typically performed efficiently after evaluating $\mathcal{M}$ at a generic point of $\mathbb{K}$.
+In practice, the Dixon matrix $\mathcal{M}$ is often rectangular or rank-deficient, so its full determinant is unavailable or identically zero. Following the extension of Dixon elimination to singular matrices by KSY~\cite{DBLP:conf/issac/KapurSY94}, we extract a maximal-rank square submatrix $\mathcal{M}'$ of size $\operatorname{rank}\mathcal{M}$ whose determinant is non-zero. Following~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025}, such a submatrix is typically identified efficiently after evaluating $\mathcal{M}$ at a generic point of $\mathbb{K}$.
 
 \begin{remark}
-	The validity of using $\det(\mathcal{M}')$ as a non-zero projection operator relies on the KSY rank condition on the singular Dixon matrix~\cite{DBLP:conf/issac/KapurSY94}. It may theoretically fail, but such instances are extremely rare in practice and it was satisfied for every instance reported in this paper. A degenerate case (even maximal-rank submatrices yielding trivial outputs) is easily resolved by fixing a single variable $x_i$ to a random value and recomputing.
+The validity of using $\det(\mathcal{M}')$ relies on the KSY condition for singular Dixon matrices. It may theoretically fail, but such instances are extremely rare in practice~\cite{DBLP:conf/issac/KapurSY94} and it was satisfied for every instance reported in this paper.
+%A degenerate case is easily resolved by fixing a single variable $x_i$ to a random value and recomputing.
 \end{remark}
 
 \subsubsection{Step 4: Compute the Dixon resultant.}\label{dixon_step4}
-Once $\mathcal{M}'$ is obtained, $\det(\mathcal{M}')$ is the Dixon resultant in $\mathbb{K}[\avec]$. Under the standard Dixon hypotheses, it vanishes whenever the original system has a common solution in the eliminated variables and is a multiple of the principal generator of $J$ whenever that ideal is principal. In general, $\det(\mathcal{M}')$ may contain extraneous factors.
+Once $\mathcal{M}'$ is obtained, $\det(\mathcal{M}')$ is the Dixon resultant in $\mathbb{K}[\avec]$.
+Under the KSY condition, it remains a valid projection polynomial for a singular Dixon matrix. Under the standard Dixon hypotheses, it vanishes whenever the original system has a common solution in the eliminated variables and is a multiple of the principal generator of $J$ whenever that ideal is principal. In general, $\det(\mathcal{M}')$ may contain extraneous factors.
+
 
 \subsubsection{Size of the Dixon matrix.}
 The size of the Dixon matrix is a key parameter in the complexity analysis. A classical variable-wise upper bound~\cite{DBLP:conf/issac/KapurSY94,DBLP:journals/ijcm/QinWTJ17} is
