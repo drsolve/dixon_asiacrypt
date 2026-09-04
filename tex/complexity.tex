@@ -249,29 +249,29 @@ Appendix~\ref{appendix:experimental_bound} provides a comparison of all bounds a
 
 \subsection{Complexity Estimates via Our Refined Bound}\label{Section: Estimate}
 
-For clarity of exposition, we focus on $(n;d)$-systems where all polynomials have total degree $d$. Consider $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[\xvec,\avec]$ consisting of $n$ equations in $n-1+k$ variables, where $\xvec=(x_1,\ldots,x_{n-1})$ are the eliminated variables and $\avec$ the retained parameters. Let
+For clarity of exposition, we focus on $(n;d)$-systems where all polynomials have total degree $d$. Consider $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[\xvec,\avec]$ consisting of $n$ equations in $n-1+k$ variables, where $\xvec=(x_1,\ldots,x_{n-1})$ are the eliminated variables and $\avec$ the retained parameters. By Corollary~\ref{cor:three_bounds}(2), the generic Dixon matrix size is
 \[
-M := C_n^{(d)} = \frac{1}{n(d-1)+1}\binom{nd}{n}
+C_n^{(d)} = \frac{1}{n(d-1)+1}\binom{nd}{n}.
 \]
-be the generic Dixon matrix size from Corollary~\ref{cor:three_bounds}(2). Since $\rho\le D(\mathcal{F})$, the quantity $M$ also upper-bounds the size of the extracted submatrix $\mathcal{M}'$, so the estimates below are upper bounds on the actual cost. 
+Since $\rho\le D(\mathcal{F})$, the quantity $C_n^{(d)}$ also upper-bounds the size of the extracted submatrix $\mathcal{M}'$, so the estimates below are upper bounds on the actual cost. 
 
 We give a stage-by-stage outline of the relevant model choices below; here we consider the determinant methods with the lowest theoretical complexity or the fastest experimental performance. The detailed parameter derivations, complexity formulas for all five determinant models, and the full Step~1 vs Step~4 comparison are deferred to Appendix~\ref{appendix:stage_details}.
 
 \subsubsection{Step~1: Compute the cancellation determinant.}
-This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,M)$ (full derivation in Appendix~\ref{appendix:stage_details}):
+This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,C_n^{(d)})$ (full derivation in Appendix~\ref{appendix:stage_details}):
 \begin{equation}
 	\mu_1 \le \binom{n-1+k+d}{n-1+k},\quad
-	S_1 \le M^2\binom{nd+k}{k},\quad
+	S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k},\quad
 	L_1 = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}\right),
 	\label{eq:step1_params}
 \end{equation}
-where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ in $n-1+k$ variables, the factor $M^2$ in $S_1$ comes from the Dixon bilinear support and $\binom{nd+k}{k}$ from the parameter monomials of degree at most $B_1$, and the constant-determinant cost inside $L_1$ is absorbed into the matrix-evaluation term. Substituting~\eqref{eq:step1_params} into the two preferred determinant models yields
+where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ in $n-1+k$ variables, the factor $\bigl(C_n^{(d)}\bigr)^2$ in $S_1$ comes from the Dixon bilinear support and $\binom{nd+k}{k}$ from the parameter monomials of degree at most $B_1$, and the constant-determinant cost inside $L_1$ is absorbed into the matrix-evaluation term. Substituting~\eqref{eq:step1_params} into the two preferred determinant models yields
 \begin{equation}
-	T_{1}^{\mathrm{minor}}  = \widetilde{O}(n2^n\mu_1S_1) = \widetilde{O}\!\left(n\,2^n\binom{n-1+k+d}{n-1+k}M^2\binom{nd+k}{k}\right),
+	T_{1}^{\mathrm{minor}}  = \widetilde{O}(n2^n\mu_1S_1) = \widetilde{O}\!\left(n\,2^n\binom{n-1+k+d}{n-1+k}\bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k}\right),
 	\label{eq:step1_minor}
 \end{equation}
 \begin{equation}
-	T_{1}^{\mathrm{sparse}} = \widetilde{O}(L_1S_1 + S_1\log q) = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}M^2\binom{nd+k}{k}\right)
+	T_{1}^{\mathrm{sparse}} = \widetilde{O}(L_1S_1 + S_1\log q) = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}\bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k}\right)
 	\label{eq:step1_sparse}
 \end{equation}
 (the term $S_1\log q$ is dominated by $L_1S_1$ up to polylogarithmic factors). The sparse model saves a factor $2^n/n$ over expansion, but in all our experiments cached expansion by minors is faster, its constant factors being much smaller.
@@ -282,14 +282,14 @@ Extracting the Dixon matrix coefficients from the cancellation determinant is do
 \subsubsection{Step~3: Extract a maximal-rank submatrix.}
 Step~3 extracts a maximal-rank submatrix numerically after finite-field evaluation, with cost
 \begin{equation}
-	T_3 = \mathcal{O}(M^{\omega}).
+	T_3 = \mathcal{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}\right).
 	\label{eq:complexity_step3}
 \end{equation}
-The degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by a single pass over the $M^2$ entries, dominated by~\eqref{eq:complexity_step3}.
+The degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by a single pass over the $\bigl(C_n^{(d)}\bigr)^2$ entries, dominated by~\eqref{eq:complexity_step3}.
 
 \subsubsection{Step~4: Compute the Dixon resultant.}
 
-This step computes the symbolic determinant of $\mathcal{M}'$, a polynomial matrix of size at most $M$ in the $k$ retained parameters $\avec$. In the Kronecker$+$HNF model, the complexity is governed by the entry-wise parameter degree $E_4\le nd$, while in the evaluation-interpolation model it is governed by the total degree $D_4$ of the elimination polynomial.
+This step computes the symbolic determinant of $\mathcal{M}'$, a polynomial matrix of size at most $C_n^{(d)}$ in the $k$ retained parameters $\avec$. In the Kronecker$+$HNF model, the complexity is governed by the entry-wise parameter degree $E_4\le nd$, while in the evaluation-interpolation model it is governed by the total degree $D_4$ of the elimination polynomial.
 Assuming that the degree-aware selection of Section~\ref{Subsection:Extraneous} removes the extraneous factors (Heuristic~\ref{hyp:bezout_attainment}), the elimination polynomial is an element of $J=\mathcal{I}\cap\mathbb{K}[\avec]$ of total degree at most $d_{\mathcal{I}}$. By Theorem~\ref{thm:bezout_bound},
 $
 D_4 \le d_\mathcal{I} \le d^{\,n}.
@@ -297,17 +297,17 @@ $
 The corresponding parameters are
 \begin{equation}
 	N_4 \le (d^{\,n}+1)^k,\qquad
-	L_4 = \widetilde{O}(M^\omega),\qquad
-	\delta_4 = nd\,(M\cdot nd+1)^{k-1},
+	L_4 = \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\right),\qquad
+	\delta_4 = nd\,(C_n^{(d)}\cdot nd+1)^{k-1},
 	\label{eq:step4_params}
 \end{equation}
 where $\delta_4$ denotes the average column degree after Kronecker substitution and reduces to $\delta_4=nd$ when $k=1$. Therefore,
 \begin{equation}
 	T_{4}^{\mathrm{HNF}}
 	=
-	\widetilde{O}(M^\omega\delta_4)
+	\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\delta_4\right)
 	=
-	\widetilde{O}\!\left(M^\omega nd(M\cdot nd+1)^{k-1}\right),
+	\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega nd(C_n^{(d)}\cdot nd+1)^{k-1}\right),
 	\label{eq:step4_hnf}
 \end{equation}
 \begin{equation}
@@ -315,7 +315,7 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 	=
 	\widetilde{O}\!\left(N_4(L_4+kD_4)\right)
 	=
-	\widetilde{O}\!\left((d^{\,n}+1)^k(M^\omega+k\,d^{\,n})\right).
+	\widetilde{O}\!\left((d^{\,n}+1)^k\left(\bigl(C_n^{(d)}\bigr)^\omega+k\,d^{\,n}\right)\right).
 	\label{eq:step4_eval}
 \end{equation}
 %see Appendix~\ref{appendix:stage_details} for the remaining three models.
@@ -323,28 +323,28 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 \subsubsection{Overall comparison.}
 Let $T_{1}^{\mathrm{best}}$ and $T_{4}^{\mathrm{best}}$ be the minimum cost across all considered models for Steps~1 and~4, respectively. Then
 $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
-At the idealized boundary $\omega=2$ the two stages have the same $M$-exponent, and Step~1 then dominates by a polynomial factor in $(n,d)$, since the Dixon polynomial already has $\Theta(M^2)$ coefficient positions. For the practically relevant case $\omega>2$, $T_{4}^{\mathrm{best}}$ asymptotically dominates as $n$ or $d$ grows, and it also dominates the running time in our experiments. We therefore take $T_{4}^{\mathrm{best}}$ as the overall complexity estimate. A more detailed comparison is given in Appendix~\ref{appendix:step_comparison}.
+At the idealized boundary $\omega=2$ the two stages have the same $C_n^{(d)}$-exponent, and Step~1 then dominates by a polynomial factor in $(n,d)$, since the Dixon polynomial already has $\Theta\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ coefficient positions. For the practically relevant case $\omega>2$, $T_{4}^{\mathrm{best}}$ asymptotically dominates as $n$ or $d$ grows, and it also dominates the running time in our experiments. We therefore take $T_{4}^{\mathrm{best}}$ as the overall complexity estimate. A more detailed comparison is given in Appendix~\ref{appendix:step_comparison}.
 
 \subsubsection{Well-determined case.}
-For $k=1$, the final determinant is an $M\times M$ univariate polynomial matrix for which the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} is typically optimal:
+For $k=1$, the final determinant is a $C_n^{(d)}\times C_n^{(d)}$ univariate polynomial matrix for which the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} is typically optimal:
 \begin{equation}
-	T_{4}^{\mathrm{HNF}} = \widetilde{O}\!\left(M^{\omega}\,nd\right)
+	T_{4}^{\mathrm{HNF}} = \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}\,nd\right)
 	= \widetilde{O}\!\left(nd\left(\frac{1}{n(d-1)+1}\binom{nd}{n}\right)^{\omega}\right).
 	\label{eq:dixon_complexity_well}
 \end{equation}
 For Step~1, the most competitive models are sparse interpolation and cached expansion by minors; substituting $k=1$ into~\eqref{eq:step1_minor} and~\eqref{eq:step1_sparse} gives
 \begin{equation}
-	T_{1}^{\mathrm{minor}} = \widetilde{O}\!\left(n^2\,d\,2^n\binom{n+d}{n}M^2\right),
+	T_{1}^{\mathrm{minor}} = \widetilde{O}\!\left(n^2\,d\,2^n\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\right),
 	\label{eq:dixon_complexity_well_step1_minor}
 \end{equation}
 \begin{equation}
-	T_{1}^{\mathrm{sparse}} = \widetilde{O}\!\left(n^3\,d\,\binom{n+d}{n}M^2\right).
+	T_{1}^{\mathrm{sparse}} = \widetilde{O}\!\left(n^3\,d\,\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\right).
 	\label{eq:dixon_complexity_well_step1_sparse}
 \end{equation}
 
 Similar to the general case, due to the rapid growth of $\binom{nd}{n}$, for every $\omega>2$, the final-determinant cost $T_{4}^{\mathrm{HNF}}$ asymptotically dominates both Step~1 models, and it is also the empirical bottleneck in our experiments. We therefore adopt $T = T_{4}^{\mathrm{HNF}}$ as the overall complexity estimate for well-determined systems. The full derivation is given in Appendix~\ref{appendix:wellsq}.
 
-%For $k\geq 2$, Kronecker substitution must use, in each variable $a_j$, a base $b_j$ exceeding $\deg_{a_j}(\det)$ to avoid overflow in the encoded determinant; since $\deg_{a_j}(\det)\le M\cdot E_4$, the choice $b_j = M E_4 + 1\le M\cdot nd+1$ is sufficient. After substitution the average column degree of the resulting univariate matrix is bounded by $\delta_4 = nd\,(M\cdot nd + 1)^{k-1}$, recovering~\eqref{eq:step4_hnf}. We use~\eqref{eq:dixon_complexity_well} as the overall Dixon complexity for square systems in the comparison with Gr\"obner-basis methods.
+%For $k\geq 2$, Kronecker substitution must use, in each variable $a_j$, a base $b_j$ exceeding $\deg_{a_j}(\det)$ to avoid overflow in the encoded determinant; since $\deg_{a_j}(\det)\le C_n^{(d)}\cdot E_4$, the choice $b_j = C_n^{(d)} E_4 + 1\le C_n^{(d)}\cdot nd+1$ is sufficient. After substitution the average column degree of the resulting univariate matrix is bounded by $\delta_4 = nd\,(C_n^{(d)}\cdot nd + 1)^{k-1}$, recovering~\eqref{eq:step4_hnf}. We use~\eqref{eq:dixon_complexity_well} as the overall Dixon complexity for square systems in the comparison with Gr\"obner-basis methods.
 
 \begin{remark}\label{rem:mixed_degree_complexity}
 	For general $(d_1,\ldots,d_n)$-systems with $k=1$, the same argument yields $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}\!\left(\big(\sum_{i=1}^n d_i\big)\,D(\mathcal{F})^{\omega}\right)$, with $D(\mathcal{F})$ given by Corollary~\ref{cor:three_bounds}(3).
@@ -393,8 +393,8 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} have established theoretical complexity bounds for Gr\"obner basis algorithms.
 Table~\ref{tab:complexity_formulas} summarizes the complexity formulas for Dixon and various Gr\"obner basis approaches for $(n;d)$-systems, together with the leading-order asymptotic equivalent of each ratio relative to Dixon.
 
-The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $M$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $M=C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor here.
-%(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $M<d^{\,n}$ often holds.) 
+The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $C_n^{(d)}$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor here.
+%(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $C_n^{(d)}<d^{\,n}$ often holds.) 
 The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
 
 \begin{table}[h]

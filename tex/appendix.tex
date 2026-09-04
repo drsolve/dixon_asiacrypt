@@ -258,7 +258,7 @@ We provide numerical comparisons between our Fuss--Catalan bound (FC Bound, Coro
 \section{Detailed Derivation of Complexity Ratios in Table~\ref{tab:complexity_formulas}}
 \label{Appendix:Derivation}
 
-This appendix provides the step-by-step derivation for the ``Ratio to Dixon'' column in Table~\ref{tab:complexity_formulas}. All ratios below are leading-order estimates in the regime ``$d$ fixed, $n\to\infty$''. The exact formulas of Table~\ref{tab:complexity_formulas} are valid in every regime, but the simplified ratios are not uniform in $(n,d)$: for $n$ fixed and $d\to\infty$ one has instead $\binom{nd}{n}=\Theta(d^{n}/n!)$ and $M=C_n^{(d)}=\Theta(d^{\,n-1})$, and the expansions have to be redone. 
+This appendix provides the step-by-step derivation for the ``Ratio to Dixon'' column in Table~\ref{tab:complexity_formulas}. All ratios below are leading-order estimates in the regime ``$d$ fixed, $n\to\infty$''. The exact formulas of Table~\ref{tab:complexity_formulas} are valid in every regime, but the simplified ratios are not uniform in $(n,d)$: for $n$ fixed and $d\to\infty$ one has instead $\binom{nd}{n}=\Theta(d^{n}/n!)$ and $C_n^{(d)}=\Theta(d^{\,n-1})$, and the expansions have to be redone. 
 
 For a well-determined $(n;d)$-system, we use the Dixon resultant complexity as the baseline:
 \[
@@ -536,7 +536,7 @@ $k$ denotes the number of parameters retained. Extraneous factors occur when $\d
 \newpage
 \section{Detailed Stage-wise Complexity Parameters}\label{appendix:stage_details}
 
-This appendix provides the detailed parameter derivations and the full set of five determinant models (expansion, Bareiss, Kronecker$+$HNF, interpolation, sparse) for the two symbolic-determinant stages whose preferred models were summarized in Section~\ref{Section: Estimate}. We keep the notation of Section~\ref{Section: Estimate} throughout: $\mathcal{F}$ is an $(n;d)$-system in $n-1+k$ variables, $M=C_n^{(d)}$ is the generic Dixon-matrix size, and we use the determinant-method complexity templates from Appendix~\ref{appendix:determinant_methods}.
+This appendix provides the detailed parameter derivations and the full set of five determinant models (expansion, Bareiss, Kronecker$+$HNF, interpolation, sparse) for the two symbolic-determinant stages whose preferred models were summarized in Section~\ref{Section: Estimate}. We keep the notation of Section~\ref{Section: Estimate} throughout: $\mathcal{F}$ is an $(n;d)$-system in $n-1+k$ variables, $C_n^{(d)}$ is the generic Dixon-matrix size, and we use the determinant-method complexity templates from Appendix~\ref{appendix:determinant_methods}.
 
 \subsection{Step 1 Parameter Derivations}\label{appendix:step1}
 
@@ -582,9 +582,9 @@ L_1 = \widetilde{O}(n^\omega + n^2\mu_1).
 \paragraph{Sparse term bound.}
 The sparse model uses the structural term bound
 \[
-S_1 \le M^2\binom{B_1+k}{k},
+S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{B_1+k}{k},
 \]
-where the factor $M^2$ comes from the bilinear Dixon support (each of $\xvec,\bar\xvec$ contributes at most $M$ distinct monomials by Lemma~\ref{lem:dixon_fc_bound}), and $\binom{B_1+k}{k}$ bounds the number of parameter monomials of total degree at most $B_1$ in the $k$ retained parameters $\avec$; see Appendix~\ref{appendix:determinant_methods} for the full derivation.
+where the factor $\bigl(C_n^{(d)}\bigr)^2$ comes from the bilinear Dixon support (each of $\xvec,\bar\xvec$ contributes at most $C_n^{(d)}$ distinct monomials by Lemma~\ref{lem:dixon_fc_bound}), and $\binom{B_1+k}{k}$ bounds the number of parameter monomials of total degree at most $B_1$ in the $k$ retained parameters $\avec$; see Appendix~\ref{appendix:determinant_methods} for the full derivation.
 
 \paragraph{Step 1 complexity models.}
 Substituting these parameters into the determinant models of Table~\ref{tab:determinant_methods} yields the following five Step~1 complexity estimates (all in field operations over $\mathbb{F}_q$):
@@ -608,18 +608,18 @@ where the sorted surrogate degrees $m_i$ are the per-variable degree bounds sele
 
 This subsection derives the abstract Step~4 parameters $(D_4,N_4,L_4,\delta_4,\mu_4,S_4)$ used to instantiate the five Step~4 complexity models. The expressions for $(D_4,N_4,L_4,\delta_4)$ recover~\eqref{eq:step4_params} in Section~\ref{Section: Estimate}, and substituting them into the determinant templates of Table~\ref{tab:determinant_methods} reproduces~\eqref{eq:step4_hnf}--\eqref{eq:step4_eval}.
 
-Step~4 computes a symbolic determinant of an $M\times M$ polynomial matrix in the $k$ retained parameters $\avec$. Let $E_4\le nd$ be an entry-wise parameter-degree bound for the Step~4 matrix and $D_4\le d^{\,n}$ be the B\'ezout total-degree bound for the elimination polynomial.
+Step~4 computes a symbolic determinant of a $C_n^{(d)}\times C_n^{(d)}$ polynomial matrix in the $k$ retained parameters $\avec$. Let $E_4\le nd$ be an entry-wise parameter-degree bound for the Step~4 matrix and $D_4\le d^{\,n}$ be the B\'ezout total-degree bound for the elimination polynomial.
 
 \paragraph{Parameter expressions.}
-Kronecker substitution must use a base $\geq ME_4+1$ to avoid overflow in the encoded determinant; the resulting univariate matrix has average column degree bounded by
+Kronecker substitution must use a base $\geq C_n^{(d)}E_4+1$ to avoid overflow in the encoded determinant; the resulting univariate matrix has average column degree bounded by
 \[
-\delta_4 := E_4 \prod_{j=1}^{k-1}(M E_4+1),
+\delta_4 := E_4 \prod_{j=1}^{k-1}(C_n^{(d)} E_4+1),
 \]
 which collapses to $\delta_4 = E_4 \le nd$ in the well-determined case $k=1$. The evaluation-interpolation and sparse-interpolation parameters are
 \[
 N_4 \le (D_4+1)^k,\qquad
 S_4 \le \binom{D_4+k}{k},\qquad
-L_4 = \widetilde{O}(M^\omega).
+L_4 = \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\right).
 \]
 The dense monomial-count proxy for one matrix entry is
 \[
@@ -629,9 +629,9 @@ The dense monomial-count proxy for one matrix entry is
 \paragraph{Step 4 complexity models.}
 The full set of five determinant models (all in field operations over $\mathbb{F}_q$) is:
 \begin{align*}
-	T_{4}^{\mathrm{minor}} &= \widetilde{O}(M2^M\mu_4S_4),\\
-	T_{4}^{\mathrm{Bareiss}} &= \widetilde{O}(M^3S_4^2),\\
-	T_{4}^{\mathrm{HNF}} &= \widetilde{O}(M^{\omega}\delta_4),\\
+	T_{4}^{\mathrm{minor}} &= \widetilde{O}\!\left(C_n^{(d)}2^{C_n^{(d)}}\mu_4S_4\right),\\
+	T_{4}^{\mathrm{Bareiss}} &= \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^3S_4^2\right),\\
+	T_{4}^{\mathrm{HNF}} &= \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}\delta_4\right),\\
 	T_{4}^{\mathrm{eval}} &= \widetilde{O}\!\left(N_4(L_4+kD_4)\right),\\
 	T_{4}^{\mathrm{sparse}} &= \widetilde{O}(L_4S_4 + S_4\log q).
 \end{align*}
@@ -650,9 +650,9 @@ Table~\ref{tab:step14_models_full} collects all the formulas above.
 		\toprule
 		\textbf{Method} & \textbf{Step 1/2} & \textbf{Step 4} \\
 		\midrule
-		Expansion & $\widetilde{O}(n2^n\mu_1S_1)$ & $\widetilde{O}(M2^M\mu_4S_4)$ \\
-		Bareiss & $\widetilde{O}(n^3S_1^2)$ & $\widetilde{O}(M^3S_4^2)$ \\
-		Kronecker & $\widetilde{O}(n^\omega \delta_1)$ & $\widetilde{O}(M^\omega\delta_4)$ \\
+		Expansion & $\widetilde{O}(n2^n\mu_1S_1)$ & $\widetilde{O}\!\left(C_n^{(d)}2^{C_n^{(d)}}\mu_4S_4\right)$ \\
+		Bareiss & $\widetilde{O}(n^3S_1^2)$ & $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^3S_4^2\right)$ \\
+		Kronecker & $\widetilde{O}(n^\omega \delta_1)$ & $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\delta_4\right)$ \\
 		Interpolation & $\widetilde{O}(N_1(L_1+\ell B_1))$ & $\widetilde{O}(N_4(L_4+kD_4))$ \\
 		Sparse & $\widetilde{O}(L_1S_1+S_1\log q)$ & $\widetilde{O}(L_4S_4+S_4\log q)$ \\
 		FDixon & $\widetilde{O}(m_1^2(n!)^3\prod_{i=2}^{n}m_i^3)$ & --- \\
@@ -688,13 +688,13 @@ Assume the well-determined setting $k=1$ and keep $d$ fixed. Then
 \[
 \!T_{1}^{\mathrm{sparse}}
 =\widetilde{O}(L_1S_1 + S_1\log q)
-=\widetilde{O}(M^2\operatorname{poly}(n)),
+=\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^2\operatorname{poly}(n)\right),
 \]
-because $S_1\le M^2(B_1+1)=\widetilde{O}(M^2)$ for $k=1$, and one probe costs $L_1=\widetilde{O}(n^\omega+n^2\mu_1)$ with $\mu_1\le\binom{n+d}{n}$, hence $L_1=\widetilde{O}(\operatorname{poly}(n))$ for fixed $d$ (the $S_1\log q$ term is also absorbed by $\widetilde{O}(M^2\operatorname{poly}(n))$ since $\log q$ is polylogarithmic in the problem size). On the other hand,
+because $S_1\le \bigl(C_n^{(d)}\bigr)^2(B_1+1)=\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ for $k=1$, and one probe costs $L_1=\widetilde{O}(n^\omega+n^2\mu_1)$ with $\mu_1\le\binom{n+d}{n}$, hence $L_1=\widetilde{O}(\operatorname{poly}(n))$ for fixed $d$ (the $S_1\log q$ term is also absorbed by $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^2\operatorname{poly}(n)\right)$ since $\log q$ is polylogarithmic in the problem size). On the other hand,
 \[
-T_{4}^{\mathrm{HNF}}=\widetilde{O}(nd\,M^\omega).
+T_{4}^{\mathrm{HNF}}=\widetilde{O}\!\left(nd\,\bigl(C_n^{(d)}\bigr)^\omega\right).
 \]
-For fixed $d$, the Fuss--Catalan quantity satisfies $M=C_n^{(d)}=\Theta(\gamma_d^n/n^{3/2})$ for a constant $\gamma_d>1$. Hence $T_{1}^{\mathrm{sparse}}$ grows essentially like $M^2$ times a polynomial factor, while $T_{4}^{\mathrm{HNF}}$ grows like $M^\omega$ times a polynomial factor. For $\omega>2$ (which is the regime of all currently known fast linear-algebra algorithms, including the practically achievable $\omega\approx 2.81$ used in our timing tables), the dominant $M$-exponent of the final determinant is strictly larger, so the growth of $T_{4}^{\mathrm{HNF}}$ is asymptotically faster than that of $T_{1}^{\mathrm{sparse}}$ as $n$ increases. The borderline case $\omega=2$ makes the two $M$-exponents equal, so the two stages are of the same asymptotic order in $M$ and their relative dominance is determined by the polynomial-in-$(n,d)$ prefactors and implementation constants rather than by the asymptotics; this is precisely why we distinguish the two regimes.
+For fixed $d$, the Fuss--Catalan quantity satisfies $C_n^{(d)}=\Theta(\gamma_d^n/n^{3/2})$ for a constant $\gamma_d>1$. Hence $T_{1}^{\mathrm{sparse}}$ grows essentially like $\bigl(C_n^{(d)}\bigr)^2$ times a polynomial factor, while $T_{4}^{\mathrm{HNF}}$ grows like $\bigl(C_n^{(d)}\bigr)^\omega$ times a polynomial factor. For $\omega>2$ (which is the regime of all currently known fast linear-algebra algorithms, including the practically achievable $\omega\approx 2.81$ used in our timing tables), the dominant $C_n^{(d)}$-exponent of the final determinant is strictly larger, so the growth of $T_{4}^{\mathrm{HNF}}$ is asymptotically faster than that of $T_{1}^{\mathrm{sparse}}$ as $n$ increases. The borderline case $\omega=2$ makes the two $C_n^{(d)}$-exponents equal, so the two stages are of the same asymptotic order in $C_n^{(d)}$ and their relative dominance is determined by the polynomial-in-$(n,d)$ prefactors and implementation constants rather than by the asymptotics; this is precisely why we distinguish the two regimes.
 
 \paragraph{Comparison of $T_{1}^{\mathrm{HNF}}$ and $T_{4}^{\mathrm{HNF}}$ as $d$ grows.}
 Fix $n$ and again take $k=1$. The variable-wise determinant degrees in the first determinant satisfy $b_i=\Theta(nd)$, with $\ell=2n-1$, and per-entry degree $\Theta(d)$, so (treating $n$ as fixed and letting $d\to\infty$)
@@ -705,11 +705,11 @@ T_{1}^{\mathrm{HNF}}=\widetilde{O}(n^\omega d^{2n-1}).
 \]
 For the final determinant,
 \[
-M=C_n^{(d)}=\Theta(d^{n-1}),
+C_n^{(d)}=\Theta(d^{n-1}),
 \qquad
-T_{4}^{\mathrm{HNF}}=\widetilde{O}(nd\,M^\omega)=\widetilde{O}(d^{\omega(n-1)+1}).
+T_{4}^{\mathrm{HNF}}=\widetilde{O}\!\left(nd\,\bigl(C_n^{(d)}\bigr)^\omega\right)=\widetilde{O}(d^{\omega(n-1)+1}).
 \]
-Since $\omega>2$, we have $\omega(n-1)+1>2n-1$ for every $n\ge 2$, so $T_{4}^{\mathrm{HNF}}$ grows strictly faster than $T_{1}^{\mathrm{HNF}}$ as $d$ increases. For the borderline case $\omega=2$, the two exponents coincide ($\omega(n-1)+1 = 2n-1$), so the two stages have the same asymptotic rate in $d$ and their ordering is decided by the implied constants alone. These constants are themselves strongly $n$-dependent (they contain factors such as $n^{n-1}/n!$ inside $M=\Theta(d^{\,n-1})$ and $\prod_i(b_i+1)/d^{2n-2}$ inside $\delta_1=\Theta(d^{2n-1})$), and the present comparison is carried out at fixed $n$; no ordering of the two stages should therefore be read off from the powers of $n$ in this regime. The strict, regime-independent dominance of Step~4 is therefore an $\omega>2$ phenomenon, which is the practically relevant case: it is driven by the larger $M$-exponent ($M$ being polynomially large in both $n$ and $d$), and it is consistent with the measured running times, where the final symbolic determinant is the bottleneck. We accordingly state the dominance for $\omega>2$ and treat $\omega=2$ as an idealized boundary used only in the uniform-exponent security plots.
+Since $\omega>2$, we have $\omega(n-1)+1>2n-1$ for every $n\ge 2$, so $T_{4}^{\mathrm{HNF}}$ grows strictly faster than $T_{1}^{\mathrm{HNF}}$ as $d$ increases. For the borderline case $\omega=2$, the two exponents coincide ($\omega(n-1)+1 = 2n-1$), so the two stages have the same asymptotic rate in $d$ and their ordering is decided by the implied constants alone. These constants are themselves strongly $n$-dependent (they contain factors such as $n^{n-1}/n!$ inside $C_n^{(d)}=\Theta(d^{\,n-1})$ and $\prod_i(b_i+1)/d^{2n-2}$ inside $\delta_1=\Theta(d^{2n-1})$), and the present comparison is carried out at fixed $n$; no ordering of the two stages should therefore be read off from the powers of $n$ in this regime. The strict, regime-independent dominance of Step~4 is therefore an $\omega>2$ phenomenon, which is the practically relevant case: it is driven by the larger $C_n^{(d)}$-exponent ($C_n^{(d)}$ being polynomially large in both $n$ and $d$), and it is consistent with the measured running times, where the final symbolic determinant is the bottleneck. We accordingly state the dominance for $\omega>2$ and treat $\omega=2$ as an idealized boundary used only in the uniform-exponent security plots.
 
 \paragraph{Consequences for the overall comparison.}
 The two formula comparisons above explain the qualitative picture observed in the implementation and in the plots:
@@ -719,7 +719,7 @@ Figures~\ref{fig:step14_vs_degree} and~\ref{fig:step14_vs_variables} illustrate 
 	\item for high-variable/low-degree systems, the first determinant rises sharply, and sparse interpolation is the only first-determinant model that can stay below the final determinant;
 	\item the numerical submatrix-selection phase remains below the symbolic final determinant throughout the parameter ranges considered in the paper.
 \end{enumerate}
-For $\omega>2$, with this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. The dominance is however asymptotic: at moderate $(n,d)$ the polynomial prefactors of the Step-1 models can still exceed the $M^{\omega-2}$ gap, and at $\omega=2$ the conclusion is reversed altogether, since the $\Theta(M^2)$ coefficient positions of the Dixon polynomial already match the $M$-exponent of Step~4. This is why the $\omega=2.37$ panel of Figure~\ref{fig:complexity} reports the maximum over the two stages. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. This is why the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
+For $\omega>2$, with this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. The dominance is however asymptotic: at moderate $(n,d)$ the polynomial prefactors of the Step-1 models can still exceed the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ gap, and at $\omega=2$ the conclusion is reversed altogether, since the $\Theta\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ coefficient positions of the Dixon polynomial already match the $C_n^{(d)}$-exponent of Step~4. This is why the $\omega=2.37$ panel of Figure~\ref{fig:complexity} reports the maximum over the two stages. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. This is why the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
 
 \begin{figure}[h]
 	\centering
@@ -737,44 +737,44 @@ For $\omega>2$, with this method selection the first determinant never dominates
 
 \subsection{Well-determined Case ($k=1$)}\label{appendix:wellsq}
 
-We now specialize the comparison in Appendix~\ref{appendix:step_comparison} to the well-determined setting $k=1$, which is the case used both in the comparison with Gr\"obner basis methods (Section~\ref{Subsection:Other_Comparison}) and in the AO applications of Section~\ref{Section:Application}. The argument is more explicit than the general case because the parameter space is one-dimensional, so $D_4\le d^{\,n}$, $E_4\le nd$, $\delta_4=nd$, and Kronecker$+$HNF reduces to a single univariate HNF on an $M\times M$ matrix.
+We now specialize the comparison in Appendix~\ref{appendix:step_comparison} to the well-determined setting $k=1$, which is the case used both in the comparison with Gr\"obner basis methods (Section~\ref{Subsection:Other_Comparison}) and in the AO applications of Section~\ref{Section:Application}. The argument is more explicit than the general case because the parameter space is one-dimensional, so $D_4\le d^{\,n}$, $E_4\le nd$, $\delta_4=nd$, and Kronecker$+$HNF reduces to a single univariate HNF on a $C_n^{(d)}\times C_n^{(d)}$ matrix.
 
 \paragraph{Explicit formulas.}
 Substituting $k=1$ into the Step~1 and Step~4 templates of Appendices~\ref{appendix:step1} and~\ref{appendix:step4} gives
 \begin{align}
 	T_{4}^{\mathrm{HNF}}
-	&= \widetilde{O}\!\bigl(nd\,M^\omega\bigr),
+	&= \widetilde{O}\!\left(nd\,\bigl(C_n^{(d)}\bigr)^\omega\right),
 	\label{eq:wellsq_T4HNF}\\[0.3em]
 	T_{1}^{\mathrm{sparse}}
-	&= \widetilde{O}\!\bigl(n^2\,(nd+1)\binom{n+d}{n}M^2\bigr)
-	= \widetilde{O}\!\bigl(n^3\,d\,\binom{n+d}{n}M^2\bigr),
+	&= \widetilde{O}\!\bigl(n^2\,(nd+1)\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\bigr)
+	= \widetilde{O}\!\bigl(n^3\,d\,\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\bigr),
 	\label{eq:wellsq_T1sparse}\\[0.3em]
 	T_{1}^{\mathrm{minor}}
-	&= \widetilde{O}\!\bigl(n\,2^n(nd+1)\binom{n+d}{n}M^2\bigr)
-	= \widetilde{O}\!\bigl(n^2 d\,2^n\binom{n+d}{n}M^2\bigr),
+	&= \widetilde{O}\!\bigl(n\,2^n(nd+1)\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\bigr)
+	= \widetilde{O}\!\bigl(n^2 d\,2^n\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\bigr),
 	\label{eq:wellsq_T1minor}
 \end{align}
 where, in~\eqref{eq:wellsq_T1sparse}, the factor $nd+1$ is combined with the $n^2$ probe-cost factor into the prefactor $n^3 d$ (this is the form used in the main text); the comparisons below are in any case insensitive to this $d$-factor, since it cancels against the $nd$ factor of~\eqref{eq:wellsq_T4HNF} when the ratio is formed.
 
-\paragraph{Asymptotic size of $M$.}
+\paragraph{Asymptotic size of $C_n^{(d)}$.}
 For fixed $d\ge 2$ and $n\to\infty$, the Fuss--Catalan formula and Stirling's approximation give
 \begin{equation}\label{eq:fc_stirling}
-	M \;=\; C_n^{(d)} \;=\; \frac{1}{n(d-1)+1}\binom{nd}{n}
+	C_n^{(d)} \;=\; \frac{1}{n(d-1)+1}\binom{nd}{n}
 	\;=\; \Theta\!\Bigl(\frac{\gamma_d^{\,n}}{n^{3/2}}\Bigr),
 	\qquad
 	\gamma_d := \frac{d^d}{(d-1)^{d-1}},
 \end{equation}
-where $\gamma_d>1$ for $d\ge 2$. The sequence $(\gamma_d)_{d\ge 2}$ is strictly increasing, with minimum $\gamma_2=4$, and grows like $\gamma_d\sim e\,d$ as $d\to\infty$. Equation~\eqref{eq:fc_stirling} shows that $M$ grows exponentially in $n$ for any fixed $d\ge 2$, while $\binom{n+d}{n}=\Theta(n^d)$ is only polynomial in $n$ for fixed $d$. This separation is the key quantitative input for the two comparisons below.
+where $\gamma_d>1$ for $d\ge 2$. The sequence $(\gamma_d)_{d\ge 2}$ is strictly increasing, with minimum $\gamma_2=4$, and grows like $\gamma_d\sim e\,d$ as $d\to\infty$. Equation~\eqref{eq:fc_stirling} shows that $C_n^{(d)}$ grows exponentially in $n$ for any fixed $d\ge 2$, while $\binom{n+d}{n}=\Theta(n^d)$ is only polynomial in $n$ for fixed $d$. This separation is the key quantitative input for the two comparisons below.
 
 \paragraph{Comparison of $T_{4}^{\mathrm{HNF}}$ with $T_{1}^{\mathrm{sparse}}$.}
 Forming the ratio and cancelling the common $d$-factors gives
 \begin{equation}\label{eq:ratio_4HNF_1sparse}
 	\frac{T_{4}^{\mathrm{HNF}}}{T_{1}^{\mathrm{sparse}}}
 	\;=\; \widetilde{\Theta}\!\left(
-	\frac{M^{\omega-2}}{n^2\,\binom{n+d}{n}}
+	\frac{\bigl(C_n^{(d)}\bigr)^{\omega-2}}{n^2\,\binom{n+d}{n}}
 	\right).
 \end{equation}
-Substituting~\eqref{eq:fc_stirling}, the numerator $M^{\omega-2}$ equals $\gamma_d^{\,(\omega-2)n}/n^{3(\omega-2)/2}$, which grows \emph{exponentially} in $n$ as long as $\gamma_d^{\,\omega-2}>1$, i.e.\ as long as $\omega>2$ (since $\gamma_d>1$ for $d\ge 2$). The denominator is polynomial in $n$ for fixed $d$. Hence for every $\omega>2$ and every fixed $d\ge 2$, the ratio~\eqref{eq:ratio_4HNF_1sparse} tends to infinity as $n\to\infty$, so
+Substituting~\eqref{eq:fc_stirling}, the numerator $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ equals $\gamma_d^{\,(\omega-2)n}/n^{3(\omega-2)/2}$, which grows \emph{exponentially} in $n$ as long as $\gamma_d^{\,\omega-2}>1$, i.e.\ as long as $\omega>2$ (since $\gamma_d>1$ for $d\ge 2$). The denominator is polynomial in $n$ for fixed $d$. Hence for every $\omega>2$ and every fixed $d\ge 2$, the ratio~\eqref{eq:ratio_4HNF_1sparse} tends to infinity as $n\to\infty$, so
 \[
 T_{4}^{\mathrm{HNF}} \;\gg\; T_{1}^{\mathrm{sparse}}\quad\text{asymptotically in }n.
 \]
@@ -784,7 +784,7 @@ The same cancellation yields
 \begin{equation}\label{eq:ratio_4HNF_1minor}
 	\frac{T_{4}^{\mathrm{HNF}}}{T_{1}^{\mathrm{minor}}}
 	\;=\; \widetilde{\Theta}\!\left(
-	\frac{M^{\omega-2}}{n\,2^n\binom{n+d}{n}}
+	\frac{\bigl(C_n^{(d)}\bigr)^{\omega-2}}{n\,2^n\binom{n+d}{n}}
 	\right)
 	\;=\; \widetilde{\Theta}\!\left(
 	\frac{(\gamma_d^{\,\omega-2}/2)^{\,n}}{\operatorname{poly}(n,d)}
@@ -803,7 +803,7 @@ T_{4}^{\mathrm{HNF}} \;\gg\; T_{1}^{\mathrm{minor}}\quad\text{asymptotically in 
 for every $\omega\ge 2.81$ and every $d\ge 2$ (and more generally whenever~\eqref{eq:minor_threshold} holds).
 
 \paragraph{Boundary case $\omega=2$.}
-At the idealized boundary $\omega=2$, the $M$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by an $M$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}; there it is applied identically to Dixon and to every competitor, so the comparison should be read as a ``uniform-$\omega$ ratio'' rather than as a literal asymptotic statement about any single method. For \vision this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $M^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
+At the idealized boundary $\omega=2$, the $C_n^{(d)}$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by a $C_n^{(d)}$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}; there it is applied identically to Dixon and to every competitor, so the comparison should be read as a ``uniform-$\omega$ ratio'' rather than as a literal asymptotic statement about any single method. For \vision this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
 
 \paragraph{Consequence.}
 Combining the two comparisons above, for all parameter ranges considered in the experiments (Strassen $\omega\approx 2.81$, $d\ge 2$, and $n$ moderate to large), neither $T_{1}^{\mathrm{sparse}}$ nor $T_{1}^{\mathrm{minor}}$ exceeds $T_{4}^{\mathrm{HNF}}$, and the measured running times confirm that Step~4 is the dominant phase. We therefore use $T = T_{4}^{\mathrm{HNF}}$, as in~\eqref{eq:dixon_complexity_well}, as the overall complexity estimate for well-determined systems.
@@ -845,7 +845,7 @@ Kronecker substitution $y_i\mapsto t^{c_i}$ with $c_i=\prod_{j<i}(b_j+1)$ maps t
 \[
 T^{\mathrm{HNF}} = \widetilde{O}(m^{\omega}\delta).
 \]
-For the univariate final determinant ($k=1$), this becomes the standard bound $\widetilde{O}(M^{\omega}E_4)$.
+For the univariate final determinant ($k=1$), this becomes the standard bound $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}E_4\right)$.
 
 \paragraph{Correctness of Kronecker$+$HNF.}
 Li~\cite{Li2007symbolic} proves that Kronecker substitution commutes with the determinant (Theorems~5 and~7): if the substitution base $c_i$ is chosen so that no monomial collisions can occur at the level of $\det(P)$, then
@@ -873,16 +873,16 @@ This is the \emph{field-operation} count (intermediate step of~\cite[Theorem~12]
 The $\log q$ factor is inherent to the algorithm: the term-locator polynomial of degree $\le S$ is recovered by equal-degree factorization, which is a Las Vegas procedure of expected cost $\widetilde{O}(S\log q)$ field operations over $\mathbb{F}_q$ (Huang~\cite{DBLP:journals/jsc/Huang23}, Theorem~12). Unlike the $\log q$ factor that appears when converting field operations to bit operations, this one is already present in the field-operation count and is not negligible for the large prime or extension fields typical of AO primitives (e.g.\ $q\approx 2^{64}$).
 The crucial input is the term bound $S$. In the first-determinant model we use
 \[
-S_1 \le M^2\binom{B_1+k}{k},
+S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{B_1+k}{k},
 \]
-where $M$ is the Dixon-matrix size and $B_1=nd$ bounds the total parameter degree. This bound is structural: the bilinear Dixon representation $\Delta(\xvec,\bar\xvec)=\sum X_u M_{u,v} \bar X_v$ has at most $M^2$ coefficient positions (the supports in $\xvec$ and in $\bar\xvec$ are symmetric, each of size at most $M$ by Lemma~\ref{lem:dixon_fc_bound}), and each coefficient is a parameter polynomial of total degree at most $B_1$, hence carries at most $\binom{B_1+k}{k}$ monomials. For the final determinant, a dense monomial upper bound gives
+where $C_n^{(d)}$ is the Dixon-matrix size and $B_1=nd$ bounds the total parameter degree. This bound is structural: the bilinear Dixon representation $\Delta(\xvec,\bar\xvec)=\sum X_u M_{u,v} \bar X_v$ has at most $\bigl(C_n^{(d)}\bigr)^2$ coefficient positions (the supports in $\xvec$ and in $\bar\xvec$ are symmetric, each of size at most $C_n^{(d)}$ by Lemma~\ref{lem:dixon_fc_bound}), and each coefficient is a parameter polynomial of total degree at most $B_1$, hence carries at most $\binom{B_1+k}{k}$ monomials. For the final determinant, a dense monomial upper bound gives
 \[
 S_4 \le \binom{D_4+k}{k}.
 \]
 This is the key reason why sparse interpolation is the only first-determinant model that consistently stays below the final determinant in the high-variable/low-degree regime.
 
 \paragraph{Stage-specific instantiations.}
-For the first determinant we substitute $m=n$, $(\delta,N,S,L)=(\delta_1,N_1,S_1,L_1)$, and use $U=S_1$ as the intermediate-support proxy. For the final determinant we substitute $m=M$, $(\delta,N,S,L)=(\delta_4,N_4,S_4,L_4)$, and use $U=S_4$. This is exactly the convention used in the comparison plots and in the complexity-reporting code.
+For the first determinant we substitute $m=n$, $(\delta,N,S,L)=(\delta_1,N_1,S_1,L_1)$, and use $U=S_1$ as the intermediate-support proxy. For the final determinant we substitute $m=C_n^{(d)}$, $(\delta,N,S,L)=(\delta_4,N_4,S_4,L_4)$, and use $U=S_4$. This is exactly the convention used in the comparison plots and in the complexity-reporting code.
 
 \paragraph{Where the parameters come from.}
 The Kronecker bound $\delta_1$ is read from the cancellation-matrix structure. In the uniform-degree case, a row-by-row analysis of the refined matrix $\widehat{C}$ gives
@@ -891,7 +891,7 @@ The Kronecker bound $\delta_1$ is read from the cancellation-matrix structure. I
 \qquad
 \deg_{\bar{x}_i}(\det\widehat{C})\le (n-i)d-1,
 \]
-and the parameter variables satisfy $\deg_{a_j}\le d$ per row, so the total parameter degree of the $n\times n$ determinant is at most $B_1=nd$. (See Appendix~\ref{appendix:stage_details} for the derivation of these bounds.) These are exactly the ingredients used to form $\delta_1$ and $N_1$ in the code. The sparse term bound $S_1$ comes from the Dixon-matrix construction itself: $M^2$ reflects the bilinear support size, while $\binom{B_1+k}{k}$ bounds the parameter contribution at each coefficient position.
+and the parameter variables satisfy $\deg_{a_j}\le d$ per row, so the total parameter degree of the $n\times n$ determinant is at most $B_1=nd$. (See Appendix~\ref{appendix:stage_details} for the derivation of these bounds.) These are exactly the ingredients used to form $\delta_1$ and $N_1$ in the code. The sparse term bound $S_1$ comes from the Dixon-matrix construction itself: $\bigl(C_n^{(d)}\bigr)^2$ reflects the bilinear support size, while $\binom{B_1+k}{k}$ bounds the parameter contribution at each coefficient position.
 
 For the final determinant, the HNF parameter $\delta_4$ is obtained from the entry-wise parameter degree bound $E_4$, while $N_4$ and $S_4$ come from the total-degree bound $D_4$ of the elimination polynomial. In the well-determined case $k=1$, this collapses to the univariate HNF model used in the main text.
 
