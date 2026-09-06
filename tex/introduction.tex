@@ -30,7 +30,7 @@ This paper studies Dixon resultants as a method for \emph{solving polynomial sys
 	
 	\item We develop a stage-wise complexity model for Dixon elimination by comparing multiple determinant computation strategies, yielding a more faithful description of polynomial-matrix behavior.
 	
-	\item We implement an efficient C library \drsolve\footnote{\url{https://github.com/drsolve/drsolve}} supporting multiple determinant routines and a degree-aware submatrix heuristic. Experiments validate the proposed Dixon-matrix bounds and show competitiveness with Magma and msolve on well-determined random systems, with advantages in the low-variable/high-degree/large-field regime, while Magma and msolve remain superior in the high-variable/low-degree/small-field regime.
+	\item We implement an efficient C library \drsolve\footnote{\url{https://drsolve.github.io}} supporting multiple determinant routines and a degree-aware submatrix heuristic. Experiments validate the proposed Dixon-matrix bounds and show competitiveness with Magma and msolve on well-determined random systems, with advantages in the low-variable/high-degree/large-field regime, while Magma and msolve remain superior in the high-variable/low-degree/small-field regime.
 	
 	\item We organize Dixon-based elimination for AO-induced systems into three strategies: direct, iterative, and hybrid reduction. We illustrate them on \poseidon, \vision, and \texttt{XHash12}, respectively, providing concrete algebraic complexity estimates.
 \end{enumerate}
