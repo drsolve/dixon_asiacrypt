@@ -25,7 +25,7 @@ where $|\text{rdeg}(A)|$ and $|\text{cdeg}(A)|$ denote the sum of row degrees an
 The intuition is that generic determinants saturate their row/column-sum upper bound, so a smaller bound usually corresponds to a smaller actual degree. Under this hypothesis, our greedy strategy yields maximal-rank submatrices with minimal determinant degree, thereby reducing extraneous factors in the resulting Dixon resultant.
 
 \begin{remark}
-	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also utilized a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. This enables deterministic selection of submatrices with minimal determinant degree, but its factorial cost makes it infeasible for large $n$. Our experiments indicate that Heuristic~\ref{hyp:deg_mini_hypo} is sufficient to achieve minimal determinant degrees in practice, although it does not hold rigorously.
+	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also utilized a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. We use the cheaper row/column weights as a heuristic for selecting low-degree submatrices.
 \end{remark}
 
 \subsubsection{Degree-aware selection algorithm.}
@@ -37,7 +37,7 @@ The rank test is performed at a random evaluation point, so the identified rank 
 	Let $\mathcal{P} = \{p_1, \ldots, p_n\}$ be a generic polynomial system with degrees $d_1, \ldots, d_n$, and $\mathcal{M}$ its Dixon matrix. The submatrix selected by Algorithm~\ref{alg:degree_optimal_selection} yields a resultant $R$ satisfying $\deg(R) \le \prod_{i=1}^{n} d_i$.
 \end{hypothesis}
 
-This is supported by computational experiments (Appendix~\ref{appendix:degree_optimal_exp}). In very rare cases where the heuristic does not fully eliminate every extraneous factor, the observed degree of $R$ exceeds the B\'ezout bound by a small constant, which does not affect the asymptotic estimates of Section~\ref{Section: Estimate}. Note that comparing $\deg(R)$ with the B\'ezout bound is only a test, not a proof that $\det(\mathcal{M}')$ generates $J$; the bounds using $D_4\le d_{\mathcal{I}}$ are stated under this heuristic.
+This is supported by computational experiments (Appendix~\ref{appendix:degree_optimal_exp}), with rare observed B\'ezout-bound violations of only $1$--$2$ degrees. Passing this test does not establish the absence of extraneous factors or excess multiplicities. The estimates using $D_4\le\prod_i d_i$ assume Heuristic~\ref{hyp:bezout_attainment}; the stronger bound $D_4\le d_{\mathcal{I}}$ additionally assumes their absence.
 
 \subsection{Implementation}\label{Implementation}
 
@@ -54,19 +54,19 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 	\centering
 	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{GF536870923_n3_comparison.png}
+		\includegraphics[width=\linewidth]{GF536870923_n3_comparison.pdf}
 	\end{subfigure}\hfill
 	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{GF536870923_n4_comparison.png}
+		\includegraphics[width=\linewidth]{GF536870923_n4_comparison.pdf}
 	\end{subfigure}\\[2pt]
 	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{GF536870923_n5_comparison.png}
+		\includegraphics[width=\linewidth]{GF536870923_n5_comparison.pdf}
 	\end{subfigure}\hfill
 	\begin{subfigure}[t]{0.48\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{GF536870923_d2_vary_n.png}
+		\includegraphics[width=\linewidth]{GF536870923_d2_vary_n.pdf}
 	\end{subfigure}
 	\caption{Performance comparison (time in seconds) of \drsolve, Magma, msolve, and Fermat on randomly generated dense polynomial systems over $\Fp$ with $p=2^{29}+11$. The four panels show degree sweeps for $n=3,4,5$ and a variable-count sweep for $d=2$; here $n$ denotes the number of variables (equal to the number of equations). A curve stops where the corresponding solver exceeded one hour.}
 	\label{fig:BenchmarkComparison}

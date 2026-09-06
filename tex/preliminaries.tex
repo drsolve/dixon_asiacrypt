@@ -108,7 +108,7 @@ Section~\ref{Section: Complexity} replaces these estimates by exact generic form
 The determinantal output may contain factors unrelated to the affine solution set.
 
 \begin{definition}[Extraneous factor]\label{def:extra_factor}
-	Let $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[\xvec, \avec]$ and $\mathcal{I} = \langle \mathcal{F} \rangle$. An irreducible $e \in \mathbb{K}[\avec]$ is an \textbf{extraneous factor} if $e$ divides the determinantal elimination polynomial but $e \notin \mathcal{I} \cap \mathbb{K}[\avec]$.
+	Let $Z$ be the Zariski closure of the projection of $V(\mathcal{I})$ onto the retained parameters. An irreducible factor $e$ of the determinantal elimination polynomial is an \textbf{extraneous factor} if $V(e)\not\subseteq Z$.
 \end{definition}
 
 In the absence of such factors and of excess multiplicities, the total degree of the eliminant is bounded by $d_{\mathcal{I}}$, both when $k=1$ and when $k\ge 2$; in either case it is bounded by the B\'ezout bound:

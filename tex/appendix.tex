@@ -413,38 +413,42 @@ The FGLM estimate $\mathcal{O}(n\,d_{\mathcal{I}}^{\omega})$ used above does not
 
 We present a more comprehensive comparison of the computational complexity of the Dixon resultant and Gr\"obner basis methods from multiple perspectives.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\centering
 	
 	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_comparison_d5.png}
+		\includegraphics[width=0.85\textwidth]{complexity_comparison_d5.pdf}
+		\caption{}
 	\end{subfigure}
 	
 	\medskip
 	
 	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n3.png}
+		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n3.pdf}
+		\caption{}
 	\end{subfigure}
 	
 	\caption{Complexity comparison between the Dixon resultant and Gr\"obner basis}
 	\label{fig:complexity}
 \end{figure}
-\begin{figure}[htbp]
+\begin{figure}[H]
 	\ContinuedFloat
 	\centering
 	
 	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5.png}
+		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5.pdf}
+		\caption{}
 	\end{subfigure}
 	
 	\medskip
 	
 	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w237.png}
+		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w237.pdf}
+		\caption{}
 	\end{subfigure}
 	
 	\caption*{Figure~\ref{fig:complexity} (continued). The bottom panel uses $\omega=2.37$. Since the asymptotic dominance of the final determinant sets in only for larger $(n,d)$ than those plotted, the Dixon curve of this panel reports the maximum over the two symbolic stages, $\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}$, which over this range is governed by Step~1.}
@@ -507,11 +511,11 @@ Table~\ref{tab:extraneous_factor_probability} compares the performance of our de
 
 \begin{table}[htbp]
 	\centering
-	\caption{Comparison of Extraneous Factor Occurrence}
+	\caption{Frequency of B\'ezout-bound violations}
 	\label{tab:extraneous_factor_probability}
 	\begin{tabular}{cccccc}
 		\hline
-		\multirow{2}{*}{$n_x$} & \multirow{2}{*}{$k$} & Degrees & B\'ezout Bound & \multicolumn{2}{c}{Extraneous Factors} \\
+		\multirow{2}{*}{$n_x$} & \multirow{2}{*}{$k$} & Degrees & B\'ezout Bound & \multicolumn{2}{c}{B\'ezout violations} \\
 		\cline{5-6}
 		& & $(d_1,\ldots,d_{n_x+1})$ & $\prod d_i$ & Naive & Algorithm~\ref{alg:degree_optimal_selection} \\
 		\hline
@@ -521,7 +525,7 @@ Table~\ref{tab:extraneous_factor_probability} compares the performance of our de
 		5 & 1 & $(2,2,2,2,2,2)$ & 64 & 199/200 & 0/200 \\
 		3 & 2 & $(2,2,3,3)$ & 36 & 177/200 & 1/200 \\
 		\hline
-		\multicolumn{4}{c}{Extraneous Factor Probability} & 963/1000 & 1/1000 \\
+		\multicolumn{4}{c}{Observed violation frequency} & 963/1000 & 1/1000 \\
 		\hline
 	\end{tabular}
 	% \vspace{0.3cm}
@@ -531,7 +535,7 @@ Table~\ref{tab:extraneous_factor_probability} compares the performance of our de
 \end{table}
 
 In Table~\ref{tab:extraneous_factor_probability}, $n_x$ denotes the number of variables to eliminate (so the system contains $n_x+1$ polynomials, consistent with the convention in the main text where $n$ is the number of polynomials),
-$k$ denotes the number of parameters retained. Extraneous factors occur when $\deg(\text{Res}(\mathcal{F})) > \prod d_i$ (B\'ezout bound violation). The naive method uses random submatrix selection. All experiments were conducted over $\mathbb{F}_{65537}$ with 200 repetitions per system configuration. In the few configurations where Algorithm~\ref{alg:degree_optimal_selection} did not fully remove the extraneous factors, the resulting resultant degree exceeded the B\'ezout bound by at most $1$--$2$, so the impact on the overall complexity estimates is negligible.
+$k$ denotes the number of parameters retained. We count cases with $\deg(\text{Res}(\mathcal{F})) > \prod d_i$; passing this test does not certify the absence of extraneous factors or excess multiplicities. The naive method uses random submatrix selection. All experiments were conducted over $\mathbb{F}_{65537}$ with 200 repetitions per system configuration. The observed violations for Algorithm~\ref{alg:degree_optimal_selection} exceeded the B\'ezout bound by at most $1$--$2$.
 
 \newpage
 \section{Detailed Stage-wise Complexity Parameters}\label{appendix:stage_details}
@@ -723,14 +727,14 @@ For $\omega>2$, with this method selection the first determinant never dominates
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_degree.png}
+	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_degree.pdf}
 	\caption{Comparison of the first and final determinant costs as the polynomial degree varies. The final determinant keeps the largest growth rate in the low-variable/high-degree regime.}
 	\label{fig:step14_vs_degree}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_variables.png}
+	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_variables.pdf}
 	\caption{Comparison of the first and final determinant costs as the number of variables varies. In the low-degree/high-variable regime, sparse interpolation is the only first-determinant model that typically remains below the final determinant.}
 	\label{fig:step14_vs_variables}
 \end{figure}
@@ -806,7 +810,7 @@ for every $\omega\ge 2.81$ and every $d\ge 2$ (and more generally whenever~\eqre
 At the idealized boundary $\omega=2$, the $C_n^{(d)}$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by a $C_n^{(d)}$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}; there it is applied identically to Dixon and to every competitor, so the comparison should be read as a ``uniform-$\omega$ ratio'' rather than as a literal asymptotic statement about any single method. For \vision this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
 
 \paragraph{Consequence.}
-Combining the two comparisons above, for all parameter ranges considered in the experiments (Strassen $\omega\approx 2.81$, $d\ge 2$, and $n$ moderate to large), neither $T_{1}^{\mathrm{sparse}}$ nor $T_{1}^{\mathrm{minor}}$ exceeds $T_{4}^{\mathrm{HNF}}$, and the measured running times confirm that Step~4 is the dominant phase. We therefore use $T = T_{4}^{\mathrm{HNF}}$, as in~\eqref{eq:dixon_complexity_well}, as the overall complexity estimate for well-determined systems.
+With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed above, and is also the empirical bottleneck. We therefore use $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems, as in~\eqref{eq:dixon_complexity_well}.
 
 
 \section{Alternative Determinant Computation Methods}\label{appendix:determinant_methods}
@@ -950,7 +954,7 @@ where $\mathsf{M}$ is an MDS matrix with rows indexed by $1,\ldots,s$, the $C_j$
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.85\textwidth]{vision.png}
+	\includegraphics[width=0.9\textwidth]{vision.png}
 	\caption{Round function of \vision. (Figure from~\cite{DBLP:phd/hal/Bouvier23})}
 	\label{fig:vision}
 \end{figure}
@@ -1032,7 +1036,7 @@ Each rung of the chain eliminates a block of two variables from the incoming rel
 For \vision with $s=2$ the two local equations of a rung have block bidegree $(e,e)$ with $e=1$ for the $\deg=2$ rungs and $e=4$ for the $\deg=8$ rungs, so~\eqref{eq:rung_rank} reads $\rho\le 2D_{\mathrm{in}}+1$ and $\rho\le 14D_{\mathrm{in}}+22$ respectively, against a support dimension $D(\mathcal{F})=\Theta(D_{\mathrm{in}}^{2})$.
 
 \paragraph{Stage-by-stage figures.}
-Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the bound~\eqref{eq:rung_rank} on the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count of Lemma~\ref{lem:rung_rank}, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. Since $\rho$ is well below $D(\mathcal{F})$, Step~3 is not run as a full elimination on $\mathcal{M}$: right-multiplying $\mathcal{M}$ by a random $D(\mathcal{F})\times 2\rho$ matrix reveals the rank with high probability in $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$ field operations, which is the figure reported below and reduces to~\eqref{eq:complexity_step3} when $\rho=D(\mathcal{F})$, as at the merge.
+Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the bound~\eqref{eq:rung_rank} on the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count of Lemma~\ref{lem:rung_rank}, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. For Step~3 we use the rank-sensitive cost model $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$; its estimate remains below Step~4 for the listed parameters.
 
 \begin{table}[h]
 	\centering
@@ -1097,7 +1101,7 @@ where $p = 2^{64}-2^{32}+1$. The nonlinear layers combine power maps over $\math
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.7\textwidth]{xhash12.png}
+	\includegraphics[width=0.95\textwidth]{xhash12.png}
 	\caption{Round function of \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}}
 	\label{fig:xhash12}
 \end{figure}

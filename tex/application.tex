@@ -17,7 +17,7 @@ Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.95\textwidth]{poseidon_complexity.png}
+\includegraphics[width=0.95\textwidth]{poseidon_complexity.pdf}
 \caption{Complexity comparison for \poseidon and \poseidonnew, with the model parameters $t=8$, $c=d=3$, $\alpha=3$ of~\cite{DBLP:journals/tosc/GrassiKR25}. Here $\omega = 2.81$ for all curves.}
 \label{fig:poseidon_complexity}
 \end{figure}
@@ -109,8 +109,8 @@ For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.90\textwidth]{vision_complexity.png}
-\caption{Complexity comparison for \vision ($\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}.).}
+\includegraphics[width=0.90\textwidth]{vision_complexity.pdf}
+\caption{Complexity comparison for \vision ($\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}).}
 \label{fig:vision_complexity_comparison}
 \end{figure}
 
@@ -168,7 +168,7 @@ For general CICO-$k$ we retain $|\mathcal{X}|=k$ input variables and build $k$ r
 \end{equation}
 For $k=1$ this sum telescopes to the bound of~\cite[Proposition~7]{DBLP:conf/crypto/BariantBBHOR25}, dominated by the first stage $i=n$. For $k\ge 2$ it does not: since $B_k(D_i)=\Theta(D_i^{k})$ and $\alpha^{k}>2\alpha-1$, the sum is instead dominated by the last stage $i=1$. Note also that~\eqref{eq:reduction_cost} is always dominated by the term $i=n$ of~\eqref{eq:successive_elim_cost}.
 
-\emph{(P3) Final elimination.} Let $d_{\mathcal{R}} := \max_j \deg(R_j)\le \alpha^{\,n}\bar{D}$. The final step is a mixed-degree Dixon elimination on $\{R_1,\ldots,R_k\}$, i.e.\ $k$ polynomials in $k$ variables of which $k-1$ are eliminated:
+\emph{(P3) Final elimination.} Let $d_{\mathcal{R}} := \max_j \deg(R_j)\le \alpha^{\,n}\bar{D}$. Assuming that $\langle R_1,\ldots,R_k\rangle$ is zero-dimensional and the Dixon projection conditions hold, the final step eliminates $k-1$ variables from these $k$ relations by mixed-degree Dixon elimination:
 \begin{equation}
 	T_{\text{final}} = \widetilde{O}\!\left(k\,d_{\mathcal{R}}\,D(\mathcal{R})^{\omega}\right),
 	\label{eq:hybrid_final_complexity}
@@ -196,7 +196,7 @@ We focus on \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}; the permutatio
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.95\textwidth]{xhash_complexity.png}
+\includegraphics[width=0.95\textwidth]{xhash_complexity.pdf}
 \caption{Complexity comparison for \texttt{XHash12}, $\omega = 2.81$.}
 \label{fig:xhash_complexity}
 \end{figure}
@@ -205,7 +205,7 @@ This picture is confirmed by the small-instance timings in Table~\ref{tab:xhash_
 
 \begin{table}[hbtp!]
 \centering
-\caption{Experimental time comparison for small \xhash instances with $c=1$, where $\alpha=3$ for the two-step instances and $\alpha=7$ for the three-step instance. The complexities (Comp.) are in $\log_2$ field operations. $\omega = 2.81$. The Method~1 entries are obtained from~\eqref{eq:dixon_complexity_well} with the equation count and degree read from the instance; the two two-step instances both consist of $6$ equations of degree $3$ and therefore share the same estimate.}
+\caption{Experimental time comparison for small \xhash instances with $c=1$, where $\alpha=3$ for the two-step instances and $\alpha=7$ for the three-step instance. The complexities (Comp.) are in $\log_2$ field operations. $\omega = 2.81$. The Method~1 entries are obtained from~\eqref{eq:dixon_complexity_well} with the equation count and degree read from the instance; both two-step instances consist of $6$ equations of degree $3$ and therefore share the same estimate.}
 \label{tab:xhash_experimental}
 \begin{tabular}{l|cc|cc|cc}
 \toprule

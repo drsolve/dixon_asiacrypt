@@ -290,9 +290,9 @@ The degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by 
 \subsubsection{Step~4: Compute the Dixon resultant.}
 
 This step computes the symbolic determinant of $\mathcal{M}'$, a polynomial matrix of size at most $C_n^{(d)}$ in the $k$ retained parameters $\avec$. In the Kronecker$+$HNF model, the complexity is governed by the entry-wise parameter degree $E_4\le nd$, while in the evaluation-interpolation model it is governed by the total degree $D_4$ of the elimination polynomial.
-Assuming that the degree-aware selection of Section~\ref{Subsection:Extraneous} removes the extraneous factors (Heuristic~\ref{hyp:bezout_attainment}), the elimination polynomial is an element of $J=\mathcal{I}\cap\mathbb{K}[\avec]$ of total degree at most $d_{\mathcal{I}}$. By Theorem~\ref{thm:bezout_bound},
+Under Heuristic~\ref{hyp:bezout_attainment}, the elimination polynomial satisfies the B\'ezout degree bound
 $
-D_4 \le d_\mathcal{I} \le d^{\,n}.
+D_4 \le d^{\,n}.
 $
 The corresponding parameters are
 \begin{equation}
@@ -323,7 +323,7 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 \subsubsection{Overall comparison.}
 Let $T_{1}^{\mathrm{best}}$ and $T_{4}^{\mathrm{best}}$ be the minimum cost across all considered models for Steps~1 and~4, respectively. Then
 $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
-At the idealized boundary $\omega=2$ the two stages have the same $C_n^{(d)}$-exponent, and Step~1 then dominates by a polynomial factor in $(n,d)$, since the Dixon polynomial already has $\Theta\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ coefficient positions. For the practically relevant case $\omega>2$, $T_{4}^{\mathrm{best}}$ asymptotically dominates as $n$ or $d$ grows, and it also dominates the running time in our experiments. We therefore take $T_{4}^{\mathrm{best}}$ as the overall complexity estimate. A more detailed comparison is given in Appendix~\ref{appendix:step_comparison}.
+At the idealized boundary $\omega=2$, both stages must be retained. For $\omega>2$, choosing the best applicable model at each stage makes Step~4 asymptotically dominant in the fixed-$d$ or fixed-$n$ regimes analyzed in Appendix~\ref{appendix:step_comparison}. It also dominates the running time in our experiments, so we use $T_{4}^{\mathrm{best}}$ as the asymptotic estimate.
 
 \subsubsection{Well-determined case.}
 For $k=1$, the final determinant is a $C_n^{(d)}\times C_n^{(d)}$ univariate polynomial matrix for which the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} is typically optimal:
@@ -342,7 +342,7 @@ For Step~1, the most competitive models are sparse interpolation and cached expa
 	\label{eq:dixon_complexity_well_step1_sparse}
 \end{equation}
 
-Similar to the general case, due to the rapid growth of $\binom{nd}{n}$, for every $\omega>2$, the final-determinant cost $T_{4}^{\mathrm{HNF}}$ asymptotically dominates both Step~1 models, and it is also the empirical bottleneck in our experiments. We therefore adopt $T = T_{4}^{\mathrm{HNF}}$ as the overall complexity estimate for well-determined systems. The full derivation is given in Appendix~\ref{appendix:wellsq}.
+With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed in Appendix~\ref{appendix:step_comparison}, and is also the empirical bottleneck. We therefore adopt $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems; Appendix~\ref{appendix:wellsq} gives the model-specific comparisons.
 
 %For $k\geq 2$, Kronecker substitution must use, in each variable $a_j$, a base $b_j$ exceeding $\deg_{a_j}(\det)$ to avoid overflow in the encoded determinant; since $\deg_{a_j}(\det)\le C_n^{(d)}\cdot E_4$, the choice $b_j = C_n^{(d)} E_4 + 1\le C_n^{(d)}\cdot nd+1$ is sufficient. After substitution the average column degree of the resulting univariate matrix is bounded by $\delta_4 = nd\,(C_n^{(d)}\cdot nd + 1)^{k-1}$, recovering~\eqref{eq:step4_hnf}. We use~\eqref{eq:dixon_complexity_well} as the overall Dixon complexity for square systems in the comparison with Gr\"obner-basis methods.
 
@@ -429,7 +429,7 @@ The GB (per-deg) row admits no closed-form asymptotic equivalent that is both si
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.88\textwidth]{complexity_comparison_d2.png}
+	\includegraphics[width=0.88\textwidth]{complexity_comparison_d2.pdf}
 	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound and the HNF change of order of~\cite{BerthomieuNeigerSafey2022}, are evaluated here for direct comparison with Dixon.}
 	\label{fig:complexity_comparison_d}
 \end{figure}

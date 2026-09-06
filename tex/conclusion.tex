@@ -11,6 +11,5 @@ There remain several directions for future work.
 	
 	\item Precisely estimating the rank of the Dixon matrix to evaluate the Step~4 complexity exactly and optimize Step~3; improving Dixon-resultant techniques, including nonheuristic algorithms for extraneous-factor elimination and possible connections with multivariate subresultants~\cite{DBLP:journals/moc/CoxD23};
 	
-	\item Extending the framework to multivariate public-key schemes such as UOV~\cite{DBLP:conf/eurocrypt/KipnisPG99}. Direct Dixon elimination is asymptotically more efficient than naive Gr\"obner basis methods for MQ systems but still less effective than hybrid strategies~\cite{DBLP:journals/jmc/BettaleFP09}, yet we can investigate whether Method~2/3 can be combined with specialized strategies such as~\cite{DBLP:journals/iacr/MayOR25} for  MQ systems.
+	\item Optimizing Dixon resultants for MQ systems, with potential applications to schemes such as UOV~\cite{DBLP:conf/eurocrypt/KipnisPG99}. Although asymptotically favorable under the compared naive Gr\"obner-basis bounds, direct Dixon elimination is generally slower than Magma in our MQ experiments and theoretically less efficient than guessing-based hybrid methods~\cite{DBLP:journals/jmc/BettaleFP09}. Improving its theoretical or practical performance on MQ systems remains an open direction.
 \end{enumerate}
-
