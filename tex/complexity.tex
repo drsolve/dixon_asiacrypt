@@ -396,15 +396,6 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 	% \end{equation}
 % For generic systems, this bound is typically tight for well-determined systems ($m=n$), giving $d_{\text{reg}} \approx n(d-1)+1$.
 
-\subsubsection{Well-Determined Systems ($m = n$)}
-
-Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} have established theoretical complexity bounds for Gr\"obner basis algorithms.
-Table~\ref{tab:complexity_formulas} summarizes the complexity formulas for Dixon and various Gr\"obner basis approaches for $(n;d)$-systems, together with the leading-order asymptotic equivalent of each ratio relative to Dixon.
-
-The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $C_n^{(d)}$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor here.
-%(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $C_n^{(d)}<d^{\,n}$ often holds.) 
-The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
-
 \begin{table}[!htb]
 	\centering
 	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\eta_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}).}
@@ -435,6 +426,17 @@ The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5
 
 \end{table}
 
+
+\subsubsection{Well-Determined Systems ($m = n$)}
+
+Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} have established theoretical complexity bounds for Gr\"obner basis algorithms.
+Table~\ref{tab:complexity_formulas} summarizes the complexity formulas for Dixon and various Gr\"obner basis approaches for $(n;d)$-systems, together with the leading-order asymptotic equivalent of each ratio relative to Dixon.
+
+The two columns are not of the same nature: the Dixon entry is instantiated with the generically attained matrix size $C_n^{(d)}$, whereas the Gr\"obner basis costs are worst-case upper bounds that do not capture practical F4/F5 optimizations, so the ratios compare bounds rather than measured running times. In particular, the change-of-order terms are asymptotically \emph{smaller} than the Dixon cost for $n$ large relative to $d$, the regime in which the ratios are computed: there $C_n^{(d)}=\Theta\bigl(\gamma_d^{\,n}/n^{3/2}\bigr)$ with $\gamma_d=d^{d}/(d-1)^{d-1}>d$ eventually exceeds the B\'ezout number $d^{\,n}$. This holds both for FGLM and for the faster Hermite-normal-form change of order of~\cite{BerthomieuNeigerSafey2022}, which improves on it only by a polynomial factor here.
+%(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $C_n^{(d)}<d^{\,n}$ often holds.) 
+The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
+
+
 The GB (per-deg) row admits no closed-form asymptotic equivalent that is both simple and accurate, since a leading-order estimate of the index-dominated sum gives only a very loose envelope; we therefore leave its ratio entry blank and refer to Figure~\ref{fig:complexity_comparison_d}. Detailed derivations of all ratios are in Appendix~\ref{Appendix:Derivation}.
 
 \begin{figure}[!htbp]
@@ -457,10 +459,13 @@ The GB (per-deg) row admits no closed-form asymptotic equivalent that is both si
 
 \subsubsection{Overdetermined Systems ($m > n$)}
 
-Gr\"obner basis methods are typically preferable here: the degree of regularity is significantly lower than for well-determined systems~\cite{Faugere2004}, dramatically reducing Macaulay matrix dimensions, and the grevlex basis often yields univariate polynomials directly, eliminating the FGLM step. The Dixon resultant, in contrast, needs exactly $n$ equations to eliminate $n-1$ variables and cannot leverage redundancy: one selects $n$ equations and verifies the rest afterward, at slightly higher cost than the well-determined case.
+Gr\"obner basis methods are typically preferable here: the degree of regularity is significantly lower than for well-determined systems~\cite{Faugere2004}, and the grevlex basis often yields univariate polynomials directly, eliminating the FGLM step. The Dixon resultant, in contrast, needs exactly $n$ equations to eliminate $n-1$ variables and cannot leverage redundancy: one selects $n$ equations and verifies the rest afterward, at slightly higher cost than the well-determined case.
 
 \subsubsection{Underdetermined Systems ($m < n$)}
 
 For complete solving, the common cryptanalytic strategy is to guess $n-m$ variables and reduce to a (well- or over-)determined subsystem solved by Gr\"obner bases, and we do not propose Dixon as a replacement. From the viewpoint of elimination, however, Dixon removes several variables at once and produces explicit relations in fewer variables, which can then be combined with guessing or meet-in-the-middle decompositions; by contrast, changing term orders for positive-dimensional ideals typically requires Gr\"obner walks~\cite{DBLP:journals/jsc/CollartKM97}, whose complexity is hard to predict.
+
+\smallskip\noindent
+In summary, the two methods are complementary: Dixon and Gr\"obner basis are comparable on well-determined systems; Gr\"obner basis is typically preferable for overdetermined systems; Dixon is attractive for underdetermined systems as a determinant-based elimination method.
 
 %!TEX root = main.tex

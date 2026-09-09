@@ -107,7 +107,7 @@ This method is best suited to Type~II (equivalence-relation) primitives, whose l
 \paragraph{Application to Vision.}
 For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make the full direct model unattractive, so we adopt a meet-in-the-middle (MITM) approach following the general framework of Liu et al.~\cite{DBLP:conf/asiacrypt/LiuMM24} and apply iterative Dixon elimination. The detailed model and equation distribution are in Appendix~\ref{appendix:vision} (the round function is recalled in Figure~\ref{fig:vision}); Figure~\ref{fig:vision_complexity_comparison} and Table~\ref{tab:vision_timing} summarize the outcome.
 
-\begin{figure}[!htbp]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.90\textwidth]{vision_complexity.pdf}
 \caption{Complexity comparison for \vision ($\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}).}
@@ -116,7 +116,7 @@ For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make 
 
 For these parameters the final merge~\eqref{eq:mitm_complexity} dominates every forward and backward stage of the chain, so it alone determines the reported complexity; the stage-by-stage figures, together with a rank bound that keeps the intermediate rungs below the merge, are collected in Appendix~\ref{appendix:vision}. This is the structured regime where local elimination is preferable to direct elimination.
 
-\begin{table}[!htbp]
+\begin{table}[h]
 \centering
 \caption{Experimental timing and complexity comparison for \vision ($s=2$). Complexities (Comp.) are in $\log_2$ field operations. $\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}.}
 \label{tab:vision_timing}
