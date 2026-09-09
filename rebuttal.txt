@@ -1,0 +1,246 @@
+asiacrypt2026 Paper #792 Reviews and Comments
+===========================================================================
+Paper #792 Efficient Polynomial System Solving via Dixon Resultants:
+Applications to AO Primitives
+
+
+Review #792A
+===========================================================================
+
+Paper summary
+-------------
+This paper provides a rigorous and in-depth analysis of the use of the Dixon Resultant to solve multivariate systems. Using advanced arguments, they provide a tight bound (for generic systems) on the size of the Dixon matrix, which accurately allows to estimate the complexity of the Dixon resultant computation.  Then, they apply the technique to AO primitives to show the relevance of the approach.
+
+Novelty, methodology and technical correctness
+----------------------------------------------
+The paper is well structured , there is a wide overview of the literature around the Dixon resultant, the concepts are clearly explained, and the authors propose an improvement over the literature (by improving the bound on the Dixon matrix). One downside though: the applications to AO primitive lacks transparency: it is not clear whether the attack can be applied on other AO primitives, or if it does not improve on existing results. Furthermore, Section 5.3 seems to contain mistakes.
+
+Technical quality
+-----------------
+Overall, the paper has a lot of references on which it bases its results. I did not have the time to check all of them, but an interested reader could look at the sources.
+
+I have several questions:
+
+p6: "In the absence of such factors, the degree of the resultant coincides with dI, which is bounded by the Bézout bound" => Is that true also when k \geq 2? Intuitively, I would say that its order of magnitude is close to the k-th root of d_I.
+
+p12: Remark 5 gives the definition used for "generic". Does the notion of "dense" holds in finite field? In the proof of Lemma 4, you use a system in a nested form. How does that prove the tightness of the bound on a "dense" subset of the possible polynomial systems? I think that I did not understand the two last paragraphs of p12.
+
+p22. Section 5.1. How does you attack against Poseidon/Poseidon2 compare to the CheapLunch attack (https://eprint.iacr.org/2025/2040)? In their paper, the authors remark that the grevlex GB can be essentially computed cheaply compared to the change of order step, which then dominates the attack. I then expect their complexity to be more competitive than yours, is this correct?
+
+Have you tried applying Method 2 to Rescue for instance?
+
+p26. If there are several input variables x_1,...x_k, is it true that [10, Algorithm 1] returns a normal form R_j of a polynomial h_j in \tilde{O}(d_{P_k}(h_j)(2\alpha-1)^n)? I doubt the correctness of the formula of T_red ((27)).
+Eq (29). Why do you use C^{(\alpha)}_{n+k}? All equations are not of degree \alpha? So the Fuss-Catalan bound cannot be used right?
+These two concerns make me think that Section 5.3 is incorrect.
+
+How does Dixon resultant compares to sylvester resultant computed with e.g. Villard's approach (https://perso.ens-lyon.fr/gilles.villard/BIBLIOGRAPHIE/PDF/vil18.pdf) in the case of 2 variables?
+
+p27. Have you tried applying the hybrid elimination to other type II algorithms? How does your attack compare to existing attacks on XHash12? And on XHash8 for instance?
+
+Appendix C. How are the generic systems generated? Are all equations of same degree d?
+
+Other question: Did you use LLMs to generate the code?
+
+Editorial quality
+-----------------
+The editorial quality of the paper is impressive. The concepts are very advanced, yet the explanations are clear and not hidden behind a bunch of formalism. There were very few typos or grammatical mistakes. I truly enjoyed reading this paper, and think that other cryptographs will also!
+
+p4. M is used without being first introduced.
+
+p12. The equation is too large.
+If you cite [23], please refer to the section/proposition/lemma used inside the book, since it is very large.
+
+p13. "is only imposed on right steps" => is only imposed on upward steps.
+
+p17. Since you use the formula of O(n d_I^\omega) for FGLM, I assume that you do not count the computation of the multiplication matrix. In Table 2 and Figure 1, You could then also compare to the HNF based change of order algorithm (https://hal.sorbonne-universite.fr/hal-03580736) which improves over FGLM.
+
+p18. Title of the figure is wrong, it is varying n with d=2.
+
+p23. Title of the figure is wrong. w=2 in the title while w=2.81 on the figure.
+
+Scientific quality
+------------------
+The research question is very nice, the technique is novel in the field of cryptography, and the contributions, both on the scientific aspect (improving state-of-the-art) and on the pedagogical aspect, are significant.
+
+
+
+Review #792B
+===========================================================================
+* Updated: Aug 17, 2026
+
+Paper summary
+-------------
+The paper titled "Revisiting the Dixon Resultant: Enhanced Elimination Techniques for Arithmetization-Oriented Primitives" investigates the use of Dixon's resultant for solving polynomial systems arising in cryptographic applications (and more particularly arithmetization-oriented primitives). Dixon's resultant is a multivariate generalization of the Sylvester resultant, introduced in the early twentieth century, and has since been studied in computer algebra as a general-purpose elimination technique.
+
+The paper makes the following main contributions:
+
+- It derives improved complexity bounds for solving polynomial systems using Dixon's resultant.
+- It presents a free C implementation that leverages the FLINT library for fast arithmetic and the PML library for efficient algorithms on polynomial matrices.
+- It reports experimental results, and presents algorithmic frameworks and applications of the complexity bounds on polynomial systems arising from arithmetization-oriented (AO) primitives, demonstrating speedups over state-of-the-art algebraic attacks.
+
+Novelty, methodology and technical correctness
+----------------------------------------------
+**Q1.** The paper cites the relevant prior work, and the comparisons with alternative solving methods (such as Gröbner bases and Sylvester resultants) appear to be fair.
+
+**Q2.** Although Dixon's resultant has been known for many years, it has rarely been used in a cryptographic context. More importantly, to the best of my knowledge, this is the first efficient implementation of this approach, which constitutes a significant contribution.
+
+**Q3.** I did not identify any major technical flaws. I have some concerns regarding the asymptotic complexity analysis (see below for details), but I believe these issues can be addressed without affecting the main message or conclusions of the paper.
+
+Technical quality
+-----------------
+Overall, the technical quality of the paper is good. I had already reviewed a previous version of the manuscript, so I did not re-examine the proofs that I had already checked at that time.
+
+That said, I have some concerns regarding the asymptotic complexity analysis when several parameters are involved. Bounds of the form $O(f(d,n))$, where $d$ and $n$ are independent parameters, should be stated with care, as their interpretation may depend on the relative growth of these parameters. In particular, some of the complexity estimates appear to rely on the assumption that $d$ is fixed (for example, the use of Stirling's approximation in Appendix D: the formula used is correct when d is fixed and n grows, but it seems wrong to me when n is fixed and d grows).
+
+This point should be clarified. In particular, are the values reported in the "Ratio to Dixon" column of Table 2 valid for all asymptotic regimes in which both $d$ and $n$ grow, or do they require additional assumptions? The derivation of these ratios seems to rely on such assumptions (for instance, by treating $d$ as fixed in some cases).
+
+A minor comment: at the beginning of Section 5.2, it would be helpful to remind the reader that calligraphic letters denote blocks of polynomials and blocks of variables.
+
+Editorial quality
+-----------------
+The editorial quality of the paper is very good. I did not notice any typographical errors, and the overall presentation is clear and well organized.
+
+Scientific quality
+------------------
+In my view, the most impressive contribution of this paper is its implementation of Dixon's resultant, which leverages state-of-the-art algorithms for polynomial matrices through the PML library. The performance of the resulting software is particularly impressive, especially considering that Dixon's resultant has historically been regarded primarily as a theoretical tool. To the best of my knowledge, this is the first efficient implementation of this approach.
+
+Making this tool available as part of the algebraic cryptanalysis toolbox is an important contribution to the cryptographic community, especially given the central role that polynomial systems play in the design and analysis of recent arithmetization-oriented (AO) primitives.
+
+======================================================== Post-rebuttal addition ====================================================================
+
+For the final version I would like you to implement the changes you've committed to in the rebuttal, in particular the comparisons with the literature and the corrections of formulas and asymptotic considerations. I also think a phrase reflecting your paragraph "A-AI tools" would be relevant in the main body.
+
+
+
+Review #792C
+===========================================================================
+
+Paper summary
+-------------
+The paper revisits the Dixon resultant, a classical (Dixon, 1909) determinant-based tool for eliminating several variables simultaneously from a multivariate polynomial system, and develops it into a practical method for the CICO polynomial systems that arise in algebraic cryptanalysis of arithmetization-oriented primitives.
+
+Its main theoretical contribution is a lattice-path description of the monomial-support dimensions of the Dixon coefficient matrix for systems with varying total degrees. In the uniform-degree case, the resulting count is a Fuss-Catalan number; in the mixed-degree case, it is expressed by an explicit Hessenberg determinant. The paper also gives a stage-wise cost discussion covering the construction of the Dixon polynomial, maximal-rank submatrix extraction, and several alternatives for the final polynomial-matrix determinant.
+
+The paper further presents DRSolve, a substantial C implementation supporting prime fields, extension fields, and the rationals, together with several determinant backends and a degree-aware submatrix-selection heuristic. It compares DRSolve with Magma and msolve and organizes applications to AO primitives into direct, iterative/MITM, and reduction-based hybrid elimination, illustrated on Poseidon/Poseidon2, Vision, and XHash12.
+
+Novelty, methodology and technical correctness
+----------------------------------------------
+A1 (Related work and originality). 
+
+The explicit mixed-degree lattice-path/Hessenberg expression appears to be the strongest plausibly new theoretical item, provided its corrected support theorem can be proved. The historical framing of the three elimination paradigms and the implementation comparison should be revised:
+
+  - Tang and Feng, ePrint 2005/312, already give essentially Method 1: treat one of n variables as a parameter, eliminate the other n-1 variables with a KSY-Dixon matrix, select a maximal minor, solve the univariate eliminant, and recover the remaining variables. They also obtain the Catalan d=2 specialization. This work is cited only for the quadratic size case, not credited as the closest cryptanalytic solver antecedent.
+
+  - Albrecht's 2006 thesis implements the same DR workflow against a block-cipher MQ system, corrects a nontermination issue in Tang-Feng, and discusses unresolved RSC/completeness conditions. It is directly relevant to DRSolve's correctness and back-substitution claims.
+
+  - Kapur-Saxena's STOC 1996 work already develops generic unmixed Dixon size bounds through Newton polytopes. Chtcherba-Kapur, JSC 38(1), 2004, explicitly treats mixed systems, support translations, matrix-size minimization, and extraneous degree. These do not obviously imply the paper's ordered mixed-total-degree determinant formula, but they make the broad statement that mixed systems lacked a framework too strong.
+
+  - Existing implementations include Jinadu-Monagan's Maple+C interpolation code and 2025 continuation, Lewis's Fermat Dixon-EDF, and a public Maple Dixon package. Comparing only with Groebner-basis solvers does not establish performance relative to the closest Dixon software. Please add at least one such baseline or explain a precise incompatibility.
+
+  - Methods 2 and 3 are best described as AO-tailored multipolynomial Dixon adaptations/syntheses of the Yang et al., Bariant et al., and Deng et al. lines, rather than three wholly new elimination paradigms.
+
+I found no earlier primary source explicitly applying Dixon to Poseidon, Vision, or XHash12, so these particular case studies appear new. Therefore, the related-work problem can be view as fixable positioning problem.
+
+A2 (Methodology). The methodology is sound, but the comparison against Groebner bases (Section 3.3 / Table 2) is framed in a way that overstates Dixon's advantage.
+
+- The "Ratio to Dixon" column of Table 2 is arithmetically correct. But this compares Dixon's tight, generically-attained bound against loose upper bounds for GB. The dominant exponential factor binom(nd,n)^omega is common to Dixon and to the Macaulay/F4-F5 bound, so the whole "advantage" is polynomial in (n,d) and rests entirely on the GB bound being loose, real F4/F5 (which the paper concedes "does not capture practical optimizations") beats these bounds.
+
+- Moreover, the change-of-order step alone (FGLM, ~ n*d^{n*omega}) is asymptotically smaller than the Dixon cost n*d*M^omega for most (n,d), because the Dixon matrix M = C_n^{(d)} ~ (d^d/(d-1)^{d-1})^n actually exceeds the Bezout number d^n. So the statement that "the Dixon complexity remains below the combined F4/F5+FGLM attack" holds only because F4/F5 is taken to be the GB bottleneck; it does not establish that Dixon beats the genuinely expensive part of GB solving. The abstract and Contribution 3 already use the correct, balanced framing; Section 3.3 and Table 2 should be brought into line with it.
+
+A3 (Technical correctness).
+
+I believe that the paper has a meaningful and repairable core, but the present version repeatedly conflates monomial-support dimension, symbolic rank, and maximal-minor size. The generic full-rank claim is not correct. I also found unsupported claims about removal of extraneous factors, omitted costs in Method 2, an invalid elimination/cost step in Method 3, an inconsistent omega=2 comparison, and several reproducible inconsistencies between the AO text, tables, plots, and supplied notebooks.
+
+The implementation contribution remains substantial, and using the support bound in place of the smaller true rank generally makes the principal univariate determinant cost conservative. Therefore, the issues can be considered potentially correctable.
+
+Concretely,
+
+1. The claimed generic full rank is not correct; support size and rank must be distinguished. Concretely, Lemma 4 and Remark 5 claim that the generic Dixon coefficient matrix has full rank equal to the stated Fuss-Catalan/support dimension. This statement does not hold as written. For three random dense bivariate polynomials, independent computations over several prime fields give the following stable results:
+
+  degree d       support matrix       generic observed rank
+      2               5 x 5                    5
+      3              12 x 12                  11
+      4              22 x 22                  20
+      5              35 x 35                  31
+
+The submitted DRSolve binary gives the same rank deficiencies. The proof shows, at most, occurrence of row and column monomials; this does not imply a nonvanishing full-size minor. Moreover, the asserted support equality needs a characteristic restriction: over F_2, (1+x_1)(1+x_1+x_2)=1+x_2+x_1^2+x_1*x_2, so a monomial in the claimed Minkowski support cancels. The support containment, and hence an upper bound, may survive, but generic tightness over small-characteristic fields is not established.
+
+The authors should distinguish row support, column support, symbolic rank, and the selected maximal-minor size; provide a corrected theorem and proof; and identify downstream claims that change. The main determinant-size estimate may remain a conservative upper bound because the selected rank is smaller than the support dimension.
+
+2. Method 3 does not perform the claimed elimination as written. Reduction modulo <z_1^alpha-P_1, ..., z_n^alpha-P_n> only reduces each z_i exponent below alpha; it does not generally produce a polynomial in X. Additional elimination operations, such as successive resultants, are therefore required, but their costs and degree growth are absent from (27).
+
+There is also an output-size problem. Equation (27) is quasi-linear in the scalar weighted degree D and does not have an exponent depending on the number of retained variables. A generic dense degree-D polynomial in k variables has Theta(D^k) coefficients, so the stated bound appears incompatible with the size of the claimed general output. Equations (27)-(29) and the dependent XHash12 curves therefore require a new derivation. Please provide the complete elimination algorithm and a complexity bound consistent with its output.
+
+3. Several complexity comparisons omit relevant stages or conditions. 
+
+- Table 2 and Figure 1 use only the Step-4 HNF cost. Yet (34) gives T_4^HNF/T_1^sparse = Theta_tilde(M^(omega-2)/(n^2*binomial(n+d,n))). At omega=2, Step 1 is larger under the paper's own displayed models. Hence, the omega=2 curves should use the maximum over all stages. The Figure 1 notebook also exchanges the labels "GB (F5)" and "GB (F5 refined)."
+
+- Method 2 prices the final merge but not the construction of the forward and backward relations. Please provide the total cost, including every intermediate determinant, root finding, back-substitution, and candidate verification, or prove that these terms are dominated.
+
+- The degree-aware submatrix selection is a useful heuristic, but it does not prove that the determinant generates the elimination ideal or is free of extraneous factors. Table 7 tests only whether the determinant degree exceeds the Bezout bound, which is neither necessary nor sufficient for detecting extraneous factors. The bounds using D_4 <= d^n should therefore state the required projection/no-extraneous-factor assumptions.
+
+4. The AO calculations and supplied notebooks are not mutually consistent.
+
+- Poseidon: Figure 3 is described as using omega=2, whereas the notebook and rendered plot use omega=2.81. Table 3 states p=2^31-159, but the supplied instances use p=2^62+169.
+
+- Vision: the equations in Appendix K total 4r-2, whereas Table 9 counts 4r-1. For odd r, Table 9 and the notebook use different degree bounds; the notebook hardcodes 2^(4r), leading to Table 4/Figure 4 values that do not follow from Table 9.
+
+- XHash12: the convention |X|=k-1 conflicts with (28), which requires a retained variable. Figure 5 plots direct Dixon only for CICO-1 and uses hybrid assumptions for CICO-2/3/4 while omitting the Method-3 reduction cost. Appendix L uses n+k equations, whereas the direct notebook curve uses n. In Table 5, the artifact gives an overall cost 35.07 rather than 33.6 for CICO-1, s=2; the supplied CICO-1, s=3 instance gives 64.43 rather than 53.5; and the caption states alpha=3 although the s=3 computations use alpha=7. The prose also compares the CICO-2 hybrid value with 33.6, although the corresponding direct table entry is 40.7.
+
+Please provide source-generated corrected tables and figures.
+
+Technical quality
+-----------------
+A4. The contribution is verifiable. The artifact is substantial: it contains DRSolve source and binary, AO instances, Magma/Sage scripts, notebooks, and benchmark data. Basic checks passed, and the supplied Poseidon complexity values and several reported dimensions/timings were reproducible. This supports the existence of a useful implementation, although it does not establish the general correctness claims.
+
+Please respond in rebuttal to the following central questions:
+
+Q1. What corrected statement replaces the full-rank sentence of Lemma 4's proof and Remark 5, how is generic column-support attainment proved, and which downstream statements change? Under which characteristic assumptions is support tightness claimed (please see issue 1 in A3)?
+
+Q2. What complete elimination algorithm justifies Method 3, including the removal of the remaining z_i powers and the multivariate output cost (please see issue 2 in A3)?
+
+Q3. What is the complete Method-2 cost, including construction of all forward/backward relations  (please see issue 3 in A3)?
+
+Q4. For each AO experiment, which KSY and no-extraneous-factor conditions were checked, and were all candidates verified in the original system?
+
+Q5. Precisely how does Method 1 differ from Tang-Feng's DR algorithm, and which part of the mixed-degree theorem is not implied by prior support-sensitive/Newton-polytope Dixon analyses?
+
+Editorial quality
+-----------------
+The paper is generally clear, well organized, and professionally written. The following are some editorial issues to fix:
+
+- The paper uses "Dixon matrix size" interchangeably for (a) the row/column support dimension, (b) the size of the maximal-rank submatrix actually extracted, and (c) the size entering the cost formulas; and "resultant" both for the canonical elimination object and for the determinant of a chosen minor (which may carry extraneous factors). A notation table separating these notions would materially improve the paper.
+- Please correct the Figure 1 legend swap, the Figure 3 omega mismatch, the Table 3 field mismatch, the Table 9 equation counts, the Table 5 comparison (to be consistent with the provided notebooks).
+- Fig. 6 appears twice.
+
+Scientific quality
+------------------
+A6 (Scientific importance). The scientific importance is high. Reliable polynomial-system solving and defensible elimination cost estimates are central to assessing the security of AO primitives, and the community would benefit from enlarging the solver toolbox beyond Groebner bases and two-polynomial resultants.
+
+A7 (Scientific contribution). The contribution is interesting. The solid DRSolve implementation is a meaningful contribution, and the mixed total-degree lattice-path/Hessenberg support formula is potentially useful. The three cryptanalytic paradigms themselves are more incremental than presented, and the AO applications are illustrative rather than new full-round breaks; Method 3 is not currently justified. Nevertheless, after correcting the issues, the support-bound framework, implementation, and case studies would remain substantial.
+
+
+
+Rebuttal Response by Haohai Suo <haohai.suo@mail.sdu.edu.cn> (Author) (700 words)
+---------------------------------------------------------------------------
+We sincerely thank all reviewers for their insightful comments. We will revise the paper as follows.
+
+A-p6–Bézout degree. For k>=2, if the resultant has no extraneous factors and excess multiplicities, its total degree is still bounded by d_I, and hence by the Bézout bound. The k-th-root intuition seems to arise from interpreting d_I as the dense monomial count of a k-variate eliminant rather than as the ideal degree itself.
+
+A-p12/C-Q1–Genericity/support/rank. We use a standard genericity proof technique: the coefficients are treated as independent parameters, and attainment of the predicted support is a Zariski-open condition. Hence constructing one instance attaining the bound establishes generic tightness. However, as Reviewer C pointed out, this reasoning should be stated over characteristic 0 (or sufficiently large characteristic); over finite fields, especially in small characteristic, cancellations may invalidate it. This affects only the tightness claim, not the support upper bound. Moreover, support tightness does not imply full rank, even in characteristic 0. We will correct the full-rank statement and distinguish the Dixon support dimension (N) and symbolic rank (r<=N). Section 3.2 will introduce separate notation for the full Dixon matrix and the extracted maximal-rank submatrix instead of using the same symbol M. The Step-4 determinant complexity depends on r, while N remains a rigorous upper bound.
+
+A-p22/p26/p27–Comparisons. Like Gröbner-basis methods, Dixon applies generally to AO systems but is most advantageous for few-variable, high-degree equations: e.g., on three-variable instances, it is asymptotically below the FGLM stage (Fig.6, p.46) and CheapLunch. For larger-variable systems, CheapLunch may be preferable. On Rescue, Dixon outperformed the resultant of Yang et al. but remained slower than Bariant et al.'s specialized method. Compared with the Sylvester resultant, Dixon uses a smaller matrix, whereas Villard's structured algorithm has better asymptotic complexity. Our XHash8/12 comparison is only with the designers' direct Gröbner-basis attack.
+
+A-p26/C-Q2–Method 3. We agree that our description of Method 3 was inaccurate. [10, Algorithm 1] computes only a normal form modulo the triangular ideal, not an eliminant in K[X]. For reduction, we should replace the univariate coefficient-size factor d_P(g) in [10, Lemma 1] by B_k(D)=\binom{D+k}{k}=\Theta(D^k). For successive elimination, we similarly replace d_P(h_i) in [10, Proposition 7] at each stage by B_k(D_i), and sum the costs over all stages and output constraints. Finally, uniSol is replaced by final mixed-degree Dixon elimination. We will revise (27)–(29) and the curves accordingly.
+
+A–Appendix C. Systems are independently sampled fully dense equal-degree systems with coefficients drawn uniformly from F_p.
+
+A–AI tools. As disclosed in the supplementary README, Claude and Codex assisted parts of the DRSolve implementation. The proofs, algorithms and mathematical derivations were developed by the authors, and all AI-assisted code was reviewed and tested.
+
+B–Asymptotic regimes. We will distinguish the growing-d and growing-n regimes. Exact formulas remain valid, whereas Table 2's simplified ratios rely on additional assumptions and are not uniform across asymptotic regimes. We will also remind readers that calligraphic symbols denote blocks of variables and polynomials.
+
+C-Q3–Method 2. We will clarify the complexity of the preceding forward/backward elimination stages, which follows from the general analysis in Section 3.2. The overall cost is governed by the most expensive determinant stage rather than necessarily by the final merge. For the reported Vision parameters, the final determinant remains dominant.
+
+C-Q4–AO conditions. All reported instances satisfy the KSY condition. Degree-aware selection reduces but does not guarantee the absence of spurious solutions. However, it cannot discard genuine solutions, and any spurious candidates are removed by direct substitution into the original system with negligible additional cost.
+
+C-Q5/C-A1–Prior work and baselines. Method 1 shares Tang-Feng's overall workflow; our practical differences are degree-aware submatrix selection and faster polynomial-matrix determinant computation. We will cite Albrecht's 2006 thesis as the closest earlier cryptanalytic Dixon implementation and restrict our novelty claim to the ordered mixed-total-degree lattice-path/Hessenberg support formula together with the implementation improvements. Our implementation on finite fields significantly outperforms existing Dixon software: e.g., on dense 3-variable degree-8 systems, DRSolve finishes in 0.1 seconds, while the fastest prior implementation Fermat requires 15 seconds. Jinadu-Monagan's code (over Q only) is not directly comparable. This speedup is mainly enabled by FLINT/PML's fast polynomial-matrix algorithms, and is further supported by our degree-aware submatrix selection. We will also correct the editorial, table, and figure issues identified by the reviewers.

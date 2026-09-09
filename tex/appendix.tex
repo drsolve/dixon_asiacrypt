@@ -106,37 +106,37 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 	
 	\paragraph{Setup.}
 	For each $k \in \{1, \ldots, n\}$, define
-	\begin{equation}\notag
+	\begin{equation*}
 		P_k := \{(i_1, \ldots, i_k, 0, \ldots, 0) \in \mathbb{Z}_{\geq 0}^n : i_1 + \cdots + i_k \leq d_k\}.
-	\end{equation}
+	\end{equation*}
 	By definition of the Iterated-Simplex Polynomial, whose coefficients over $\mathbb{Z}$ are positive,
-	\begin{equation}\notag
+	\begin{equation*}
 		\operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}) = P_1 + P_2 + \cdots + P_n,
-	\end{equation}
+	\end{equation*}
 	where $+$ denotes the Minkowski sum. Define the target set:
-	\begin{equation}\notag
+	\begin{equation*}
 		Q_n := \left\{(\alpha_1, \ldots, \alpha_n) \in \mathbb{Z}_{\geq 0}^n : \sum_{\ell=n-j+1}^{n} \alpha_\ell \leq \sum_{i=1}^{j} d_{n-i+1} \text{ for all } j \in \{1, \ldots, n\}\right\}.
-	\end{equation}
+	\end{equation*}
 	
 	\paragraph{Inclusion $P_1 + \cdots + P_n \subseteq Q_n$.}
 	Let $(\alpha_1, \ldots, \alpha_n) \in P_1 + \cdots + P_n$. Then there exist $(i_1^{(k)}, \ldots, i_n^{(k)}) \in P_k$ for $k = 1, \ldots, n$ such that
-	\begin{equation}\notag
+	\begin{equation*}
 		(\alpha_1, \ldots, \alpha_n) = \sum_{k=1}^{n} (i_1^{(k)}, \ldots, i_n^{(k)}).
-	\end{equation}
+	\end{equation*}
 	
 	Fix $j \in \{1, \ldots, n\}$ and consider the last $j$ components. For each $k \in \{n-j+1, \ldots, n\}$, by the definition of $P_k$, we have
-	\begin{equation}\notag
+	\begin{equation*}
 		\sum_{\ell=n-j+1}^{n} i_\ell^{(k)} \leq d_k.
-	\end{equation}
+	\end{equation*}
 	
 	Therefore,
-	\begin{align}\notag
+	\begin{align*}
 		\sum_{\ell=n-j+1}^{n} \alpha_\ell 
 		&= \sum_{\ell=n-j+1}^{n} \sum_{k=1}^{n} i_\ell^{(k)} 
 		= \sum_{k=n-j+1}^{n} \sum_{\ell=n-j+1}^{n} i_\ell^{(k)} \\[0.3em]\notag
 		&\leq \sum_{k=n-j+1}^{n} d_k 
 		= \sum_{i=1}^{j} d_{n-i+1}.
-	\end{align}
+	\end{align*}
 	
 	This shows $(\alpha_1, \ldots, \alpha_n) \in Q_n$.
 	
@@ -145,52 +145,52 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 	
 	Assume $n \geq 2$ and $P_1 + \cdots + P_{n-1} = Q_{n-1}$, where $Q_{n-1}$ is the set attached to the truncated sequence $(d_1,\ldots,d_{n-1})$, viewed as a subset of $\mathbb{Z}_{\geq 0}^{n-1} \times \{0\}$. (Note that the statement of the lemma makes no assumption on the ordering of the $d_i$, so applying it to the truncated sequence is legitimate and the induction is not circular.)
 	Let $(\alpha_1, \ldots, \alpha_n) \in Q_n$. We construct a decomposition
-	\begin{equation}\notag
+	\begin{equation*}
 		(\alpha_1, \ldots, \alpha_n) = (\alpha_1', \ldots, \alpha_{n-1}', 0) + (\alpha_1'', \ldots, \alpha_n'')
-	\end{equation}
+	\end{equation*}
 	with $(\alpha_1', \ldots, \alpha_{n-1}', 0) \in Q_{n-1}$ and $(\alpha_1'', \ldots, \alpha_n'') \in P_n$.
 	
 	We define the decomposition recursively for $j = 1, \ldots, n$. At step $j$, if
-	\begin{equation}\notag
+	\begin{equation*}
 		\alpha_{n-j+1} + \sum_{\ell=n-j+2}^{n-1} \alpha_\ell' \leq \sum_{i=2}^{j} d_{n-i+1}
-	\end{equation}
+	\end{equation*}
 	(with the convention that the sums $\sum_{\ell=n-j+2}^{n-1}\alpha_\ell'$ and $\sum_{i=2}^{j}d_{n-i+1}$ are empty---and therefore equal to $0$---when $j=1$), set
 	\(\alpha_{n-j+1}' := \alpha_{n-j+1}\), 
     \(\alpha_{n-j+1}'' := 0\).
 	Otherwise, set
-	\begin{equation}\notag
+	\begin{equation*}
 		\alpha_{n-j+1}' := \sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell', \quad 
 		\alpha_{n-j+1}'' := \alpha_{n-j+1} - \alpha_{n-j+1}'.
-	\end{equation}
+	\end{equation*}
 	Here $\sum_{i=2}^{j} d_{n-i+1}=\sum_{k=n-j+1}^{n-1} d_k$ is precisely the budget that $Q_{n-1}$ allows for the suffix starting at index $n-j+1$; note also that this budget increases by $d_{n-j+1}\ge 0$ from step $j-1$ to step $j$, so $\alpha_{n-j+1}'\ge 0$ in the second case. At $j=1$ the budget is the empty sum $0$, so the step forces $\alpha_n'=0$.
     %, as required by the shape of the decomposition.
 	
 	In both cases,
-	\begin{equation}\notag
+	\begin{equation*}
 		\sum_{\ell=n-j+1}^{n-1} \alpha_\ell' \leq \sum_{i=2}^{j} d_{n-i+1},
-	\end{equation}
+	\end{equation*}
 	which establishes $(\alpha_1', \ldots, \alpha_{n-1}', 0) \in Q_{n-1}$.
 	
 	To verify $(\alpha_1'', \ldots, \alpha_n'') \in P_n$, we need $\sum_{\ell=1}^{n} \alpha_\ell'' \leq d_n$. If the second case never occurs, then $\alpha''=0$ and there is nothing to prove. Otherwise, let $j$ be the \emph{largest} index at which the second case occurs; then $\alpha_\ell''=0$ for every $\ell<n-j+1$, and since the second case saturates the budget at step $j$ we obtain
-	\begin{align}\notag
+	\begin{align*}
 		\sum_{\ell=1}^{n} \alpha_\ell''=\sum_{\ell=n-j+1}^{n} \alpha_\ell'' 
 		&= \alpha_{n-j+1} - \left(\sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell'\right) + \sum_{\ell=n-j+2}^{n} \alpha_\ell'' \\[0.3em]\notag
 		&= \sum_{\ell=n-j+1}^{n} \alpha_\ell - \sum_{i=2}^{j} d_{n-i+1} 
 		\leq \sum_{i=1}^{j} d_{n-i+1} - \sum_{i=2}^{j} d_{n-i+1} 
 		= d_n,
-	\end{align}
+	\end{align*}
 	where the inequality follows from the definition of $Q_n$.
 	
 	By the induction hypothesis,
-	\begin{equation}\notag
+	\begin{equation*}
 		(\alpha_1, \ldots, \alpha_n) \in Q_{n-1} + P_n \subseteq P_1 + \cdots + P_n.
-	\end{equation}
+	\end{equation*}
 	
 	\paragraph{Conclusion.}
 	Combining both inclusions, we obtain
-	\begin{equation}\notag
+	\begin{equation*}
 		\operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}) = P_1 + \cdots + P_n = Q_n.
-	\end{equation}
+	\end{equation*}
 	establishing the claimed characterization.
     \qed
 \end{proof}
@@ -739,7 +739,7 @@ For $\omega>2$, with this method selection the first determinant never dominates
 	\label{fig:step14_vs_variables}
 \end{figure}
 
-\subsection{Well-determined Case ($k=1$)}\label{appendix:wellsq}
+\subsection{Well-determined Case (\texorpdfstring{$k=1$}{k=1})}\label{appendix:wellsq}
 
 We now specialize the comparison in Appendix~\ref{appendix:step_comparison} to the well-determined setting $k=1$, which is the case used both in the comparison with Gr\"obner basis methods (Section~\ref{Subsection:Other_Comparison}) and in the AO applications of Section~\ref{Section:Application}. The argument is more explicit than the general case because the parameter space is one-dimensional, so $D_4\le d^{\,n}$, $E_4\le nd$, $\delta_4=nd$, and Kronecker$+$HNF reduces to a single univariate HNF on a $C_n^{(d)}\times C_n^{(d)}$ matrix.
 
@@ -943,7 +943,7 @@ We follow the algebraic models from~\cite{DBLP:journals/tosc/GrassiKR25}. The di
 \section{Vision}
 \label{appendix:vision}
 
-\vision is a ZK-friendly hash function following the \emph{Marvellous} design strategy proposed in~\cite{DBLP:journals/tosc/AlyABDS20}. Over $\mathbb{F}_{2^\ell}$, each round alternates inverse maps with affine layers. For $s$ branches, the round functions are
+\vision is a ZK-friendly hash function following the \emph{MARVELlous} design strategy proposed in~\cite{DBLP:journals/tosc/AlyABDS20}. Over $\mathbb{F}_{2^\ell}$, each round alternates inverse maps with affine layers. For $s$ branches, the round functions are
 \begin{equation*}
 	\begin{aligned}
 		\mathcal{F}_{2i}(x) &= \mathsf{M} \cdot \big(B^{-1}(x_0^{-1}), \ldots, B^{-1}(x_{s-1}^{-1})\big) + C_{2i}, \\

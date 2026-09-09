@@ -154,11 +154,11 @@ We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 \begin{proof}
 	\emph{Upper bound.}
 	Write $\operatorname{Supp}_{\bar\xvec}(\cdot)$ for the set of $\bar\xvec$-exponent vectors of a polynomial regarded as an element of $\mathbb{K}[\avec,\xvec][\bar\xvec]$; by the bilinear form $\Delta_{\mathcal{F}}=X\mathcal{M}\overline{X}^{T}$, the numbers of $\bar\xvec$- and of $\xvec$-monomials of $\Delta_{\mathcal{F}}$ are the column and row dimensions of $\mathcal{M}$. In the refined construction~\eqref{eq:Dixon_polynomial_improve} the entry $\widehat{C}_{i,j}$ involves no dual variable other than $\bar{x}_1,\ldots,\bar{x}_{i-1}$, with $\bar\xvec$-degree $0$ for $i=1$ and at most $d_j-1$ for $i\ge 2$, since the difference quotient lowers the degree by one. In an expansion term $\prod_{i}\widehat{C}_{i,\sigma(i)}$, $\sigma\in S_n$, the factor $i=1$ therefore carries no dual variable, while the factors $i\ge2$ have exactly the shape of the product in~\eqref{eq:Iterated_Simplex_Polynomial} under the reindexing $k=i-1$: the $k$-th factor lies in $\bar{x}_1,\ldots,\bar{x}_k$ and has degree at most $d_{\sigma(k+1)}-1$. Hence
-	\begin{equation}\notag
+	\begin{equation*}
 		\operatorname{Supp}_{\bar\xvec}\Bigl(\prod_{i=1}^{n}\widehat{C}_{i,\sigma(i)}\Bigr)
 		\subseteq \operatorname{Supp}\bigl(I_{d_{\sigma(2)}-1,\,\ldots,\,d_{\sigma(n)}-1}\bigr)
 		\subseteq \operatorname{Supp}\bigl(I_{d_{2}-1,\,\ldots,\,d_{n}-1}\bigr),
-	\end{equation}
+	\end{equation*}
 	the second inclusion by Lemma~\ref{lem:reorder_support}, whose hypothesis does not require the primed sequence to be sorted: the multiset $\{d_{\sigma(2)},\ldots,d_{\sigma(n)}\}$ arises from $\{d_2,\ldots,d_n\}$ by replacing $d_{\sigma(1)}$ with $d_1\le d_{\sigma(1)}$ and is therefore dominated by it, with equality when $\sigma(1)=1$. Taking the union over $\sigma\in S_n$ bounds the number of $\bar\xvec$-monomials of $\Delta_{\mathcal{F}}$ by $N^{*}$.
 	
 	For the $\xvec$-support, consider the order-reversing involution $\tau: x_i\mapsto\bar{x}_{n-i},\ \bar{x}_i\mapsto x_{n-i}$ and the reversed system $\mathcal{F}^{\mathrm{rev}}=\{f_1^{\mathrm{rev}},\ldots,f_n^{\mathrm{rev}}\}$ with $f_j^{\mathrm{rev}}(x_1,\ldots,x_{n-1}) := f_j(x_{n-1},\ldots,x_1)$, which has the same degree sequence. Applying $\tau$ to the $i$-th row of the cancellation matrix~\eqref{eq:Cancellation Matrix} of $\mathcal{F}$ produces the $(n-i+1)$-st row of that of $\mathcal{F}^{\mathrm{rev}}$, so $\tau$ merely reverses the row order and both $\det(C)$ and $\prod_{i}(x_i-\bar{x}_i)$ are preserved up to sign. Hence
@@ -169,11 +169,11 @@ We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 	
 	\emph{Attainment for generic systems.}
 	Write $s_{j} := \sum_{l=1}^{j} \bar{x}_l$ for the partial sums of the dual variables, so that $s_{0}=0$ and $s_{i-2}+\bar{x}_{i-1}=s_{i-1}$. Take the nested system $\mathcal{F}^* = \{f^*_1,\ldots,f^*_n\}$ with $f^*_1 = 1$ and $f^*_i = \bigl(\sum_{l=1}^{i-1} x_l\bigr)^{d_i}$ for $i\ge2$, which lies in the coefficient space of Definition~\ref{def:generic} since $\deg_{\xvec}(f^*_i)\le d_i$. For $j<i$ the polynomial $f^*_j$ does not involve $x_{i-1}$, so the numerator of the difference quotient in row $i$ vanishes identically and $\widehat{C}_{i,j}=0$. Thus $\widehat{C}$ is upper-triangular and, since $\widehat{C}_{1,1}=f^*_1=1$,
-	\begin{equation}\notag
+	\begin{equation*}
 		\Delta_{\mathcal{F}^*} = \prod_{i=2}^{n} \widehat{C}_{i,i},
 		\qquad
 		\widehat{C}_{i,i} = -\sum_{t=0}^{d_i-1} (s_{i-2} + x_{i-1})^t (s_{i-2} + \bar{x}_{i-1})^{d_i-1-t}.
-	\end{equation}
+	\end{equation*}
 	Specializing all $x_i$ to $1$ can only shrink the $\bar\xvec$-support, so it suffices to exhibit $N^{*}$ monomials in $\Delta_{\mathcal{F}^*}|_{\xvec=\mathbf{1}}$. All its coefficients are integers of the same sign $(-1)^{n-1}$, so no cancellation occurs as soon as $\operatorname{char}(\mathbb{K})$ is zero or large enough (Remark~\ref{rem:support_vs_rank}). The summand of index $t$ of $\widehat{C}_{i,i}|_{\xvec=\mathbf{1}}$ is $(s_{i-2}+1)^{t}\,s_{i-1}^{\,d_i-1-t}$, whose support contains all monomials of degree $d_i-1-t$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$; letting $t$ run over $0,\ldots,d_i-1$ shows that $\operatorname{Supp}_{\bar\xvec}(\widehat{C}_{i,i}|_{\xvec=\mathbf{1}})$ is the full simplex of degree $d_i-1$, and by the same absence of cancellation $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}^*}|_{\xvec=\mathbf{1}})=\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$, of cardinality $N^{*}$.
 	
 	Finally, the requirement that all $N^{*}$ iterated-simplex monomials occur in $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}})$ is a finite intersection of Zariski-open conditions on the coefficients of $\mathcal{F}$, satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset $U$ of the irreducible coefficient space. As $\mathcal{F}\mapsto\mathcal{F}^{\mathrm{rev}}$ is a linear automorphism preserving the degree bounds, $U^{\mathrm{rev}}:=\{\mathcal{F}: \mathcal{F}^{\mathrm{rev}}\in U\}$ is again dense and open, and by~\eqref{eq:tau_symmetry} the $\xvec$-support of $\Delta_{\mathcal{F}}$ has $N^{*}$ elements for every $\mathcal{F}\in U^{\mathrm{rev}}$. On $U\cap U^{\mathrm{rev}}$ both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
@@ -458,4 +458,3 @@ Gr\"obner basis methods are typically preferable here: the degree of regularity 
 For complete solving, the common cryptanalytic strategy is to guess $n-m$ variables and reduce to a (well- or over-)determined subsystem solved by Gr\"obner bases, and we do not propose Dixon as a replacement. From the viewpoint of elimination, however, Dixon removes several variables at once and produces explicit relations in fewer variables, which can then be combined with guessing or meet-in-the-middle decompositions; by contrast, changing term orders for positive-dimensional ideals typically requires Gr\"obner walks~\cite{DBLP:journals/jsc/CollartKM97}, whose complexity is hard to predict.
 
 %!TEX root = main.tex
-
