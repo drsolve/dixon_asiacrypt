@@ -1,6 +1,6 @@
 \section{Optimized Implementation for Dixon Resultant}\label{Section: Improvements}
 
-While the theoretical complexity analysis highlights the advantages of Dixon resultant methods, bridging the gap to practical efficiency requires overcoming several significant hurdles. Currently, off-the-shelf computer algebra systems offer limited support: Dixon resultants are not natively implemented in advanced solvers like Magma~\cite{magma}; the Maple package of~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025} targets computations over $\mathbb{Q}$ and is therefore not directly comparable with our finite-field benchmarks; and Fermat~\cite{fermat}, which we use as the Dixon baseline in Section~\ref{Implementation}, is often unsatisfactory at scale. Beyond software limitations, extraneous factors must be carefully controlled or the classical B\'ezout bound becomes inapplicable, and large-scale polynomial-matrix operations must be handled efficiently. This section addresses these issues.
+While the theoretical complexity analysis highlights the advantages of Dixon resultant methods, bridging the gap to practical efficiency requires overcoming several significant hurdles. Currently, off-the-shelf computer algebra systems offer limited support: Dixon resultants are not natively implemented in advanced solvers like Magma~\cite{magma}; and while implementations exist in Fermat~\cite{fermat} and through third-party packages in Maple~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025}, their performance is often unsatisfactory at scale. Beyond software limitations, extraneous factors must be carefully controlled or the classical B\'ezout bound becomes inapplicable, and large-scale polynomial-matrix operations must be handled efficiently. This section addresses these issues.
 
 \subsection{Eliminating Extraneous Factors via Degree-Aware Submatrix Selection}
 \label{Subsection:Extraneous}
@@ -22,7 +22,7 @@ where $|\text{rdeg}(A)|$ and $|\text{cdeg}(A)|$ denote the sum of row degrees an
 	then we expect that $\deg(\det(A)) \geq \deg(\det(B))$ typically holds in the generic case.
 \end{hypothesis}
 
-The intuition is that generic determinants saturate their row/column-sum upper bound, so a smaller bound usually corresponds to a smaller actual degree. Under this hypothesis, our greedy strategy yields maximal-rank submatrices with minimal determinant degree, thereby reducing extraneous factors in the resulting Dixon resultant.
+The intuition is that a smaller row/column-sum degree bound tends to indicate a smaller determinant degree, motivating our greedy strategy to favor low-degree maximal-rank submatrices and thereby potentially reduce extraneous factors.
 
 \begin{remark}
 	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also utilized a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. We use the cheaper row/column weights as a heuristic for selecting low-degree submatrices.
@@ -73,8 +73,8 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 \end{figure}
 
 \paragraph{Experimental results.}
-All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the fastest previous Dixon resultant implementation Fermat~\cite{fermat}. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve shows significant advantages for systems with fewer variables and higher degrees.
-Our advantage over Fermat is primarily due to the high-performance polynomial-matrix routines in FLINT/PML, in particular the efficient HNF algorithm.
+All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the high-performance Dixon implementation Fermat~\cite{fermat}. Jinadu--Monagan's Maple implementation is designed for $\mathbb{Q}$ and is not included in our finite-field benchmarks. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve performs best for systems with fewer variables and higher degrees.
+Our advantage over Fermat is primarily due to the efficient polynomial-matrix routines in FLINT/PML, in particular the HNF algorithm.
 
 
 

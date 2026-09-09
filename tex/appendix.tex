@@ -155,15 +155,15 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 		\alpha_{n-j+1} + \sum_{\ell=n-j+2}^{n-1} \alpha_\ell' \leq \sum_{i=2}^{j} d_{n-i+1}
 	\end{equation}
 	(with the convention that the sums $\sum_{\ell=n-j+2}^{n-1}\alpha_\ell'$ and $\sum_{i=2}^{j}d_{n-i+1}$ are empty---and therefore equal to $0$---when $j=1$), set
-	\begin{equation}\notag
-		\alpha_{n-j+1}' := \alpha_{n-j+1}, \quad \alpha_{n-j+1}'' := 0.
-	\end{equation}
+	\(\alpha_{n-j+1}' := \alpha_{n-j+1}\), 
+    \(\alpha_{n-j+1}'' := 0\).
 	Otherwise, set
 	\begin{equation}\notag
 		\alpha_{n-j+1}' := \sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell', \quad 
 		\alpha_{n-j+1}'' := \alpha_{n-j+1} - \alpha_{n-j+1}'.
 	\end{equation}
-	Here $\sum_{i=2}^{j} d_{n-i+1}=\sum_{k=n-j+1}^{n-1} d_k$ is precisely the budget that $Q_{n-1}$ allows for the suffix starting at index $n-j+1$; note also that this budget increases by $d_{n-j+1}\ge 0$ from step $j-1$ to step $j$, so $\alpha_{n-j+1}'\ge 0$ in the second case. At $j=1$ the budget is the empty sum $0$, so the step forces $\alpha_n'=0$, as required by the shape of the decomposition.
+	Here $\sum_{i=2}^{j} d_{n-i+1}=\sum_{k=n-j+1}^{n-1} d_k$ is precisely the budget that $Q_{n-1}$ allows for the suffix starting at index $n-j+1$; note also that this budget increases by $d_{n-j+1}\ge 0$ from step $j-1$ to step $j$, so $\alpha_{n-j+1}'\ge 0$ in the second case. At $j=1$ the budget is the empty sum $0$, so the step forces $\alpha_n'=0$.
+    %, as required by the shape of the decomposition.
 	
 	In both cases,
 	\begin{equation}\notag
@@ -189,9 +189,10 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 	\paragraph{Conclusion.}
 	Combining both inclusions, we obtain
 	\begin{equation}\notag
-		\operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}) = P_1 + \cdots + P_n = Q_n,
+		\operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}) = P_1 + \cdots + P_n = Q_n.
 	\end{equation}
 	establishing the claimed characterization.
+    \qed
 \end{proof}
 
 % \paragraph{Outline of proof.}
@@ -556,7 +557,7 @@ The expansion-by-minors model uses the dense monomial-count proxy
 \[
 \mu_1 \le \binom{n-1+k+d}{n-1+k},
 \]
-i.e.\ the number of dense monomials in the original $f_j$ when viewed as a polynomial in the $n-1+k$ variables of $\xvec$ and $\avec$ of total degree at most $d$. We use this as a per-entry dense bound; intermediate minors arising in the expansion are also bounded by $S_1$ (see below).
+i.e.\ the number of dense monomials in the original $f_j$ when viewed as a polynomial in the $n-1+k$ variables of $\xvec$ and $\avec$ of total degree at most $d$. Explicitly expanding the difference-quotient entries would introduce a factor $\max\{1,d/(n+k)\}$ in the uniform entry-support bound. The theoretical expansion model avoids this factor by multiplying the undivided numerators of a difference-quotient row by the cached minors, summing the row expansion, and only then dividing exactly by the common linear factor $x_i-\bar{x}_i$. Each numerator has at most $2\mu_1$ terms, and this linear division is soft-linear in the input and output support sizes. Under the stated intermediate-support proxy $U:=S_1$, the cost therefore remains $\widetilde O(n2^n\mu_1S_1)$, as in~\eqref{eq:step1_minor}. This is an evaluation strategy for the same refined determinant, rather than a claim that expanded difference quotients have at most $\mu_1$ terms.
 
 \paragraph{Variable-wise degree bounds.}
 The Kronecker$+$HNF model uses the variable-wise degree bounds derived from the refined cancellation-matrix structure. A row-by-row analysis of $\widehat{C}$ (the variable $x_i$ appears in rows $1,\ldots,i$ with degree $\leq d$, in row $i+1$ with degree $\leq d-1$ after the difference quotient, and is absent from rows $i+2,\ldots,n$ where it has been replaced by $\bar{x}_i$; an analogous count applies to $\bar{x}_i$) gives
@@ -567,11 +568,11 @@ The Kronecker$+$HNF model uses the variable-wise degree bounds derived from the 
 	b_{a_j} &:= \deg_{a_j}(\det\widehat{C})\le nd, &&
 \end{aligned}
 \]
-for $i=1,\ldots,n-1$ and $j=1,\ldots,k$. Per-entry degree bounds are $e_{x_i}, e_{\bar x_i}, e_{a_j}\le d$. Kronecker substitution must use the determinant-level base $b_*+1$ (per Appendix~\ref{appendix:determinant_methods}). For concreteness, let $b_1,\ldots,b_\ell$ denote the variable-wise determinant degrees in some fixed ordering of the $\ell=2n+k-2$ variables, with the last variable playing the role of the univariate indeterminate $t$ after Kronecker substitution. After substitution, the average column degree of the univariate matrix is bounded by
+for $i=1,\ldots,n-1$ and $j=1,\ldots,k$. Every entry has total degree at most $d$, so in particular $e_{x_i}, e_{\bar x_i}, e_{a_j}\le d$. Kronecker substitution must use the determinant-level base $b_*+1$ (per Appendix~\ref{appendix:determinant_methods}). For concreteness, let $b_1,\ldots,b_\ell$ denote the variable-wise determinant degrees in some fixed ordering of the $\ell=2n+k-2$ variables. The largest Kronecker weight is $\prod_{i=1}^{\ell-1}(b_i+1)$; using the entry total-degree bound, the average column degree of the univariate matrix is bounded by
 \[
 \delta_1 := d\cdot\prod_{i=1}^{\ell-1}(b_i+1)\;\le\;\prod_{i=1}^{\ell}(b_i+1),
 \]
-where the first factor $d$ is the per-entry degree bound of the indeterminate variable, and the second inequality uses $d\le b_\ell+1$, which holds since $b_\ell$ bounds a degree of the whole determinant while $d$ bounds the corresponding degree of a single entry. The bound is invariant under the choice of which variable serves as $t$. The HNF cost is then $T_{1}^{\mathrm{HNF}}=\widetilde{O}(n^\omega \delta_1)$.
+where $d$ is the total-degree bound of an entry and $d\le b_\ell+1$ for the structural bounds above. The estimate is valid for any fixed variable ordering, although its value may depend on that ordering. The HNF cost is then $T_{1}^{\mathrm{HNF}}=\widetilde{O}(n^\omega \delta_1)$.
 
 \paragraph{Interpolation parameters.}
 For evaluation-interpolation, the tensor-grid size is
@@ -818,13 +819,13 @@ With the best applicable construction model, Step~4 is asymptotically dominant f
 This appendix expands the determinant-method summary from Table~\ref{tab:determinant_methods}. We record both the complexity formulas and the stage-specific origin of the parameters used in the comparison code.
 
 \paragraph{Notation.}
-Let $P(\yvec)$ be an $m\times m$ polynomial matrix in variables $\yvec=(y_1,\ldots,y_v)$. Let $b_i$ bound the degree of $\det(P)$ in $y_i$ (this determines the Kronecker substitution base, which must avoid overflow), and let $e_i\le b_i$ bound the degree of a single entry of $P$ in $y_i$. Define
+Let $P(\yvec)$ be an $m\times m$ polynomial matrix in variables $\yvec=(y_1,\ldots,y_v)$. Let $b_i$ bound the degree of $\det(P)$ in $y_i$ (this determines the Kronecker substitution base, which must avoid overflow), and let $e_i\le b_i$ bound the degree of a single entry of $P$ in $y_i$. With $c_i=\prod_{j<i}(b_j+1)$, define
 \[
-\delta = e_v \prod_{i=1}^{v-1}(b_i+1),
+\delta = \sum_{i=1}^{v}e_i c_i,
 \qquad
 N = \prod_{i=1}^{v}(b_i+1),
 \]
-where $\delta$ bounds the entry degree, hence the average column degree, of the univariate matrix obtained after Kronecker substitution.
+where $\delta$ bounds the entry degree, hence the average column degree, of the univariate matrix obtained after Kronecker substitution. Since $\sum_{i<v}b_i c_i=c_v-1$, we have $\delta\le(e_v+1)c_v-1<2e_vc_v$ when $e_v\ge1$; thus the asymptotic cost $\widetilde O(m^\omega e_vc_v)$ is unchanged. If every entry has total degree at most $E$, the bound $\delta=Ec_v$ may be used instead. This gives the Step~1 and Step~4 specializations with $E=d$ and $E=E_4\le nd$, respectively.
 We also write $B:=\max_i b_i$, $L$ for the cost of one determinant probe, $S$ for a sparsity bound on $\det(P)$, $U$ for an upper bound on the support size of intermediate minors arising during a chosen evaluation strategy, $\mu$ for a dense monomial-count bound on one entry of $P$, and $\widetilde{M}(u)$ for soft-Oh multiplication at degree $u$.
 
 \paragraph{Intermediate-minor support proxy (modeling convention).}
@@ -931,7 +932,7 @@ The parameters are chosen so that $\gcd(\alpha,p-1)=1$ and so as to meet the tar
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{poseidon.png}
+	\includegraphics[width=0.9\textwidth]{poseidon_diagram.pdf}
 	\caption{Overview of \poseidon and \poseidonnew. (Figure from~\cite{DBLP:phd/hal/Bouvier23})}
 	\label{fig:poseidon}
 \end{figure}
@@ -954,7 +955,7 @@ where $\mathsf{M}$ is an MDS matrix with rows indexed by $1,\ldots,s$, the $C_j$
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.9\textwidth]{vision.png}
+	\includegraphics[width=0.9\textwidth]{vision_diagram.pdf}
 	\caption{Round function of \vision. (Figure from~\cite{DBLP:phd/hal/Bouvier23})}
 	\label{fig:vision}
 \end{figure}
@@ -1016,27 +1017,37 @@ The equation-degree distribution used in the MITM estimate is summarized in Tabl
 
 The MITM elimination proceeds by computing forward resultants up to the middle state and backward resultants from the output side to the same middle state. The two shared middle variables $\mathcal{Z}$ are retained throughout, so the forward chain terminates in one relation in $\mathcal{Z}$ of total degree $D_{\mathrm{fwd}}$ and the backward chain in another of total degree $D_{\mathrm{bwd}}$. The final step is a single resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, yielding the univariate eliminant in the remaining middle variable. This is the detailed model underlying Equation~\eqref{eq:mitm_complexity} in the main text.
 
-\paragraph{A rank bound for the ladder rungs.}
-Each rung of the chain eliminates a block of two variables from the incoming relation $R$ together with two local equations. Unlike a generic three-polynomial system, only $R$ has a degree growing with the number of rounds, and this alone already forces the Dixon matrix to be strongly rank-deficient. The next lemma makes this precise; it requires neither genericity nor an assumption on $\operatorname{char}(\mathbb{K})$, so it applies verbatim over $\mathbb{F}_{2^\ell}$ (cf.\ Remark~\ref{rem:support_vs_rank}).
-
-\begin{lemma}[Rung rank bound]\label{lem:rung_rank}
-	Let $\xvec=(x_1,x_2)$ be the eliminated block, let $R\in\mathbb{K}[\xvec]$ have total degree at most $D$, and let $f_1,f_2$ have degree at most $e$ in $\xvec$. Let $\mathcal{M}$ be the Dixon matrix obtained by eliminating $\xvec$ from $\{R,f_1,f_2\}$. Then
-	\begin{equation}\label{eq:rung_rank}
-		\operatorname{rank}\mathcal{M}\;\le\;\frac{e(e+3)}{2}\,D+\frac{e(3e-1)}{2},
-	\end{equation}
-	and the Dixon polynomial $\Delta$ has $\mathcal{O}(e^4D^3)$ terms.
-\end{lemma}
-
-\begin{proof}
-	Write $\Delta=X\mathcal{M}\overline{X}^{T}$ and recall the two elementary facts that a bilinear form $\sum_{a\le r}u_a(\xvec)v_a(\bar\xvec)$ has coefficient matrix of rank at most $r$, and that these ranks are subadditive under sums and submultiplicative under products. In the refined construction~\eqref{eq:Dixon_polynomial_improve} with $n=3$, the entry $\widehat{C}_{1,j}$ has $\bar\xvec$-degree $0$, the entry $\widehat{C}_{2,j}$ involves $\bar{x}_1$ only, and $\widehat{C}_{3,j}$ involves $x_2$ only on the $\xvec$-side; in rows $2$ and $3$ the difference quotient lowers the $\xvec$-degree by one.
-	
-	Expanding $\det\widehat{C}$ along the column of $R$ gives $\Delta=\sum_{i=1}^{3}(-1)^{i+1}\widehat{C}_{i,R}\,m_i$, where $m_i$ is the $2\times 2$ minor formed by the columns of $f_1,f_2$ with row $i$ deleted. The three factors attached to $R$ have ranks at most $1$, $D$ and $D$ respectively (a single $\bar\xvec$-monomial for $i=1$; at most $D$ powers of $\bar x_1$ for $i=2$; at most $D$ powers of $x_2$ for $i=3$). The minors are bounded by their $\bar\xvec$-supports: $m_3$ involves $\bar x_1$ alone with degree $\le e-1$, giving $e$ monomials; $m_2$ has $\bar\xvec$-degree $\le e-1$, giving $\binom{e+1}{2}$ monomials; and $m_1$ has $\bar\xvec$-support inside $\{\bar x_1^{a}\bar x_2^{b}: b\le e-1,\ a+b\le 2e-2\}$, of cardinality $e(3e-1)/2$. Combining the three products yields~\eqref{eq:rung_rank}. Finally, $\widehat{C}_{2,R}$ and $\widehat{C}_{3,R}$ each involve only three of the four variables, with degree below $D$ in each, hence have $\mathcal{O}(D^3)$ terms, while every $m_i$ has $\mathcal{O}(e^4)$ terms.
-\end{proof}
+\paragraph{Rank and extraction cost of a rung.}
+Let the incoming relation $R$ have degree at most $D$ in the eliminated
+block $\xvec=(x_1,x_2)$, and let the two local equations have block degree
+at most $e$.
+Expanding the refined cancellation determinant along the column of $R$
+gives $\Delta=\sum_{i=1}^3(-1)^{i+1}\widehat C_{i,R}m_i$,
+where $m_i$ is the corresponding local $2\times2$ minor.
+The three $R$-entries decompose into at most $1,D,D$ products
+of a polynomial in $\xvec$ and a polynomial in $\bar{\xvec}$, respectively,
+while grouping the local minors by dual monomials gives ranks at most
+$e(3e-1)/2$, $\binom{e+1}{2}$ and $e$, respectively. Hence
+\begin{equation}\label{eq:rung_rank}
+ \operatorname{rank}\mathcal M
+ \le r_0:=\frac{e(e+3)}2D+\frac{e(3e-1)}2 .
+\end{equation}
+The same expansion has $O(e^4D^3)$ terms and explicitly gives
+$\mathcal M=UV$ of inner dimension $r_0$, independently of the
+characteristic.
+After a rank-preserving specialization, a row basis $U_{I,:}$ gives
+$\mathcal M_{I,:}=U_{I,:}V$ with the same row space as $\mathcal M$.
+Thin-matrix elimination therefore extracts a maximal-rank submatrix in
+$\widetilde O(N\bar\rho^{\omega-1})$ operations, where
+$\bar\rho=\min\{N,r_0\}$ and $N$ bounds both support dimensions;
+use dense elimination if $r_0>N$.
+For fixed $e$, the $\widetilde O(D^3)$ factor-construction cost is
+included in Step~1.
 
 For \vision with $s=2$ the two local equations of a rung have block bidegree $(e,e)$ with $e=1$ for the $\deg=2$ rungs and $e=4$ for the $\deg=8$ rungs, so~\eqref{eq:rung_rank} reads $\rho\le 2D_{\mathrm{in}}+1$ and $\rho\le 14D_{\mathrm{in}}+22$ respectively, against a support dimension $D(\mathcal{F})=\Theta(D_{\mathrm{in}}^{2})$.
 
 \paragraph{Stage-by-stage figures.}
-Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the bound~\eqref{eq:rung_rank} on the size $\rho$ of the maximal-rank submatrix extracted in Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count of Lemma~\ref{lem:rung_rank}, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. For Step~3 we use the rank-sensitive cost model $\mathcal{O}(D(\mathcal{F})\rho^{\omega-1})$; its estimate remains below Step~4 for the listed parameters.
+Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the rank bound $\bar\rho=\min\{D(\mathcal F),r_0\}$ used for Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count above, with fixed-$e$ constants suppressed, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. For Step~3 we use the rank-sensitive cost model $\widetilde{\mathcal{O}}(D(\mathcal{F})\bar\rho^{\omega-1})$; its estimate remains below Step~4 for the listed parameters. The first rung has no incoming relation $R$ and uses the ordinary two-polynomial bound $N=\bar\rho=2$ instead.
 
 \begin{table}[h]
 	\centering
@@ -1047,9 +1058,9 @@ Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cos
 	\renewcommand{\arraystretch}{1.1}
 	\begin{tabular}{lccccccccc}
 		\toprule
-		Stage & $d$ & $\log_2 D_{\mathrm{in}}$ & $\log_2 D_{\mathrm{out}}$ & $\log_2 D(\mathcal{F})$ & $\log_2\rho$ & Step~1 & Step~3 & Step~4 & Cost \\
+		Stage & $d$ & $\log_2 D_{\mathrm{in}}$ & $\log_2 D_{\mathrm{out}}$ & $\log_2 D(\mathcal{F})$ & $\log_2\bar\rho$ & Step~1 & Step~3 & Step~4 & Cost \\
 		\midrule
-		F1    & $2$ & $0$  & $2$  & $0.0$  & $1.0$  & $3.0$  & $1.0$  & $5.3$  & $5.3$ \\
+		F1    & $2$ & $0$  & $2$  & $1.0$  & $1.0$  & $3.0$  & $2.0$  & $5.3$  & $5.3$ \\
 		F2    & $8$ & $2$  & $8$  & $4.5$  & $4.5$  & $6.0$  & $8.9$  & $19.4$ & $19.4$ \\
 		F3    & $2$ & $8$  & $10$ & $15.0$ & $9.0$  & $24.0$ & $24.0$ & $29.0$ & $29.0$ \\
 		F4    & $8$ & $10$ & $16$ & $19.0$ & $13.8$ & $30.0$ & $32.8$ & $46.6$ & $46.6$ \\
@@ -1101,7 +1112,7 @@ where $p = 2^{64}-2^{32}+1$. The nonlinear layers combine power maps over $\math
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.95\textwidth]{xhash12.png}
+	\includegraphics[width=0.95\textwidth]{xhash12_diagram.pdf}
 	\caption{Round function of \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}}
 	\label{fig:xhash12}
 \end{figure}
@@ -1120,8 +1131,6 @@ For an $s$-step instance, let $n=12s$ and write the system in triangular form
 \end{array}
 \right.
 \]
-with $\alpha=7$ for the standard XHash12 instance.
+with $\alpha=7$ for the standard XHash12 instance. The complexity curves use $\bar D=\alpha$ for the output constraints and the degree bounds $D_i=\alpha^{n-i}\bar D$ before each successive elimination. For CICO-1, we instantiate~\eqref{eq:two_poly_complexity_main} with $d_{\mathcal I}=\alpha^n$. For $k\ge2$, we evaluate the sum in~\eqref{eq:successive_elim_cost} and bound the final relation degrees by $\alpha^n\bar D$. In both the direct and final hybrid Dixon computations, construction uses the cheaper of Kronecker$+$HNF and cached expansion, followed by rank extraction and univariate HNF; the reported estimate is the maximum over these stages.
 
 For CICO-1, the reduction method of~\cite{DBLP:conf/crypto/BariantBBHOR25} can be applied directly. For larger $k$, the hybrid strategy first derives reduced relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ from the triangular ideal and then performs a final Dixon elimination on these relations. The main text reports only the resulting complexities and timings because the qualitative conclusion is simple: the hybrid strategy is excellent for very small $k$, but the direct Dixon method remains the relevant estimate for the natural CICO-4 setting. The reference point for both is the direct Gr\"obner-basis attack of the designers~\cite{DBLP:journals/iacr/AshurKM23}; the same triangular model, with the power maps of $\mathcal{B}_i$ replaced accordingly, applies verbatim to \texttt{XHash8}.
-
-

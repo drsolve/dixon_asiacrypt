@@ -64,6 +64,7 @@ This lattice path counting problem admits precise closed-form solutions through 
 
 \begin{proof}
 	Parts (1)(2) are classical results in enumerative combinatorics; see~\cite{hilton1991catalan,DBLP:journals/dm/Aval08}. Part (3) is a special case of Theorem 10.7.1 in~\cite{bona2015handbook} with $b_j = 0$ for all $j$. 
+\qed
 \end{proof}
 
 By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}, we immediately obtain the following bounds.
@@ -103,7 +104,7 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 We introduce the Iterated-Simplex Polynomial as a bridge connecting the Dixon matrix size to lattice path counting. Lemma~\ref{lem:fc_polytope} gives a polyhedral description of its support via the trailing-sum inequalities $\alpha_{n-k+1}+\cdots+\alpha_n \leq \sum_{i=1}^k d_{n-i+1}$. Using this description, Lemma~\ref{lem:dixon_fc_bound} shows the Dixon matrix size is bounded by the number of monomials of ${I}_{d_2-1, \ldots, d_{n}-1}$, with equality for generic systems. Lemma~\ref{lem:lattice_path_count} then bijects these lattice points with lattice paths below a piecewise linear boundary.
 
 \begin{definition}[Iterated-Simplex Polynomial]
-	Let $n \geq 1$ be a positive integer and $(d_1, d_2, \ldots, d_n)$ be a sequence of positive integers. The Iterated-Simplex polynomial is defined as
+	Let $n$ be a positive integer and $(d_1, d_2, \ldots, d_n)$ be a sequence of nonnegative integers. The Iterated-Simplex polynomial is defined as
 	\begin{equation}
 		I_{d_1,d_2,\ldots,d_n}(x_1, \ldots, x_n) := \prod_{k=1}^{n} \left( \sum_{\substack{\boldsymbol\alpha \in \mathbb{Z}_{\ge 0}^k,\; \alpha_1 + \cdots + \alpha_k \leq d_k}} x_1^{\alpha_1} \cdots x_k^{\alpha_k} \right),
 		\label{eq:Iterated_Simplex_Polynomial}
@@ -138,6 +139,7 @@ In particular, if $d_1\leq\cdots\leq d_n$, the hypothesis holds for any permutat
 By Lemma~\ref{lem:fc_polytope}, the two supports are characterized by the trailing-sum inequalities $\alpha_{n-k+1}+\cdots+\alpha_n \leq \sum_{j=1}^{k} d_{n-j+1}$ and their primed counterparts. Since every primed right-hand side is no larger, every point in $\operatorname{Supp}(I_{d'_1,\ldots,d'_n})$ also belongs to $\operatorname{Supp}(I_{d_1,\ldots,d_n})$.
 
 For the final statement, $\sum_{j=1}^{k} d_{n-j+1}$ is the sum of the $k$ largest original entries. Any suffix sum of $k$ primed entries is at most the sum of the $k$ largest primed entries, which cannot exceed the sum of the $k$ largest original entries after some entries are decreased. Hence the hypothesis holds.
+\qed
 \end{proof}
 
 
@@ -175,6 +177,7 @@ We now connect the Dixon matrix size to the Iterated-Simplex Polynomial.
 	Specializing all $x_i$ to $1$ can only shrink the $\bar\xvec$-support, so it suffices to exhibit $N^{*}$ monomials in $\Delta_{\mathcal{F}^*}|_{\xvec=\mathbf{1}}$. All its coefficients are integers of the same sign $(-1)^{n-1}$, so no cancellation occurs as soon as $\operatorname{char}(\mathbb{K})$ is zero or large enough (Remark~\ref{rem:support_vs_rank}). The summand of index $t$ of $\widehat{C}_{i,i}|_{\xvec=\mathbf{1}}$ is $(s_{i-2}+1)^{t}\,s_{i-1}^{\,d_i-1-t}$, whose support contains all monomials of degree $d_i-1-t$ in $\bar{x}_1,\ldots,\bar{x}_{i-1}$; letting $t$ run over $0,\ldots,d_i-1$ shows that $\operatorname{Supp}_{\bar\xvec}(\widehat{C}_{i,i}|_{\xvec=\mathbf{1}})$ is the full simplex of degree $d_i-1$, and by the same absence of cancellation $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}^*}|_{\xvec=\mathbf{1}})=\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$, of cardinality $N^{*}$.
 	
 	Finally, the requirement that all $N^{*}$ iterated-simplex monomials occur in $\operatorname{Supp}_{\bar\xvec}(\Delta_{\mathcal{F}})$ is a finite intersection of Zariski-open conditions on the coefficients of $\mathcal{F}$, satisfied at $\mathcal{F}^*$; it therefore defines a non-empty, hence dense, Zariski-open subset $U$ of the irreducible coefficient space. As $\mathcal{F}\mapsto\mathcal{F}^{\mathrm{rev}}$ is a linear automorphism preserving the degree bounds, $U^{\mathrm{rev}}:=\{\mathcal{F}: \mathcal{F}^{\mathrm{rev}}\in U\}$ is again dense and open, and by~\eqref{eq:tau_symmetry} the $\xvec$-support of $\Delta_{\mathcal{F}}$ has $N^{*}$ elements for every $\mathcal{F}\in U^{\mathrm{rev}}$. On $U\cap U^{\mathrm{rev}}$ both dimensions of $\mathcal{M}$ equal $N^{*}$, so $\mathcal{M}$ is square of size $N^{*}$ and $D(\mathcal{F})=N^{*}$.
+\qed
 \end{proof}
 
 \begin{remark}\label{rem:support_vs_rank}
@@ -217,6 +220,7 @@ We now establish a bijection between lattice points satisfying the polyhedral co
 	$(\alpha_1,\ldots,\alpha_{n})$ by recording the number of upward steps immediately before each horizontal step.
 	The height condition implies
 	$\alpha_1+\cdots+\alpha_k \le a_k$ for all $k=1,\ldots,n$.
+\qed
 \end{proof}
 
 
@@ -229,6 +233,7 @@ Applying the index reversal $\beta_i:=\alpha_{n-i}$ for $i=1,\ldots,n-1$ rewrite
 \sum_{\ell=1}^{j}\beta_\ell \;\le\; \sum_{i=1}^{j}(d_{n-i+1}-1)=a_j,\qquad j=1,\ldots,n-1,
 \]
 i.e.\ the prefix-sum form to which Lemma~\ref{lem:lattice_path_count} applies (with $n$ in that lemma replaced by $n-1$). Lemma~\ref{lem:lattice_path_count} then bijects these lattice points with lattice paths from $(0,0)$ to $(n-1,a_{n-1})$ whose $i$-th horizontal step has height at most $a_i$. This is exactly the boundary in Theorem~\ref{thm:dixon_general_bound}, so the Dixon matrix size is bounded above by the corresponding lattice-path count, with equality for generic systems under the characteristic hypothesis of Lemma~\ref{lem:dixon_fc_bound}.
+\qed
 
 \subsubsection{Comparison with Existing Bounds}
 

@@ -3,8 +3,7 @@
 
 Run with Python 3 + matplotlib + numpy from any directory. Existing notebook
 models and recorded benchmark timings are reused without rerunning experiments.
-Only Figure 6(d) changes its numerical model: max(best Step 1, best Step 4),
-as already specified in the paper's caption. No other cost model is revised.
+Figure 6(d) and XHash use the stage models specified in the paper.
 """
 
 import argparse
@@ -103,21 +102,43 @@ def export_ao():
         for i in range(3):
             ns = load_cell("AO_Complexity.ipynb", i, ns)
         ns["plot_poseidon"](TEX / "poseidon_complexity.pdf", omega=2.81)
-        for i, stem in [(3, "vision_complexity"), (4, "xhash_complexity")]:
+        for i, stem in [(3, "vision_complexity")]:
             load_cell("AO_Complexity.ipynb", i, ns)
             with (TEX / (stem + ".pdf")).open("wb") as handle:
                 plt.gcf().savefig(handle, format="pdf")
             plt.close()
+    export_xhash()
+
+
+def export_xhash():
+    """Export the XHash figure and its numerical series from the same models."""
+    with plt.rc_context():
+        ns = load_cell("AO_Complexity.ipynb", 0)
+        load_cell("AO_Complexity.ipynb", 4, ns)
+        plt.gcf().savefig(TEX / "xhash_complexity.pdf", format="pdf")
+        plt.close()
+        with (HERE / "xhash_complexity_data.csv").open("w", newline="", encoding="utf-8") as f:
+            writer = csv.writer(f)
+            writer.writerow(["steps", "k", "alpha", "omega", "direct_step1",
+                             "direct_step3", "direct_step4", "direct_total",
+                             "hybrid_route", "P1", "P2", "P3", "hybrid_total"])
+            for s in ns["steps"]:
+                for k in (1, 2, 3, 4):
+                    direct = ns["xhash_dixon_stages"](12 * s + k, 7, 2.81)
+                    hybrid = ns["xhash_method3"](12 * s, k, 7, 2.81, D0=7) if k > 1 else None
+                    writer.writerow([s, k, 7, 2.81] +
+                                    [direct[key] for key in ("step1", "step3", "step4", "total")] +
+                                    ["P1/P2/P3" if hybrid else "optimized two-polynomial"] +
+                                    [hybrid[key] if hybrid else "" for key in ("P1", "P2", "P3")] +
+                                    [ns["m3"][k][s - 1]])
 
 
 def recorded_fermat_log():
-    """Recover the exact printed timings already present in the uploaded file."""
-    nb = json.loads((HERE / "fermat_sage.ipynb").read_text(encoding="utf-8"))
-    text = "".join("".join(o.get("text", [])) for o in nb["cells"][1].get("outputs", []))
+    """Use the recorded timings directly, without overwriting benchmark data."""
+    path = HERE / "fermat_timings_recorded.txt"
+    text = path.read_text(encoding="utf-8")
     if "Running 3x2..." not in text or "Running 7x2..." not in text:
         raise RuntimeError("Recorded Fermat benchmark output is missing; refusing to omit its series.")
-    path = HERE / "fermat_timings_recorded.txt"
-    path.write_text(text, encoding="utf-8")
     return path
 
 
@@ -152,11 +173,20 @@ def export_benchmarks():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--fig6d-only", action="store_true")
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--fig6d-only", action="store_true")
+    group.add_argument("--benchmarks-only", action="store_true")
+    group.add_argument("--xhash-only", action="store_true")
     args = parser.parse_args()
     TEX.mkdir(exist_ok=True)
-    if args.fig6d_only:
+    if args.xhash_only:
+        export_xhash()
+        print("Exported XHash vector PDF and numerical series.")
+    elif args.fig6d_only:
         export_fig6d()
+    elif args.benchmarks_only:
+        export_benchmarks()
+        print("Exported 4 benchmark vector PDFs using recorded timings.")
     else:
         export_complexity()
         export_ao()
