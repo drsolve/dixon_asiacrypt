@@ -504,7 +504,6 @@ It is straightforward to observe that the computational cost of our algorithm es
 
 
 \newpage
-\newpage
 \section{Experimental Results of Degree-Aware Submatrix Selection}\label{appendix:degree_optimal_exp}
 
 We present the experimental results of Algorithm~\ref{alg:degree_optimal_selection} to validate Heuristic~\ref{hyp:bezout_attainment}. 
@@ -714,7 +713,7 @@ C_n^{(d)}=\Theta(d^{n-1}),
 \qquad
 T_{4}^{\mathrm{HNF}}=\widetilde{O}\!\left(nd\,\bigl(C_n^{(d)}\bigr)^\omega\right)=\widetilde{O}(d^{\omega(n-1)+1}).
 \]
-Since $\omega>2$, we have $\omega(n-1)+1>2n-1$ for every $n\ge 2$, so $T_{4}^{\mathrm{HNF}}$ grows strictly faster than $T_{1}^{\mathrm{HNF}}$ as $d$ increases. For the borderline case $\omega=2$, the two exponents coincide ($\omega(n-1)+1 = 2n-1$), so the two stages have the same asymptotic rate in $d$ and their ordering is decided by the implied constants alone. These constants are themselves strongly $n$-dependent (they contain factors such as $n^{n-1}/n!$ inside $C_n^{(d)}=\Theta(d^{\,n-1})$ and $\prod_i(b_i+1)/d^{2n-2}$ inside $\delta_1=\Theta(d^{2n-1})$), and the present comparison is carried out at fixed $n$; no ordering of the two stages should therefore be read off from the powers of $n$ in this regime. The strict, regime-independent dominance of Step~4 is therefore an $\omega>2$ phenomenon, which is the practically relevant case: it is driven by the larger $C_n^{(d)}$-exponent ($C_n^{(d)}$ being polynomially large in both $n$ and $d$), and it is consistent with the measured running times, where the final symbolic determinant is the bottleneck. We accordingly state the dominance for $\omega>2$ and treat $\omega=2$ as an idealized boundary used only in the uniform-exponent security plots.
+Since $\omega>2$, we have $\omega(n-1)+1>2n-1$ for every $n\ge 2$. Thus, for fixed $n$, the HNF complexity estimate for Step~4 has a strictly larger exponent in $d$ than that for Step~1. At the boundary $\omega=2$, the exponents coincide, so this comparison alone does not establish which stage dominates; the suppressed polylogarithmic factors and constants may affect their relative costs. In particular, the constants may depend strongly on $n$, which is held fixed in this analysis. For $\omega>2$, the comparison supports using Step~4 as the asymptotic bottleneck within the HNF model in the fixed-$n$, high-degree regime. This is consistent with our experiments, in which the final symbolic determinant dominates the running time. We treat $\omega=2$ as an idealized boundary used for the uniform-exponent security comparisons.
 
 \paragraph{Consequences for the overall comparison.}
 The two formula comparisons above explain the qualitative picture observed in the implementation and in the plots:
@@ -813,7 +812,7 @@ At the idealized boundary $\omega=2$, the $C_n^{(d)}$-exponents of $T_{4}^{\math
 \paragraph{Consequence.}
 With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed above, and is also the empirical bottleneck. We therefore use $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems, as in~\eqref{eq:dixon_complexity_well}.
 
-
+\newpage
 \section{Alternative Determinant Computation Methods}\label{appendix:determinant_methods}
 
 This appendix expands the determinant-method summary from Table~\ref{tab:determinant_methods}. We record both the complexity formulas and the stage-specific origin of the parameters used in the comparison code.
@@ -907,7 +906,7 @@ T_{2}^{\mathrm{FDixon}}=\widetilde{O}\!\left(m_1^2\,(n!)^3\prod_{i=2}^{n}m_i^3\r
 \]
 We do not list it in the main table because it is not a generic determinant model; rather, it is a special construction path that replaces the combined Step~1/Step~2 cost and can be attractive when the number of eliminated variables is small and the degrees are high.
 
-
+\newpage
 \section{Poseidon}
 \label{appendix:poseidon}
 
@@ -940,7 +939,7 @@ The parameters are chosen so that $\gcd(\alpha,p-1)=1$ and so as to meet the tar
 \paragraph{Attack models used in Section~\ref{Section:Application}.}
 We follow the algebraic models from~\cite{DBLP:journals/tosc/GrassiKR25}. The direct Dixon method is applied to the input/output model, while the mixed-degree subspace models are estimated using the determinant bound from Corollary~\ref{cor:three_bounds}(3). This is the reason the Poseidon part of the main text only needs the final complexity plots and timing table.
 
-
+\newpage
 \section{Vision}
 \label{appendix:vision}
 
@@ -1100,7 +1099,7 @@ Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cos
 
 The candidate roots of the final univariate eliminant are substituted back into the original system, which removes the spurious ones at negligible additional cost.
 
-
+\newpage
 \section{XHash12}
 \label{appendix:xhash}
 
