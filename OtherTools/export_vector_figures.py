@@ -18,7 +18,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 HERE = Path(__file__).resolve().parent
-TEX = HERE.parent / "tex"
+TEX = HERE.parent / "figures"
 
 
 def cell_source(name, index):

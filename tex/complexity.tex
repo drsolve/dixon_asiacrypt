@@ -406,8 +406,8 @@ The two columns are not of the same nature: the Dixon entry is instantiated with
 The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
 
 \begin{table}[!htb]
-		\centering
-	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\eta_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}), and they compare a generically attained Dixon estimate with worst-case Gr\"obner basis bounds.}
+	\centering
+	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\eta_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}).}
 	\label{tab:complexity_formulas}
 	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{lcc}
@@ -439,8 +439,9 @@ The GB (per-deg) row admits no closed-form asymptotic equivalent that is both si
 
 \begin{figure}[!htbp]
 	\centering
-	\includegraphics[width=0.88\textwidth]{complexity_comparison_d2.pdf}
-	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound and the HNF change of order of~\cite{BerthomieuNeigerSafey2022}, are evaluated here for direct comparison with Dixon.}
+	\includegraphics[width=0.98\textwidth]{complexity_comparison_d2.pdf}
+	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. }
+    %The y-axis shows $\log_2(\text{complexity})$. All variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound and the HNF change of order of~\cite{BerthomieuNeigerSafey2022}, are evaluated here for direct comparison with Dixon.
 	\label{fig:complexity_comparison_d}
 \end{figure}
 
