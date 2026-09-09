@@ -11,11 +11,11 @@ Method~1 applies the Dixon resultant directly to a square polynomial system. Sta
 
 This method is best suited to Type~I (low-degree) primitives, whose CICO systems admit a dense but uniformly low-degree algebraic description, so that the first elimination dominates and the later back-substitution phases operate on lower-dimensional systems; we take \poseidon as the representative example.
 
-\paragraph{Application to Poseidon.}
+\paragraph{Application to \poseidon.}
 We consider the CICO-3 problems of \poseidon~\cite{DBLP:conf/uss/0001KR0S21} and \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} in sponge mode, using the input/output and internal-subspace models from~\cite{DBLP:journals/tosc/GrassiKR25}; the precise models are summarized in Appendix~\ref{appendix:poseidon} (see Figure~\ref{fig:poseidon} for an overview of the permutation). For the pure I/O model, direct Dixon elimination matches the natural square-system viewpoint. For the mixed-degree subspace models, the determinant bound from Section~\ref{Section: Complexity} becomes essential because the polynomial degrees are no longer uniform.
 Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=8$, $c=d=3$, $\alpha=3$ across different numbers of partial rounds.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{poseidon_complexity.pdf}
 \caption{Complexity comparison for \poseidon and \poseidonnew, with the model parameters $t=8$, $c=d=3$, $\alpha=3$ of~\cite{DBLP:journals/tosc/GrassiKR25}. Here $\omega = 2.81$ for all curves.}
@@ -24,12 +24,12 @@ Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=
 
 Table~\ref{tab:poseidon-timing} reports small-instance timings. Full-round systems behave close to generic dense systems, while partial-round systems are much more structured, so both the Dixon matrix size and the Gr\"obner-basis degree of regularity fall well below their generic upper bounds. Since the size of this drop depends on the specific subspace model, the generic bound should be read as an upper-bound template rather than as a tight prediction of the best attack. A finer analysis of these structural effects is left for future work.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 \centering
-\caption{Timing comparison for Poseidon instances ($t=6, c=1, d=3$, I/O modeling, bypass one round) over $\mathbb{F}_p$, $p = 2^{62}+169$. $T$ and $E$ denote Theoretical and Experimental values; complexities (Comp.) are in $\log_2$ field operations. Here $\omega = 2.81$. For odd $R_F$, one additional full round is added at the beginning. Both the Comp. and the timed implementation use the HNF determinant model.}
+\caption{Timing comparison for \poseidon instances ($t=6, c=1, d=3$, I/O modeling, bypass one round) over $\mathbb{F}_p$, $p = 2^{62}+169$. $T$ and $E$ denote theoretical and experimental values; complexities (Comp.) are in $\log_2$ field operations. Here $\omega = 2.81$. For odd $R_F$, one additional full round is added at the beginning. Both the Comp. and the timed implementation use the HNF determinant model.}
 \label{tab:poseidon-timing}
 \small
-\setlength{\tabcolsep}{4pt}
+\setlength{\tabcolsep}{3.5pt}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{lcccccccccc}
 \toprule
@@ -105,9 +105,9 @@ The complexity of Method~2 is the maximum over all stages: every determinant of 
 This method is best suited to Type~II (equivalence-relation) primitives, whose ladder-structured CICO systems link successive states through local low-degree relations; we take \vision as the representative example.
 
 \paragraph{Application to Vision.}
-For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make the full direct model unattractive, so we adopt a meet-in-the-middle (MITM) approach following the general framework of Liu et al.~\cite{DBLP:conf/asiacrypt/LiuMM24} and apply iterative elimination with Dixon resultant. The detailed model and equation distribution are in Appendix~\ref{appendix:vision} (the round function is recalled in Figure~\ref{fig:vision}); Figure~\ref{fig:vision_complexity_comparison} and Table~\ref{tab:vision_timing} summarize the outcome.
+For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make the full direct model unattractive, so we adopt a meet-in-the-middle (MITM) approach following the general framework of Liu et al.~\cite{DBLP:conf/asiacrypt/LiuMM24} and apply iterative Dixon elimination. The detailed model and equation distribution are in Appendix~\ref{appendix:vision} (the round function is recalled in Figure~\ref{fig:vision}); Figure~\ref{fig:vision_complexity_comparison} and Table~\ref{tab:vision_timing} summarize the outcome.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.90\textwidth]{vision_complexity.pdf}
 \caption{Complexity comparison for \vision ($\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}).}
@@ -116,7 +116,7 @@ For \vision~\cite{DBLP:journals/tosc/AlyABDS20} with $s=2$, inverse layers make 
 
 For these parameters the final merge~\eqref{eq:mitm_complexity} dominates every forward and backward stage of the chain, so it alone determines the reported complexity; the stage-by-stage figures, together with a rank bound that keeps the intermediate rungs below the merge, are collected in Appendix~\ref{appendix:vision}. This is the structured regime where local elimination is preferable to direct elimination.
 
-\begin{table}[hbpt!]
+\begin{table}[!htbp]
 \centering
 \caption{Experimental timing and complexity comparison for \vision ($s=2$). Complexities (Comp.) are in $\log_2$ field operations. $\omega = 2$ for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}.}
 \label{tab:vision_timing}
@@ -153,7 +153,7 @@ and use the reduction procedure \texttt{Reduce} of~\cite[Algorithm~1]{DBLP:conf/
 \widetilde{O}\!\left(d_{\mathcal{I}}\alpha^2\left(\frac{2\alpha-1}{\alpha}\right)^{n+2}\right).
 \label{eq:two_poly_complexity_main}
 \end{equation}
-For general CICO-$k$ we retain $|\mathcal{X}|=k$ input variables and build $k$ relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ in three phases.
+For general CICO-$k$, we retain $|\mathcal{X}|=k$ input variables and build $k$ relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ in three phases.
 
 \emph{(P1) Reduction.} Each output constraint $h_j$ is replaced by its normal form modulo the triangular ideal, using~\cite[Algorithm~1]{DBLP:conf/crypto/BariantBBHOR25}. Since the polynomials manipulated here are $k$-variate in $\mathcal{X}$, the coefficient-count factor of~\cite[Lemma~1]{DBLP:conf/crypto/BariantBBHOR25} is replaced by the dense coefficient count $B_k(e):=\binom{e+k}{k}$ of a $k$-variate polynomial of degree $e$, which is $\Theta(e^k)$ for fixed $k$. Reduction never increases the weighted degree, so with $\bar{D}:=\max_j d_{\mathcal{P}_k}(h_j)$ this phase costs
 \begin{equation}
@@ -187,32 +187,32 @@ again with $D(\mathcal{P}_k)$ from Corollary~\ref{cor:three_bounds}(3), since th
 This method is an improved attack on Type~II (equivalence-relation) primitives, refining Method~2 by interleaving Dixon elimination with ideal reduction; we take \xhash as the representative example.
 
 \begin{remark}
-	For the special case of CICO-1 the two-polynomial iterative-resultant route of~\cite{DBLP:conf/crypto/BariantBBHOR25} already gives~\eqref{eq:two_poly_complexity_main} and Dixon does not change the picture. In concurrent and independent work, Bak et al.~\cite{DBLP:journals/iacr/BakBHN26} develop a related CICO-2 framework, introducing improvements to variable elimination and the final bivariate resultant, with substantial theoretical and practical gains. Although Method~3 does not currently offer a concrete advantage with $k\ge 3$, it provides a more flexible framework for further elimination strategies.
+	For the special case of CICO-1, the two-polynomial iterative-resultant route of~\cite{DBLP:conf/crypto/BariantBBHOR25} already gives~\eqref{eq:two_poly_complexity_main}, and Dixon does not change the picture. In concurrent and independent work, Bak et al.~\cite{DBLP:journals/iacr/BakBHN26} develop a related CICO-2 framework, introducing improvements to variable elimination and the final bivariate resultant, with substantial theoretical and practical gains. Although Method~3 does not currently offer a concrete advantage for $k\ge 3$, it provides a more flexible framework for further elimination strategies.
 \end{remark}
 
 
-\paragraph{Application to XHash12.}
-We focus on \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}; the permutation (Figure~\ref{fig:xhash12}) and the triangular model we use are recalled in Appendix~\ref{appendix:xhash}. Figure~\ref{fig:xhash_complexity} compares the direct Dixon method, the hybrid reduction-based strategy, and the corresponding generic Gr\"obner-basis estimate for each $k=1,2,3,4$. The hybrid method is excellent for CICO-1, and retains a small margin for CICO-2. However, starting from CICO-3 or 4, the intermediate degrees make it worse than the direct elimination method.
+\paragraph{Application to \xhash.}
+We focus on \xhash~\cite{DBLP:journals/iacr/AshurKM23}; the permutation (Figure~\ref{fig:xhash12}) and the triangular model we use are recalled in Appendix~\ref{appendix:xhash}. Figure~\ref{fig:xhash_complexity} compares the direct Dixon method, the hybrid reduction-based strategy, and the corresponding generic Gr\"obner-basis estimate for each $k=1,2,3,4$. The hybrid method is excellent for CICO-1 and retains a small margin for CICO-2. For CICO-3 and CICO-4, however, the intermediate degrees make it worse than the direct elimination method.
 
 \begin{figure}[t]
   \centering
-  \begin{subfigure}[t]{0.48\textwidth}
+  \begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figure5_cico1.pdf}
-  \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.48\textwidth}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figure5_cico2.pdf}
-  \end{subfigure}\\[2pt]
-  \begin{subfigure}[t]{0.48\textwidth}
+  \end{minipage}\\[2pt]
+  \begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figure5_cico3.pdf}
-  \end{subfigure}\hfill
-  \begin{subfigure}[t]{0.48\textwidth}
+  \end{minipage}\hfill
+  \begin{minipage}[t]{0.48\textwidth}
     \centering
     \includegraphics[width=\linewidth]{figure5_cico4.pdf}
-  \end{subfigure}
-  \caption{Symbolic complexity comparison for XHash12,
+  \end{minipage}
+  \caption{Symbolic complexity comparison for \xhash,
     $\alpha=7$ and $\omega=2.81$, in $\log_2$ field operations.
     The CICO-1 Method~3 curve uses~\eqref{eq:two_poly_complexity_main}; the hybrid Method~1+3 for $k\ge2$
     includes reduction, successive elimination and final Dixon elimination.
@@ -223,7 +223,7 @@ We focus on \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}; the permutatio
 
 Table~\ref{tab:xhash_experimental} compares symbolic complexity estimates with recorded elimination times for small \texttt{XHash} polynomial systems. The special structure of these instances and implementation details can lead to discrepancies between generic complexity bounds and measured running times. A refined complexity analysis accounting for this structure is left for future work.
 
-\begin{table}[hbtp!]
+\begin{table}[!htbp]
 \centering
 \caption{Elimination times and symbolic complexity estimates for small \texttt{XHash} polynomial systems. The tuples specify $(\alpha,\mathrm{State},\mathrm{step})$: the exponent, state width, and number of steps. Comp. denotes $\log_2$ field operations with $\omega=2.81$.}
 \label{tab:xhash_experimental}

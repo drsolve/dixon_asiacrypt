@@ -1,16 +1,16 @@
-\section{Optimized Implementation for Dixon Resultant}\label{Section: Improvements}
+\section{Optimized Implementation of the Dixon Resultant}\label{Section: Improvements}
 
-While the theoretical complexity analysis highlights the advantages of Dixon resultant methods, bridging the gap to practical efficiency requires overcoming several significant hurdles. Currently, off-the-shelf computer algebra systems offer limited support: Dixon resultants are not natively implemented in advanced solvers like Magma~\cite{magma}; and while implementations exist in Fermat~\cite{fermat} and through third-party packages in Maple~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025}, their performance is often unsatisfactory at scale. Beyond software limitations, extraneous factors must be carefully controlled or the classical B\'ezout bound becomes inapplicable, and large-scale polynomial-matrix operations must be handled efficiently. This section addresses these issues.
+While the theoretical complexity analysis highlights the advantages of Dixon resultant methods, bridging the gap to practical efficiency requires overcoming several significant hurdles. Currently, off-the-shelf computer algebra systems offer limited support: Dixon resultants are not natively implemented in advanced solvers such as Magma~\cite{magma}, and although implementations exist in Fermat~\cite{fermat} and through third-party packages in Maple~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025}, their performance is often unsatisfactory at scale. Beyond software limitations, extraneous factors must be carefully controlled or the classical B\'ezout bound becomes inapplicable, and large-scale polynomial-matrix operations must be handled efficiently. This section addresses these issues.
 
 \subsection{Eliminating Extraneous Factors via Degree-Aware Submatrix Selection}
 \label{Subsection:Extraneous}
 
-The primary challenge in implementing the Dixon resultant arises from the \emph{extraneous factors} of Definition~\ref{def:extra_factor}, which do not correspond to actual solutions of the original system and can substantially inflate the resultant degree beyond the B\'ezout bound (Theorem~\ref{thm:bezout_bound}). Without extraneous factors, the degree is controlled by the ideal degree and hence by B\'ezout, providing both theoretical elegance and computational efficiency.
+The primary challenge in implementing the Dixon resultant arises from the \emph{extraneous factors} in Definition~\ref{def:extra_factor}, which do not correspond to actual solutions of the original system and can substantially inflate the resultant degree beyond the B\'ezout bound (Theorem~\ref{thm:bezout_bound}). Without extraneous factors, the degree is controlled by the ideal degree and hence by B\'ezout, providing both theoretical elegance and computational efficiency.
 
-Qin et al.~\cite{DBLP:journals/jsc/QinZYC22} proposed a method based on parameter specialization and regular-chain computation; however, the regular-chain step incurs additional overhead. In contrast, we propose a \emph{preventive} strategy that minimizes extraneous factors during the matrix construction phase rather than eliminating them afterwards. Our experimental results show that the proposed greedy selection algorithm reduces redundant factors, and in most cases the resulting Dixon determinants remain at or below the B\'ezout bound.
+Qin et al.~\cite{DBLP:journals/jsc/QinZYC22} proposed a method based on parameter specialization and regular-chain computation; however, the regular-chain step incurs additional overhead. In contrast, we propose a \emph{preventive} strategy that minimizes extraneous factors during the matrix construction phase rather than eliminating them afterward. Our experimental results show that the proposed greedy selection algorithm reduces redundant factors, and in most cases the resulting Dixon determinants remain at or below the B\'ezout bound.
 
 \subsubsection{Degree-aware submatrix selection strategy.}
-A naive constant-evaluation rank test ignores the degree structure of the resulting submatrix. We develop a degree-aware selection strategy that employs a greedy approach to prioritize rows and columns with lower degrees. Following the determinant degree estimation framework of Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17}, for any non-singular polynomial matrix $A$,
+A naive constant-evaluation rank test ignores the degree structure of the resulting submatrix. We develop a degree-aware selection strategy that employs a greedy approach to prioritize rows and columns with lower degrees. Following the determinant degree estimation framework of Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17}, for any nonsingular polynomial matrix $A$,
 \begin{equation*}
 	\deg(\det(A)) \leq \min(|\text{rdeg}(A)|, |\text{cdeg}(A)|),
 \end{equation*}
@@ -19,25 +19,25 @@ where $|\text{rdeg}(A)|$ and $|\text{cdeg}(A)|$ denote the sum of row degrees an
 \begin{hypothesis}[Degree Minimization Heuristic]\label{hyp:deg_mini_hypo}
 	For two polynomial matrices $A$ and $B$ of the same dimension over $\mathbb{K}[t_1,\ldots,t_m]$, if 
 	$\min(|\text{rdeg}(A)|, |\text{cdeg}(A)|) \geq \min(|\text{rdeg}(B)|, |\text{cdeg}(B)|),$
-	then we expect that $\deg(\det(A)) \geq \deg(\det(B))$ typically holds in the generic case.
+	then we expect $\deg(\det(A)) \geq \deg(\det(B))$ to hold generically.
 \end{hypothesis}
 
 The intuition is that a smaller row/column-sum degree bound tends to indicate a smaller determinant degree, motivating our greedy strategy to favor low-degree maximal-rank submatrices and thereby potentially reduce extraneous factors.
 
 \begin{remark}
-	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also utilized a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. We use the cheaper row/column weights as a heuristic for selecting low-degree submatrices.
+	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also used a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. We use the cheaper row/column weights as a heuristic for selecting low-degree submatrices.
 \end{remark}
 
 \subsubsection{Degree-aware selection algorithm.}
 Based on Heuristic~\ref{hyp:deg_mini_hypo}, we design a greedy algorithm that combines rank verification with degree-aware ordering of rows and columns. The core idea is to assign degree weights to rows and columns of the Dixon matrix and prioritize those with lower degrees during Gaussian elimination, ensuring the selected submatrix has maximal rank while heuristically favoring a low determinant degree. The full pseudocode is in Appendix~\ref{appendix:algorithms}.
 
-The rank test is performed at a random evaluation point, so the identified rank equals the true symbolic rank only with high probability; by Schwartz--Zippel lemma~\cite{schwartz1980fast,zippel1979probabilistic}, the failure probability is negligible, and a complete analysis in the same setting can be found in~\cite{Jinadu2023,JinaduMonagan2025}.
+The rank test is performed at a random evaluation point, so the identified rank equals the true symbolic rank only with high probability; by the Schwartz--Zippel lemma~\cite{schwartz1980fast,zippel1979probabilistic}, the failure probability is negligible, and a complete analysis in the same setting can be found in~\cite{Jinadu2023,JinaduMonagan2025}.
 
 \begin{hypothesis}\label{hyp:bezout_attainment}
 	Let $\mathcal{P} = \{p_1, \ldots, p_n\}$ be a generic polynomial system with degrees $d_1, \ldots, d_n$, and $\mathcal{M}$ its Dixon matrix. The submatrix selected by Algorithm~\ref{alg:degree_optimal_selection} yields a resultant $R$ satisfying $\deg(R) \le \prod_{i=1}^{n} d_i$.
 \end{hypothesis}
 
-This is supported by computational experiments (Appendix~\ref{appendix:degree_optimal_exp}), with rare observed B\'ezout-bound violations of only $1$--$2$ degrees. Passing this test does not establish the absence of extraneous factors or excess multiplicities. The estimates using $D_4\le\prod_i d_i$ assume Heuristic~\ref{hyp:bezout_attainment}; the stronger bound $D_4\le d_{\mathcal{I}}$ additionally assumes their absence.
+This is supported by computational experiments (Appendix~\ref{appendix:degree_optimal_exp}), with rare observed violations of the B\'ezout bound by only $1$--$2$ degrees. Passing this test does not establish the absence of extraneous factors or excess multiplicities. The estimates using $D_4\le\prod_i d_i$ assume Heuristic~\ref{hyp:bezout_attainment}; the stronger bound $D_4\le d_{\mathcal{I}}$ additionally assumes their absence.
 
 \subsection{Implementation}\label{Implementation}
 
@@ -50,24 +50,24 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 	\item \textbf{Complexity estimation:} A tool for estimating the cost of a polynomial system, or of a parameter set such as the number of variables and degrees.
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[!htb]
 	\centering
-	\begin{subfigure}[t]{0.48\textwidth}
+	\begin{minipage}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_n3_comparison.pdf}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.48\textwidth}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_n4_comparison.pdf}
-	\end{subfigure}\\[2pt]
-	\begin{subfigure}[t]{0.48\textwidth}
+	\end{minipage}\\[2pt]
+	\begin{minipage}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_n5_comparison.pdf}
-	\end{subfigure}\hfill
-	\begin{subfigure}[t]{0.48\textwidth}
+	\end{minipage}\hfill
+	\begin{minipage}[t]{0.48\textwidth}
 		\centering
 		\includegraphics[width=\linewidth]{GF536870923_d2_vary_n.pdf}
-	\end{subfigure}
+	\end{minipage}
 	\caption{Performance comparison (time in seconds) of \drsolve, Magma, msolve, and Fermat on randomly generated dense polynomial systems over $\Fp$ with $p=2^{29}+11$. The four panels show degree sweeps for $n=3,4,5$ and a variable-count sweep for $d=2$; here $n$ denotes the number of variables (equal to the number of equations). A curve stops where the corresponding solver exceeded one hour.}
 	\label{fig:BenchmarkComparison}
 \end{figure}
@@ -75,4 +75,3 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 \paragraph{Experimental results.}
 All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the high-performance Dixon implementation Fermat~\cite{fermat}. Jinadu--Monagan's Maple implementation is designed for $\mathbb{Q}$ and is not included in our finite-field benchmarks. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve performs best for systems with fewer variables and higher degrees.
 Our advantage over Fermat is primarily due to the efficient polynomial-matrix routines in FLINT/PML, in particular the HNF algorithm.
-

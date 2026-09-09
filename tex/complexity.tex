@@ -1,4 +1,4 @@
-\section{Improved Complexity Estimates for Dixon Resultant}\label{Section: Complexity}
+\section{Improved Complexity Estimates for the Dixon Resultant}\label{Section: Complexity}
 
 Prior work on Dixon resultant bounds~\cite{DBLP:conf/stoc/KapurS96} focused on multi-homogeneous and unmixed systems. We consider general mixed systems with varying degrees, bound the size of the Dixon matrix via lattice path counting, and obtain bounds that are attained for generic systems, yielding refined complexity estimates.
 
@@ -12,10 +12,10 @@ We bound the Dixon matrix size for general $(d_1,\ldots,d_n)$-systems via a latt
 	For a $(d_1, d_2, \ldots, d_n)$-system $\mathcal{F}$ with 
 	$d_1 \leq d_2 \leq \cdots \leq d_n$, 
 	let
-	$$
+	\[
 	a_i := \sum_{k=1}^{i} (d_{n+1-k}-1),
 	\qquad i=1,2,\ldots,n-1.
-	$$
+	\]
 	Then $D(\mathcal{F})$ is bounded above by the number of lattice paths 
 	from $(0,0)$ to $(n-1, a_{n-1})$ such that for every 
 	$i=1,2,\ldots,n-1$, the height $y_i$ of the $i$-th horizontal step is at most $a_i$.
@@ -38,39 +38,39 @@ This lattice path counting problem admits precise closed-form solutions through 
 		
 		\item[(1)] %\textbf{Unrestricted paths.}
 		The total number of lattice paths without any restriction equals
-		$$
+		\[
 		\binom{(n-1)+a_{n-1}}{n-1}.
-		$$
+		\]
 		
 		\item[(2)] %\textbf{Linear boundary.}
 		If $a_i = i(d-1)$ for some constant $d$ and all $i=1,\ldots,n-1$, 
 		then the number of lattice paths such that the height $y_i$ of the $i$-th horizontal step is at most $a_i$ equals the Fuss--Catalan number with parameters $(n,d)$
-		$$
+		\[
 		C_n^{(d)} := \frac{1}{(d-1)n+1}\binom{dn}{n}.
-		$$
+		\]
 		
 		\item[(3)] %\textbf{General boundary.}
 		The number of lattice paths such that for every 
 		$i=1,2,\ldots,n-1$ the height $y_i$ of the $i$-th horizontal step is at most $a_i$ is given by the determinant
-		$$
+		\[
 		\det_{1\le i,j\le n-1}
 		\left(
 		\binom{a_i+1}{j-i+1}
 		\right).
-		$$
+		\]
 		
 	\end{enumerate}
 \end{lemma}
 
 \begin{proof}
-	Parts (1)(2) are classical results in enumerative combinatorics; see~\cite{hilton1991catalan,DBLP:journals/dm/Aval08}. Part (3) is a special case of Theorem 10.7.1 in~\cite{bona2015handbook} with $b_j = 0$ for all $j$. 
+	Parts (1) and (2) are classical results in enumerative combinatorics; see~\cite{hilton1991catalan,DBLP:journals/dm/Aval08}. Part (3) is a special case of Theorem~10.7.1 in~\cite{bona2015handbook} with $b_j = 0$ for all $j$.
 \qed
 \end{proof}
 
 By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}, we immediately obtain the following bounds.
 
 \begin{corollary}\label{cor:three_bounds}
-	For a $(d_1, d_2, \ldots, d_n)$-system $\mathcal{F}$ with $d_1 \leq d_2 \leq \cdots \leq d_n$, the following three bounds of Dixon matrix size hold:
+	For a $(d_1, d_2, \ldots, d_n)$-system $\mathcal{F}$ with $d_1 \leq d_2 \leq \cdots \leq d_n$, the following three bounds on the Dixon matrix size hold:
 	\begin{enumerate}
 		
 		\item[(1)] \textbf{Unrestricted Bound:} 
@@ -101,7 +101,7 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 \end{remark}
 
 \paragraph{Outline of proof of Theorem~\ref{thm:dixon_general_bound}.}
-We introduce the Iterated-Simplex Polynomial as a bridge connecting the Dixon matrix size to lattice path counting. Lemma~\ref{lem:fc_polytope} gives a polyhedral description of its support via the trailing-sum inequalities $\alpha_{n-k+1}+\cdots+\alpha_n \leq \sum_{i=1}^k d_{n-i+1}$. Using this description, Lemma~\ref{lem:dixon_fc_bound} shows the Dixon matrix size is bounded by the number of monomials of ${I}_{d_2-1, \ldots, d_{n}-1}$, with equality for generic systems. Lemma~\ref{lem:lattice_path_count} then bijects these lattice points with lattice paths below a piecewise linear boundary.
+We introduce the Iterated-Simplex Polynomial as a bridge connecting the Dixon matrix size to lattice path counting. Lemma~\ref{lem:fc_polytope} gives a polyhedral description of its support via the trailing-sum inequalities $\alpha_{n-k+1}+\cdots+\alpha_n \leq \sum_{i=1}^k d_{n-i+1}$. Using this description, Lemma~\ref{lem:dixon_fc_bound} shows that the Dixon matrix size is bounded by the number of monomials of ${I}_{d_2-1, \ldots, d_{n}-1}$, with equality for generic systems. Lemma~\ref{lem:lattice_path_count} then establishes a bijection between these lattice points and the lattice paths below a piecewise linear boundary.
 
 \begin{definition}[Iterated-Simplex Polynomial]
 	Let $n$ be a positive integer and $(d_1, d_2, \ldots, d_n)$ be a sequence of nonnegative integers. The Iterated-Simplex polynomial is defined as
@@ -130,7 +130,10 @@ The proof is deferred to Appendix~\ref{appendix:proof_lemma_fc}, since it requir
 To compare different degree sequences, we establish a monotonicity property with respect to the trailing partial sums; it covers both reorderings and entry-wise decreases of the degrees.
 
 \begin{lemma}\label{lem:reorder_support}
-Let $(d_1,\ldots,d_n)$ and $(d'_1,\ldots,d'_n)$ be sequences of nonnegative integers satisfying $\sum_{j=1}^{k} d'_{n-j+1} \leq \sum_{j=1}^{k} d_{n-j+1}$ for every $k=1,\ldots,n$. Then $$\operatorname{Supp}(I_{d'_1,\ldots,d'_n}) \subseteq \operatorname{Supp}(I_{d_1,\ldots,d_n}).$$
+Let $(d_1,\ldots,d_n)$ and $(d'_1,\ldots,d'_n)$ be sequences of nonnegative integers satisfying $\sum_{j=1}^{k} d'_{n-j+1} \leq \sum_{j=1}^{k} d_{n-j+1}$ for every $k=1,\ldots,n$. Then
+\[
+\operatorname{Supp}(I_{d'_1,\ldots,d'_n}) \subseteq \operatorname{Supp}(I_{d_1,\ldots,d_n}).
+\]
 
 In particular, if $d_1\leq\cdots\leq d_n$, the hypothesis holds for any permutation of a sequence obtained by decreasing some of the $d_i$.
 \end{lemma}
@@ -265,8 +268,8 @@ We give a stage-by-stage outline of the relevant model choices below; here we co
 \subsubsection{Step~1: Compute the cancellation determinant.}
 This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,C_n^{(d)})$ (full derivation in Appendix~\ref{appendix:stage_details}):
 \begin{equation}
-	\mu_1 \le \binom{n-1+k+d}{n-1+k},\quad
-	S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k},\quad
+		\mu_1 \le \binom{n-1+k+d}{n-1+k},\;
+		S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k},\;
 	L_1 = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}\right),
 	\label{eq:step1_params}
 \end{equation}
@@ -355,7 +358,7 @@ With the best applicable construction model, Step~4 is asymptotically dominant f
 	For general $(d_1,\ldots,d_n)$-systems with $k=1$, the same argument yields $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}\!\left(\big(\sum_{i=1}^n d_i\big)\,D(\mathcal{F})^{\omega}\right)$, with $D(\mathcal{F})$ given by Corollary~\ref{cor:three_bounds}(3).
 \end{remark}
 
-\subsection{Comparison with Gr\"obner Basis}\label{Subsection:Other_Comparison}
+\subsection{Comparison with Gr\"obner Basis Methods}\label{Subsection:Other_Comparison}
 
 Gr\"obner basis methods solve polynomial systems by computing a grevlex order basis via F4/F5~\cite{Faugere2004,Faugere2002} and then converting to lexicographic order via FGLM~\cite{DBLP:journals/jsc/FaugereGLM93}. We compare Dixon with these methods on $(n;d)$-systems.
 
@@ -402,10 +405,11 @@ The two columns are not of the same nature: the Dixon entry is instantiated with
 %(For small $n$ the inequality goes the other way: e.g.\ $C_4^{(3)}=55<3^4$ and $C_3^{(2)}=5<2^3$, whereas $C_5^{(2)}=42>2^5$, so within the parameter range of our experiments $C_n^{(d)}<d^{\,n}$ often holds.) 
 The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5 is taken as the Gr\"obner bottleneck. We therefore claim only that the two approaches are comparable on well-determined systems, and rely on the experiments of Section~\ref{Implementation} for practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates these formulas as $n$ varies, and further plots are in Appendix~\ref{appendix:complexity_plots}.
 
-\begin{table}[h]
-	\centering
+\begin{table}[!htb]
+		\centering
 	\caption{Complexity formulas for well-determined $(n;d)$-systems with $d_{\text{reg}} = n(d-1)+1$, $d_{\mathcal{I}} = d^n$, $t=d^{\,n-1}/\sqrt{n}$ and $\eta_d:=((d-1)/d)^{d-1}$, and ratios relative to Dixon. The ``Ratio to Dixon'' column reports the leading-order estimate of $\mathcal{T}_{\mathrm{GB}}/\mathcal{T}_{\mathrm{Dixon}}$ for $d$ fixed and $n\to\infty$; these simplified ratios are not uniform in $(n,d)$ (Appendix~\ref{Appendix:Derivation}), and they compare a generically attained Dixon estimate with worst-case Gr\"obner basis bounds.}
 	\label{tab:complexity_formulas}
+	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{lcc}
 		\toprule
 		\textbf{Method} & \textbf{Complexity} & \textbf{Ratio to Dixon} \\
@@ -427,12 +431,13 @@ The Dixon estimate stays below the combined F4/F5$+$FGLM cost only because F4/F5
 		BNS order change~\cite{BerthomieuNeigerSafey2022} & $\displaystyle {\mathcal{O}}\left(t^{\,\omega-1} d_{\mathcal{I}}\right)$ & ${\mathcal{O}}\!\left(n^{\omega-1/2}\eta_d^{\,n\omega}\right)$ \\
 		\bottomrule
 	\end{tabular}
+	}
 
 \end{table}
 
 The GB (per-deg) row admits no closed-form asymptotic equivalent that is both simple and accurate, since a leading-order estimate of the index-dominated sum gives only a very loose envelope; we therefore leave its ratio entry blank and refer to Figure~\ref{fig:complexity_comparison_d}. Detailed derivations of all ratios are in Appendix~\ref{Appendix:Derivation}.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.88\textwidth]{complexity_comparison_d2.pdf}
 	\caption{Complexity comparison varying $n$ with $d=2$, $\omega=2.81$. The y-axis shows $\log_2(\text{complexity})$. All variants tabulated in Table~\ref{tab:complexity_formulas}, including the GB (per-degree) bound and the HNF change of order of~\cite{BerthomieuNeigerSafey2022}, are evaluated here for direct comparison with Dixon.}

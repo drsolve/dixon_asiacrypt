@@ -23,7 +23,7 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 	A set $C \subset \mathbb{R}^n$ is \emph{convex} if for any two points $p, q \in C$, the line segment $\{(1-\lambda)p + \lambda q : \lambda \in [0,1]\}$ lies entirely in $C$. 
 	
 	For any set $S \subset \mathbb{R}^n$, its \emph{convex hull} $\text{conv}(S)$ is the smallest convex set containing $S$, equivalently:
-	$$\text{conv}(S) = \left\{\sum_{i=1}^m \lambda_i s_i : s_i \in S, \lambda_i \geq 0, \sum_{i=1}^m \lambda_i = 1\right\}.$$
+	\[\text{conv}(S) = \left\{\sum_{i=1}^m \lambda_i s_i : s_i \in S, \lambda_i \geq 0, \sum_{i=1}^m \lambda_i = 1\right\}.\]
 	Linear combinations of this form are called \emph{convex combinations}.
 \end{definition}
 
@@ -35,12 +35,12 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 
 \begin{definition}[Monomial Support]\label{def:support}
 	For a polynomial $f = \sum_{\alpha} c_{\alpha} x^{\alpha}$ where $c_{\alpha} \in \mathbb{K}$ and $\alpha \in \mathbb{Z}_{\geq 0}^n$, the \emph{support} of $f$ is the set of exponent vectors corresponding to nonzero coefficients:
-	$$\text{Supp}(f) = \{\alpha \in \mathbb{Z}_{\geq 0}^n : c_{\alpha} \neq 0\}.$$
+	\[\text{Supp}(f) = \{\alpha \in \mathbb{Z}_{\geq 0}^n : c_{\alpha} \neq 0\}.\]
 \end{definition}
 
 \begin{definition}[Newton Polytope]\label{def:newton}
 	The \emph{Newton polytope} of a polynomial $f$ is the convex hull of its support:
-	$$\text{NP}(f) = \text{conv}(\text{Supp}(f)) \subset \mathbb{R}^n.$$
+	\[\text{NP}(f) = \text{conv}(\text{Supp}(f)) \subset \mathbb{R}^n.\]
 	The Newton polytope records the "shape" or sparsity structure of $f$; the actual coefficient values do not affect $\text{NP}(f)$.
 \end{definition}
 
@@ -56,7 +56,7 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 
 \begin{definition}[Minkowski Sum]\label{def:minkowski}
 	For polytopes $P_1, P_2 \subset \mathbb{R}^n$, their {Minkowski sum} is:
-	$$P_1 + P_2 = \{p_1 + p_2 : p_1 \in P_1, p_2 \in P_2\}.$$
+	\[P_1 + P_2 = \{p_1 + p_2 : p_1 \in P_1, p_2 \in P_2\}.\]
 	More generally, for $\lambda \geq 0$ and polytope $P$, define $\lambda P = \{\lambda p : p \in P\}$.
 \end{definition}
 
@@ -70,12 +70,12 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 
 \begin{proposition}[Newton Polytope of Products]\label{prop:newton-product}
 	For polynomials $f, g \in \mathbb{K}[x_1, \ldots, x_n]$:
-	$$\text{NP}(fg) = \text{NP}(f) + \text{NP}(g).$$
+	\[\text{NP}(fg) = \text{NP}(f) + \text{NP}(g).\]
 \end{proposition}
 
 \begin{proposition}[Faces of Minkowski Sums]\label{prop:minkowski-faces}
 	Let $P_1, \ldots, P_r \subset \mathbb{R}^n$ be polytopes, and let $P = P_1 + \cdots + P_r$ be their Minkowski sum. Then every face $P'$ of $P$ can be expressed as a Minkowski sum:
-	$$P' = P'_1 + \cdots + P'_r,$$
+	\[P' = P'_1 + \cdots + P'_r,\]
 	where each $P'_i$ is a face of $P_i$.
 \end{proposition}
 
@@ -173,10 +173,10 @@ Informally, a property holds generically if it holds for "most" polynomial syste
 	
 	To verify $(\alpha_1'', \ldots, \alpha_n'') \in P_n$, we need $\sum_{\ell=1}^{n} \alpha_\ell'' \leq d_n$. If the second case never occurs, then $\alpha''=0$ and there is nothing to prove. Otherwise, let $j$ be the \emph{largest} index at which the second case occurs; then $\alpha_\ell''=0$ for every $\ell<n-j+1$, and since the second case saturates the budget at step $j$ we obtain
 	\begin{align*}
-		\sum_{\ell=1}^{n} \alpha_\ell''=\sum_{\ell=n-j+1}^{n} \alpha_\ell'' 
-		&= \alpha_{n-j+1} - \left(\sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell'\right) + \sum_{\ell=n-j+2}^{n} \alpha_\ell'' \\[0.3em]\notag
-		&= \sum_{\ell=n-j+1}^{n} \alpha_\ell - \sum_{i=2}^{j} d_{n-i+1} 
-		\leq \sum_{i=1}^{j} d_{n-i+1} - \sum_{i=2}^{j} d_{n-i+1} 
+		\sum_{\ell=1}^{n} \alpha_\ell''=\sum_{\ell=n-j+1}^{n} \alpha_\ell''
+		&= \alpha_{n-j+1} -\!\left(\sum_{i=2}^{j} d_{n-i+1} - \sum_{\ell=n-j+2}^{n-1} \alpha_\ell'\right)\!+\!\sum_{\ell=n-j+2}^{n} \alpha_\ell'' \\[0.3em]
+		&= \sum_{\ell=n-j+1}^{n} \alpha_\ell\!-\!\sum_{i=2}^{j} d_{n-i+1}
+		\leq \sum_{i=1}^{j} d_{n-i+1}\!-\!\sum_{i=2}^{j} d_{n-i+1}
 		= d_n,
 	\end{align*}
 	where the inequality follows from the definition of $Q_n$.
@@ -416,43 +416,25 @@ We present a more comprehensive comparison of the computational complexity of th
 
 \begin{figure}[H]
 	\centering
-	
-	\begin{subfigure}{\textwidth}
-		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_comparison_d5.pdf}
-		\caption{}
-	\end{subfigure}
-	
+	\includegraphics[width=0.85\textwidth]{complexity_comparison_d5.pdf}
+	\par\smallskip\makebox[\textwidth][c]{(a)}\par
 	\medskip
-	
-	\begin{subfigure}{\textwidth}
-		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n3.pdf}
-		\caption{}
-	\end{subfigure}
-	
+	\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n3.pdf}
+	\par\smallskip\makebox[\textwidth][c]{(b)}\par
 	\caption{Complexity comparison between the Dixon resultant and Gr\"obner basis}
 	\label{fig:complexity}
 \end{figure}
 \begin{figure}[H]
-	\ContinuedFloat
 	\centering
-	
-	\begin{subfigure}{\textwidth}
-		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5.pdf}
-		\caption{}
-	\end{subfigure}
-	
+	\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5.pdf}
+	\par\smallskip\makebox[\textwidth][c]{(c)}\par
 	\medskip
-	
-	\begin{subfigure}{\textwidth}
-		\centering
-		\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w237.pdf}
-		\caption{}
-	\end{subfigure}
-	
-	\caption*{Figure~\ref{fig:complexity} (continued). The bottom panel uses $\omega=2.37$. Since the asymptotic dominance of the final determinant sets in only for larger $(n,d)$ than those plotted, the Dixon curve of this panel reports the maximum over the two symbolic stages, $\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}$, which over this range is governed by Step~1.}
+	\includegraphics[width=0.85\textwidth]{complexity_vs_degree_n5w237.pdf}
+	\par\smallskip\makebox[\textwidth][c]{(d)}\par
+	\par\smallskip
+	\begingroup\small\noindent
+	\textbf{Fig.~\ref{fig:complexity} (continued).} The bottom panel uses $\omega=2.37$. Since the asymptotic dominance of the final determinant sets in only for larger $(n,d)$ than those plotted, the Dixon curve of this panel reports the maximum over the two symbolic stages, $\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}$, which over this range is governed by Step~1.\par
+	\endgroup
 \end{figure}
 
 \newpage
@@ -556,7 +538,7 @@ The expansion-by-minors model uses the dense monomial-count proxy
 \[
 \mu_1 \le \binom{n-1+k+d}{n-1+k},
 \]
-i.e.\ the number of dense monomials in the original $f_j$ when viewed as a polynomial in the $n-1+k$ variables of $\xvec$ and $\avec$ of total degree at most $d$. Explicitly expanding the difference-quotient entries would introduce a factor $\max\{1,d/(n+k)\}$ in the uniform entry-support bound. The theoretical expansion model avoids this factor by multiplying the undivided numerators of a difference-quotient row by the cached minors, summing the row expansion, and only then dividing exactly by the common linear factor $x_i-\bar{x}_i$. Each numerator has at most $2\mu_1$ terms, and this linear division is soft-linear in the input and output support sizes. Under the stated intermediate-support proxy $U:=S_1$, the cost therefore remains $\widetilde O(n2^n\mu_1S_1)$, as in~\eqref{eq:step1_minor}. This is an evaluation strategy for the same refined determinant, rather than a claim that expanded difference quotients have at most $\mu_1$ terms.
+i.e.\ the number of dense monomials in the original $f_j$ when viewed as a polynomial in the $n-1+k$ variables of $\xvec$ and $\avec$ of total degree at most $d$. Explicitly expanding the difference-quotient entries would introduce a factor $\max\{1,d/(n+k)\}$ in the uniform entry-support bound. The theoretical expansion model avoids this factor by multiplying the undivided numerators of a difference-quotient row by the cached minors, summing the row expansion, and only then dividing exactly by the common linear factor $x_i-\bar{x}_i$. Each numerator has at most $2\mu_1$ terms, and this linear division is soft-linear in the input and output support sizes. Under the stated intermediate-support proxy $U:=S_1$, the cost therefore remains $\widetilde{O}(n2^n\mu_1S_1)$, as in~\eqref{eq:step1_minor}. This is an evaluation strategy for the same refined determinant, rather than a claim that expanded difference quotients have at most $\mu_1$ terms.
 
 \paragraph{Variable-wise degree bounds.}
 The Kronecker$+$HNF model uses the variable-wise degree bounds derived from the refined cancellation-matrix structure. A row-by-row analysis of $\widehat{C}$ (the variable $x_i$ appears in rows $1,\ldots,i$ with degree $\leq d$, in row $i+1$ with degree $\leq d-1$ after the difference quotient, and is absent from rows $i+2,\ldots,n$ where it has been replaced by $\bar{x}_i$; an analogous count applies to $\bar{x}_i$) gives
@@ -643,7 +625,7 @@ The full set of five determinant models (all in field operations over $\mathbb{F
 \paragraph{Full table of stage-wise models.}
 Table~\ref{tab:step14_models_full} collects all the formulas above.
 
-\begin{table}[h]
+\begin{table}[!htbp]
 	\centering
 	\small
 	\caption{Complexity models instantiated for the first and final symbolic determinants.}
@@ -723,16 +705,16 @@ Figures~\ref{fig:step14_vs_degree} and~\ref{fig:step14_vs_variables} illustrate 
 	\item for high-variable/low-degree systems, the first determinant rises sharply, and sparse interpolation is the only first-determinant model that can stay below the final determinant;
 	\item the numerical submatrix-selection phase remains below the symbolic final determinant throughout the parameter ranges considered in the paper.
 \end{enumerate}
-For $\omega>2$, with this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. The dominance is however asymptotic: at moderate $(n,d)$ the polynomial prefactors of the Step-1 models can still exceed the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ gap, and at $\omega=2$ the conclusion is reversed altogether, since the $\Theta\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ coefficient positions of the Dixon polynomial already match the $C_n^{(d)}$-exponent of Step~4. This is why the $\omega=2.37$ panel of Figure~\ref{fig:complexity} reports the maximum over the two stages. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. This is why the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
+For $\omega>2$, with this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. The dominance, however, is asymptotic: at moderate $(n,d)$ the polynomial prefactors of the Step-1 models can still exceed the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ gap, and at $\omega=2$ the conclusion is reversed altogether, since the $\Theta\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ coefficient positions of the Dixon polynomial already match the $C_n^{(d)}$-exponent of Step~4. This is why the $\omega=2.37$ panel of Figure~\ref{fig:complexity} reports the maximum over the two stages. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. Accordingly, the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_degree.pdf}
 	\caption{Comparison of the first and final determinant costs as the polynomial degree varies. The final determinant keeps the largest growth rate in the low-variable/high-degree regime.}
 	\label{fig:step14_vs_degree}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_variables.pdf}
 	\caption{Comparison of the first and final determinant costs as the number of variables varies. In the low-degree/high-variable regime, sparse interpolation is the only first-determinant model that typically remains below the final determinant.}
@@ -824,7 +806,7 @@ Let $P(\yvec)$ be an $m\times m$ polynomial matrix in variables $\yvec=(y_1,\ldo
 \qquad
 N = \prod_{i=1}^{v}(b_i+1),
 \]
-where $\delta$ bounds the entry degree, hence the average column degree, of the univariate matrix obtained after Kronecker substitution. Since $\sum_{i<v}b_i c_i=c_v-1$, we have $\delta\le(e_v+1)c_v-1<2e_vc_v$ when $e_v\ge1$; thus the asymptotic cost $\widetilde O(m^\omega e_vc_v)$ is unchanged. If every entry has total degree at most $E$, the bound $\delta=Ec_v$ may be used instead. This gives the Step~1 and Step~4 specializations with $E=d$ and $E=E_4\le nd$, respectively.
+where $\delta$ bounds the entry degree, hence the average column degree, of the univariate matrix obtained after Kronecker substitution. Since $\sum_{i<v}b_i c_i=c_v-1$, we have $\delta\le(e_v+1)c_v-1<2e_vc_v$ when $e_v\ge1$; thus the asymptotic cost $\widetilde{O}(m^\omega e_vc_v)$ is unchanged. If every entry has total degree at most $E$, the bound $\delta=Ec_v$ may be used instead. This gives the Step~1 and Step~4 specializations with $E=d$ and $E=E_4\le nd$, respectively.
 We also write $B:=\max_i b_i$, $L$ for the cost of one determinant probe, $S$ for a sparsity bound on $\det(P)$, $U$ for an upper bound on the support size of intermediate minors arising during a chosen evaluation strategy, $\mu$ for a dense monomial-count bound on one entry of $P$, and $\widetilde{M}(u)$ for soft-Oh multiplication at degree $u$.
 
 \paragraph{Intermediate-minor support proxy (modeling convention).}
@@ -907,7 +889,7 @@ T_{2}^{\mathrm{FDixon}}=\widetilde{O}\!\left(m_1^2\,(n!)^3\prod_{i=2}^{n}m_i^3\r
 We do not list it in the main table because it is not a generic determinant model; rather, it is a special construction path that replaces the combined Step~1/Step~2 cost and can be attractive when the number of eliminated variables is small and the degrees are high.
 
 \newpage
-\section{Poseidon}
+\section{\texorpdfstring{\poseidon}{Poseidon}}
 \label{appendix:poseidon}
 
 \poseidon~\cite{DBLP:conf/uss/0001KR0S21} is a family of hash functions designed for efficient evaluation in zero-knowledge proof systems, while \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} updates the linear layer for improved performance.
@@ -929,7 +911,7 @@ The round functions are
 \end{equation*}
 The parameters are chosen so that $\gcd(\alpha,p-1)=1$ and so as to meet the targeted security level.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{poseidon_diagram.pdf}
 	\caption{Overview of \poseidon and \poseidonnew. (Figure from~\cite{DBLP:phd/hal/Bouvier23})}
@@ -937,7 +919,7 @@ The parameters are chosen so that $\gcd(\alpha,p-1)=1$ and so as to meet the tar
 \end{figure}
 
 \paragraph{Attack models used in Section~\ref{Section:Application}.}
-We follow the algebraic models from~\cite{DBLP:journals/tosc/GrassiKR25}. The direct Dixon method is applied to the input/output model, while the mixed-degree subspace models are estimated using the determinant bound from Corollary~\ref{cor:three_bounds}(3). This is the reason the Poseidon part of the main text only needs the final complexity plots and timing table.
+We follow the algebraic models from~\cite{DBLP:journals/tosc/GrassiKR25}. The direct Dixon method is applied to the input/output model, while the mixed-degree subspace models are estimated using the determinant bound from Corollary~\ref{cor:three_bounds}(3). This is the reason the \poseidon part of the main text only needs the final complexity plots and timing table.
 
 \newpage
 \section{Vision}
@@ -952,7 +934,7 @@ We follow the algebraic models from~\cite{DBLP:journals/tosc/GrassiKR25}. The di
 \end{equation*}
 where $\mathsf{M}$ is an MDS matrix with rows indexed by $1,\ldots,s$, the $C_j$ are round constants, and $B(x)=b_0+b_1x+b_2x^2+b_3x^4$ is an $\mathbb{F}_2$-affine linearized polynomial.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.9\textwidth]{vision_diagram.pdf}
 	\caption{Round function of \vision. (Figure from~\cite{DBLP:phd/hal/Bouvier23})}
@@ -995,7 +977,7 @@ Imposing the CICO conditions fixes one input and one output coordinate and remov
 which is the count split into the forward and backward chains in Table~\ref{tab:vision_equation_distribution}. For $r=2$, for instance, this is $2$ equations of degree $8$, $4$ of degree $2$ and $1$ of degree $4$, matching the instance used in our experiments. This is the shape of the ladder~\eqref{eq:iterative_chain}: $|\mathcal{F}_1|=|\mathcal{X}_0|+1=2$, $|\mathcal{F}_i|=2$ for the remaining rungs, plus the single output constraint.
 
 The equation-degree distribution used in the MITM estimate is summarized in Table~\ref{tab:vision_equation_distribution}.
-\begin{table}[hbpt!]
+\begin{table}[!htbp]
 	\centering
 	\caption{Degree distribution of equations for MITM elimination of \vision. Rows split each round count into the forward and backward chains; the three middle columns give the number of equations of degree $8$, $2$, and $4$ in that chain; the last column reports the total degree of the resultant produced by that chain.}
 	\label{tab:vision_equation_distribution}
@@ -1031,24 +1013,24 @@ $e(3e-1)/2$, $\binom{e+1}{2}$ and $e$, respectively. Hence
  \operatorname{rank}\mathcal M
  \le r_0:=\frac{e(e+3)}2D+\frac{e(3e-1)}2 .
 \end{equation}
-The same expansion has $O(e^4D^3)$ terms and explicitly gives
+The same expansion has $\mathcal{O}(e^4D^3)$ terms and explicitly gives
 $\mathcal M=UV$ of inner dimension $r_0$, independently of the
 characteristic.
 After a rank-preserving specialization, a row basis $U_{I,:}$ gives
 $\mathcal M_{I,:}=U_{I,:}V$ with the same row space as $\mathcal M$.
 Thin-matrix elimination therefore extracts a maximal-rank submatrix in
-$\widetilde O(N\bar\rho^{\omega-1})$ operations, where
+$\widetilde{O}(N\bar\rho^{\omega-1})$ operations, where
 $\bar\rho=\min\{N,r_0\}$ and $N$ bounds both support dimensions;
 use dense elimination if $r_0>N$.
-For fixed $e$, the $\widetilde O(D^3)$ factor-construction cost is
+For fixed $e$, the $\widetilde{O}(D^3)$ factor-construction cost is
 included in Step~1.
 
 For \vision with $s=2$ the two local equations of a rung have block bidegree $(e,e)$ with $e=1$ for the $\deg=2$ rungs and $e=4$ for the $\deg=8$ rungs, so~\eqref{eq:rung_rank} reads $\rho\le 2D_{\mathrm{in}}+1$ and $\rho\le 14D_{\mathrm{in}}+22$ respectively, against a support dimension $D(\mathcal{F})=\Theta(D_{\mathrm{in}}^{2})$.
 
-\paragraph{Stage-by-stage figures.}
+\paragraph{Stage-by-stage results.}
 Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the rank bound $\bar\rho=\min\{D(\mathcal F),r_0\}$ used for Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count above, with fixed-$e$ constants suppressed, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. For Step~3 we use the rank-sensitive cost model $\widetilde{\mathcal{O}}(D(\mathcal{F})\bar\rho^{\omega-1})$; its estimate remains below Step~4 for the listed parameters. The first rung has no incoming relation $R$ and uses the ordinary two-polynomial bound $N=\bar\rho=2$ instead.
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\small
 	\caption{Every Dixon elimination performed by Method~2 on \vision with $r=4$ ($s=2$), in $\log_2$ field operations, $\omega=2$. The meet-in-the-middle cut is after rung~$4$.}
@@ -1073,7 +1055,7 @@ Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cos
 	\end{tabular}
 \end{table}
 
-\begin{table}[h]
+\begin{table}[ht]
 	\centering
 	\small
 	\caption{Maximal forward and backward stage cost against the final merge, for \vision with $s=2$ and $2\le r\le 10$, in $\log_2$ field operations, $\omega=2$. The last column is the complexity reported for Method~2.}
@@ -1100,7 +1082,7 @@ Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cos
 The candidate roots of the final univariate eliminant are substituted back into the original system, which removes the spurious ones at negligible additional cost.
 
 \newpage
-\section{XHash12}
+\section{\texorpdfstring{\xhash}{XHash12}}
 \label{appendix:xhash}
 
 \xhash is a STARK-friendly sponge hash function proposed by Ashur et al.~\cite{DBLP:journals/iacr/AshurKM23}. The permutation over $\mathbb{F}_p^{12}$ is
@@ -1109,10 +1091,10 @@ The candidate roots of the final univariate eliminant are substituted back into 
 \]
 where $p = 2^{64}-2^{32}+1$. The nonlinear layers combine power maps over $\mathbb{F}_p$ and over $\mathbb{F}_{p^3}$.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.95\textwidth]{xhash12_diagram.pdf}
-	\caption{Round function of \texttt{XHash12}~\cite{DBLP:journals/iacr/AshurKM23}}
+	\caption{Round function of \xhash~\cite{DBLP:journals/iacr/AshurKM23}}
 	\label{fig:xhash12}
 \end{figure}
 
@@ -1130,6 +1112,6 @@ For an $s$-step instance, let $n=12s$ and write the system in triangular form
 \end{array}
 \right.
 \]
-with $\alpha=7$ for the standard XHash12 instance. The complexity curves use $\bar D=\alpha$ for the output constraints and the degree bounds $D_i=\alpha^{n-i}\bar D$ before each successive elimination. For CICO-1, we instantiate~\eqref{eq:two_poly_complexity_main} with $d_{\mathcal I}=\alpha^n$. For $k\ge2$, we evaluate the sum in~\eqref{eq:successive_elim_cost} and bound the final relation degrees by $\alpha^n\bar D$. In both the direct and final hybrid Dixon computations, construction uses the cheaper of Kronecker$+$HNF and cached expansion, followed by rank extraction and univariate HNF; the reported estimate is the maximum over these stages.
+with $\alpha=7$ for the standard \xhash instance. The complexity curves use $\bar D=\alpha$ for the output constraints and the degree bounds $D_i=\alpha^{n-i}\bar D$ before each successive elimination. For CICO-1, we instantiate~\eqref{eq:two_poly_complexity_main} with $d_{\mathcal I}=\alpha^n$. For $k\ge2$, we evaluate the sum in~\eqref{eq:successive_elim_cost} and bound the final relation degrees by $\alpha^n\bar D$. In both the direct and final hybrid Dixon computations, construction uses the cheaper of Kronecker$+$HNF and cached expansion, followed by rank extraction and univariate HNF; the reported estimate is the maximum over these stages.
 
 For CICO-1, the reduction method of~\cite{DBLP:conf/crypto/BariantBBHOR25} can be applied directly. For larger $k$, the hybrid strategy first derives reduced relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ from the triangular ideal and then performs a final Dixon elimination on these relations. The main text reports only the resulting complexities and timings because the qualitative conclusion is simple: the hybrid strategy is excellent for very small $k$, but the direct Dixon method remains the relevant estimate for the natural CICO-4 setting. The reference point for both is the direct Gr\"obner-basis attack of the designers~\cite{DBLP:journals/iacr/AshurKM23}; the same triangular model, with the power maps of $\mathcal{B}_i$ replaced accordingly, applies verbatim to \texttt{XHash8}.
