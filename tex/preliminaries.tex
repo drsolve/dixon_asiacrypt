@@ -83,7 +83,6 @@ In practice, the Dixon matrix $\mathcal{M}$ is often rectangular or rank-deficie
 
 \begin{remark}
 The validity of using $\det(\mathcal{M}')$ relies on the KSY condition for singular Dixon matrices. It may theoretically fail, but such instances are extremely rare in practice~\cite{DBLP:conf/issac/KapurSY94} and it was satisfied for every instance reported in this paper.
-%A degenerate case is easily resolved by fixing a single variable $x_i$ to a random value and recomputing.
 \end{remark}
 
 \subsubsection{Step 4: Compute the Dixon resultant.}\label{dixon_step4}
@@ -97,12 +96,12 @@ The size of the Dixon matrix is a key parameter in the complexity analysis. A cl
 	B_{var} = (n-1)! \prod_{i=1}^{n-1} m_i,
 	\label{eq:Dixon_var_bound}
 \end{equation}
-where $m_i = \max_{1\leq j\leq n}\deg_{x_i}(f_j)$ is the maximum degree in $x_i$ over all polynomials in $\mathcal{F}$. For multi-homogeneous systems, Kapur and Saxena~\cite{DBLP:conf/stoc/KapurS96} proposed the volume-based bound
+where $m_i = \max_{1\leq j\leq n}\deg_{x_i}(f_j)$ is the maximum degree in $x_i$ over all polynomials in $\mathcal{F}$. Kapur and Saxena~\cite[Theorem~4.3]{DBLP:conf/stoc/KapurS96} give a volume-based asymptotic estimate for multi-homogeneous systems. In the equal-total-degree setting, their volume expression is $(dn)^{n-1}/n!$. We use its integer part as the comparison bound
 \begin{equation}
 	B_{MH} = \left\lfloor \frac{(dn)^{n-1}}{n!} \right\rfloor.
-	\label{eq:Dixon_old_bound}
+	\label{eq:Dixon_volume_bound}
 \end{equation}
-Section~\ref{Section: Complexity} replaces these estimates by exact generic formulas for the total-degree setting relevant here.
+Section~\ref{Section: Complexity} derives exact generic support formulas for the total-degree setting and independently verifies the explicit inequality $D(\mathcal{F})\le B_{MH}$ from the Fuss--Catalan formula.
 
 \subsubsection{Influence of extraneous factors.}
 The determinantal output may contain factors unrelated to the affine solution set.
@@ -146,7 +145,7 @@ In the table notation, $b_i$ bounds $\deg_{y_i}\det(P)$ and fixes the Kronecker 
 		\midrule
 		Expansion~\cite{GentlemanJohnson1976,HorowitzSahni1975} & $\widetilde{O}(m2^m \mu U)$ & $\widetilde{O}(\binom{m}{m/2}U)$ \\
 		Bareiss~\cite{Bareiss1968,GentlemanJohnson1976} & $\widetilde{O}(m^3U^2)$ & $\widetilde{O}(m^2U)$ \\
-		Kronecker~\cite{Li2007symbolic} & $\widetilde{O}(m^{\omega}\delta)$ & $\widetilde{O}(m\delta)$ \\
+		Kronecker~\cite{Li2007symbolic} & $\widetilde{O}(m^{\omega}\delta)$ & $\widetilde{O}(m^2\delta)$ \\
 		Interpolation~\cite{HorowitzSahni1975} & $\widetilde{O}\!\left(N(L+vB)\right)$ & $\widetilde{O}(N)$ \\
 		Sparse~\cite{DBLP:journals/jsc/Huang23}\footnotemark & $\widetilde{O}(LS + S\log q)$ & $\widetilde{O}(S)$ \\
 		\bottomrule

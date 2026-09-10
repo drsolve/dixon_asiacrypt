@@ -1,44 +1,30 @@
 \documentclass[10pt]{llncs}
 
 \pagestyle{plain}
-\usepackage{amsmath,amssymb,amsfonts,xspace} % amsthm
+\usepackage{amsmath,amssymb,amsfonts,xspace} %
 \usepackage{autobreak}
 
-\usepackage{makeidx}  % allows for indexgeneration
+\usepackage{makeidx}  %
 \usepackage[english]{babel}
 \usepackage{multirow}
 \usepackage{latexsym}
 \usepackage{enumitem}
 \usepackage{algorithm}
-% Algorithm 1 uses the algorithm/algorithmic pair; algorithm2e is deliberately
-% not loaded, since the two provide incompatible `algorithm' environments.
-%\usepackage{subfig}
 \usepackage{tabularx}
 
 \usepackage{graphicx}
 \usepackage{booktabs}
-%\usepackage{./fdsymbol}
 \usepackage{algorithmic}
-%\usepackage{subcaption}
 \usepackage{float}
-%latexmk -xelatex main.tex
-%\newcommand{\kai}[1]{\textcolor{red}{{\bf Kai:} #1}}
-%ciphers
-%\newcommand{\SPARX}{\textsc{Sparx}\xspace}
-%\newcommand{\SIMON}{\textsc{Simon}}
-%\newcommand{\todoKH}[2][]{\todo[color=red!30, #1]{Kai: #2}}
-%\newcommand{\todoQW}[2][]{\todo[color=blue!30, #1]{Qingju: #2}}
 \usepackage{marvosym}
-\usepackage[colorlinks, citecolor=blue]{hyperref} % load after float and graphics packages
+\usepackage[colorlinks, citecolor=blue]{hyperref} %
 
 \newcommand{\correspondingauthor}{\textsuperscript{(\Letter)}}
 
-%\newtheorem{theorem}{Theorem}
 \newtheorem{myrule}{Rule}
 \newtheorem{observation}{Observation}
 \newtheorem{hypothesis}{Heuristic}
 
-%\newtheorem{theorem}{Theorem}
 
 \newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
 \newcommand{\mv}[1]{\boldsymbol{#1}}
@@ -63,9 +49,6 @@
 \newcommand\Zvec{{\boldsymbol{Z}}}
 \newcommand\Avec{{\boldsymbol{A}}}
 \newcommand\kvec{{\boldsymbol{k}}}
-% \newcommand\XOR{{\texttt{XOR}}}
-% \newcommand\COPY{{\texttt{COPY}}}
-% \newcommand\AND{{\texttt{AND}}}
 \newcommand\rs{\rightsquigarrow}
 
 \newcommand\hull{\Join}
@@ -128,7 +111,7 @@
 \sloppy
 \emergencystretch=3em
          
-{\def \addcontentsline #1#2#3{} \maketitle} %it allows to remove title from the table of contents
+{\def \addcontentsline #1#2#3{} \maketitle} %
 \bibliographystyle{splncs04}
 
 \input{abstract}

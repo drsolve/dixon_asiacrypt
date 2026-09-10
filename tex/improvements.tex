@@ -7,7 +7,7 @@ While the theoretical complexity analysis highlights the advantages of Dixon res
 
 The primary challenge in implementing the Dixon resultant arises from the \emph{extraneous factors} in Definition~\ref{def:extra_factor}, which do not correspond to actual solutions of the original system and can substantially inflate the resultant degree beyond the B\'ezout bound (Theorem~\ref{thm:bezout_bound}). Without extraneous factors, the degree is controlled by the ideal degree and hence by B\'ezout, providing both theoretical elegance and computational efficiency.
 
-Qin et al.~\cite{DBLP:journals/jsc/QinZYC22} proposed a method based on parameter specialization and regular-chain computation; however, the regular-chain step incurs additional overhead. In contrast, we propose a \emph{preventive} strategy that minimizes extraneous factors during the matrix construction phase rather than eliminating them afterward. Our experimental results show that the proposed greedy selection algorithm reduces redundant factors, and in most cases the resulting Dixon determinants remain at or below the B\'ezout bound.
+Chtcherba and Kapur reduce extraneous degree through support translations and dialytic multiplier selection~\cite[Section~9]{ChtcherbaKapur2004Bivariate}. Qin et al.~\cite{DBLP:journals/jsc/QinZYC22} proposed a method based on parameter specialization and regular-chain computation; however, the regular-chain step incurs additional overhead. Our strategy selects low-degree maximal-rank submatrices of the original Dixon matrix. Our experimental results show that the proposed greedy selection algorithm reduces redundant factors, and in most cases the resulting Dixon determinants remain at or below the B\'ezout bound.
 
 \subsubsection{Degree-aware submatrix selection strategy.}
 A naive constant-evaluation rank test ignores the degree structure of the resulting submatrix. We develop a degree-aware selection strategy that employs a greedy approach to prioritize rows and columns with lower degrees. Following the determinant degree estimation framework of Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17}, for any nonsingular polynomial matrix $A$,
@@ -17,15 +17,20 @@ A naive constant-evaluation rank test ignores the degree structure of the result
 where $|\text{rdeg}(A)|$ and $|\text{cdeg}(A)|$ denote the sum of row degrees and column degrees, respectively. Our method is based on the following working hypothesis:
 
 \begin{hypothesis}[Degree Minimization Heuristic]\label{hyp:deg_mini_hypo}
-	For two polynomial matrices $A$ and $B$ of the same dimension over $\mathbb{K}[t_1,\ldots,t_m]$, if 
-	$\min(|\text{rdeg}(A)|, |\text{cdeg}(A)|) \geq \min(|\text{rdeg}(B)|, |\text{cdeg}(B)|),$
-	then we expect $\deg(\det(A)) \geq \deg(\det(B))$ to hold generically.
+	For two maximal-rank square submatrices $A$ and $B$ of the same Dixon matrix, if
+    \[
+      \min(|\mathrm{rdeg}(A)|,|\mathrm{cdeg}(A)|)
+      >
+      \min(|\mathrm{rdeg}(B)|,|\mathrm{cdeg}(B)|),
+    \]
+    then we heuristically expect $B$ to have a lower determinant degree.
+    %we heuristically expect $\deg(\det(A)) \ge \deg(\det(B))$.
 \end{hypothesis}
 
 The intuition is that a smaller row/column-sum degree bound tends to indicate a smaller determinant degree, motivating our greedy strategy to favor low-degree maximal-rank submatrices and thereby potentially reduce extraneous factors.
 
 \begin{remark}
-	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also used a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. We use the cheaper row/column weights as a heuristic for selecting low-degree submatrices.
+	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also used a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. we use row/column weights computable in $\mathcal{O}(n^2)$ as a cheaper but coarser guide to submatrix selection.
 \end{remark}
 
 \subsubsection{Degree-aware selection algorithm.}
@@ -73,7 +78,8 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 \end{itemize}
 
 
-
 \paragraph{Experimental results.}
+Dixon resultants are well suited to parametric elimination, while Gr\"obner bases are particularly effective for overdetermined solving. We therefore focus our benchmarks on well-determined systems, retaining one variable as a parameter in Dixon elimination.
+
 All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the high-performance Dixon implementation Fermat~\cite{fermat}. Jinadu--Monagan's Maple implementation is designed for $\mathbb{Q}$ and is not included in our finite-field benchmarks. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve performs best for systems with fewer variables and higher degrees.
 Our advantage over Fermat is primarily due to the efficient polynomial-matrix routines in FLINT/PML, in particular the HNF algorithm.

@@ -1,5 +1,4 @@
 \begin{abstract}
-	%\fontsize{10pt}{12pt}\selectfont
 	Solving multivariate polynomial systems is a fundamental problem in cryptanalysis, with increasing relevance in algebraic attacks on arithmetization-oriented (AO) primitives. Current approaches primarily rely on Gr\"obner bases or the Sylvester resultant. However, Gr\"obner basis methods typically rely on FGLM to change the monomial order, which applies only to zero-dimensional ideals, whereas the Sylvester resultant eliminates only one variable at a time, limiting its flexibility in multivariate elimination.
 	
 	We revisit the Dixon resultant as an efficient and flexible tool for eliminating several variables simultaneously. We derive refined upper bounds on the Dixon matrix size via lattice-path counting and analyze the complexity under several determinant computation models, yielding explicit complexity estimates. For well-determined systems, the Dixon resultant is a viable alternative to Gr\"obner basis methods; moreover, it is attractive for elimination in underdetermined systems, whereas Gr\"obner basis methods remain preferable for overdetermined ones.

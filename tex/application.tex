@@ -12,10 +12,10 @@ Method~1 applies the Dixon resultant directly to a square polynomial system. Sta
 This method is best suited to Type~I (low-degree) primitives, whose CICO systems admit a dense but uniformly low-degree algebraic description, so that the first elimination dominates and the later back-substitution phases operate on lower-dimensional systems; we take \poseidon as the representative example.
 
 \paragraph{Application to \poseidon.}
-We consider the CICO-3 problems of \poseidon~\cite{DBLP:conf/uss/0001KR0S21} and \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} in sponge mode, using the input/output and internal-subspace models from~\cite{DBLP:journals/tosc/GrassiKR25}; the precise models are summarized in Appendix~\ref{appendix:poseidon} (see Figure~\ref{fig:poseidon} for an overview of the permutation). For the pure I/O model, direct Dixon elimination matches the natural square-system viewpoint. For the mixed-degree subspace models, the determinant bound from Section~\ref{Section: Complexity} becomes essential because the polynomial degrees are no longer uniform.
+We consider the CICO-3 problems of \poseidon~\cite{DBLP:conf/uss/0001KR0S21} and \poseidonnew~\cite{DBLP:conf/africacrypt/GrassiKS23} in sponge mode, using the input/output and internal-subspace models from~\cite{DBLP:journals/tosc/GrassiKR25}; the precise models are summarized in Appendix~\ref{appendix:poseidon} (see Figure~\ref{fig:poseidon} for an overview of the permutation). For the pure I/O model, direct Dixon elimination matches the natural square-system viewpoint. For the mixed-degree subspace models, the Hessenberg bound from Section~\ref{Section: Complexity} becomes essential because the polynomial degrees are no longer uniform.
 Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=8$, $c=d=3$, $\alpha=3$ across different numbers of partial rounds.
 
-\begin{figure}[!htbp]
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.95\textwidth]{poseidon_complexity.pdf}
 \caption{Complexity comparison for \poseidon and \poseidonnew, with the model parameters $t=8$, $c=d=3$, $\alpha=3$ of~\cite{DBLP:journals/tosc/GrassiKR25}. Here $\omega = 2.81$ for all curves.}
@@ -24,7 +24,7 @@ Figure~\ref{fig:poseidon_complexity} compares the resulting complexities for $t=
 
 Table~\ref{tab:poseidon-timing} reports small-instance timings. Full-round systems behave close to generic dense systems, while partial-round systems are much more structured, so both the Dixon matrix size and the Gr\"obner-basis degree of regularity fall well below their generic upper bounds. Since the size of this drop depends on the specific subspace model, the generic bound should be read as an upper-bound template rather than as a tight prediction of the best attack. A finer analysis of these structural effects is left for future work.
 
-\begin{table}[!htbp]
+\begin{table}[h]
 \centering
 \caption{Timing comparison for \poseidon instances ($t=6, c=1, d=3$, I/O modeling, bypass one round) over $\mathbb{F}_p$, $p = 2^{62}+169$. $T$ and $E$ denote theoretical and experimental values; complexities (Comp.) are in $\log_2$ field operations. Here $\omega = 2.81$. For odd $R_F$, one additional full round is added at the beginning. Both the Comp. and the timed implementation use the HNF determinant model.}
 \label{tab:poseidon-timing}
@@ -78,7 +78,7 @@ The last step produces $R_n$ from $R_{n-1}$ and $\mathcal{F}_n$, by eliminating 
 \widetilde{\mathcal{O}}\!\left((D_{\mathrm{in}}+d_n|\mathcal{F}_n|)\binom{d_n|\mathcal{F}_n|-d_n+D_{\mathrm{in}}}{|\mathcal{F}_n|}^{\omega}\right),
 \label{eq:iterative_sequential_complexity}
 \end{equation}
-with the Determinant Bound~\eqref{eq:determinant_bound} available when the Unrestricted Bound is too coarse.
+with the Hessenberg Bound~\eqref{eq:hessenberg_bound} available when the Unrestricted Bound is too coarse.
 
 For meet-in-the-middle (MITM) instances, we split the chain into forward and backward parts meeting in a small middle block $\mathcal{Z}$:
 \begin{equation}
@@ -97,8 +97,6 @@ The final merge eliminates the middle block $\mathcal{Z}$ and, with $d_{\max}=\m
 \widetilde{\mathcal{O}}\!\left(d_{\max}^{\omega+1}\right).
 \label{eq:mitm_complexity}
 \end{equation}
-% obtained as follows. We arrange the split so that the middle block $\mathcal{Z}$ consists of two shared variables, with the forward chain contributing one relation in $\mathcal{Z}$ and the backward chain contributing another, of total degrees $D_{\mathrm{fwd}}$ and $D_{\mathrm{bwd}}$ respectively. The merge is then a resultant within $\mathcal{Z}$: it eliminates one of the two middle variables between these two relations, leaving the final univariate polynomial in the remaining middle variable. The associated Dixon matrix has size $\Theta(d_{\max})$ (driven by the degree of the two middle relations in the eliminated variable), and each of its entries is a polynomial of degree at most $2d_{\max}$ in the retained variable (a Dixon entry is a difference-quotient combination of two row entries, each of degree $\le d_{\max}$). The univariate HNF determinant on such a matrix costs $\widetilde{O}(d_{\max}^{\omega}\cdot 2d_{\max})=\widetilde{O}(d_{\max}^{\omega+1})$.
-% (Step~4 with matrix size $\Theta(d_{\max})$ and average column degree $\Theta(d_{\max})$, $k=1$).
 
 The complexity of Method~2 is the maximum over all stages: every determinant of the forward and backward chains~\eqref{eq:iterative_sequential_complexity} and the final merge~\eqref{eq:mitm_complexity}. Root finding, back-substitution, and the verification of the candidate solutions in the original system---which also discards the spurious candidates possibly introduced by extraneous factors---are negligible in comparison.
 
@@ -182,7 +180,6 @@ The total symbolic hybrid cost is, up to a constant factor, the maximum of~\eqre
 \end{equation}
 again with $D(\mathcal{P}_k)$ from Corollary~\ref{cor:three_bounds}(3), since the constraints $h_j$ do not have the same degree as the triangular equations; the last term becomes $(n+k)\alpha (C_{n+k}^{(\alpha)})^{\omega}$ when all equations have degree $\alpha$. The comparison between the two routes determines whether the reduction phase is worthwhile.
 
-%\paragraph{Relation to the iterative-resultant strategy of~\cite{DBLP:conf/crypto/BariantBBHOR25}.}
 
 This method is an improved attack on Type~II (equivalence-relation) primitives, refining Method~2 by interleaving Dixon elimination with ideal reduction; we take \xhash as the representative example.
 
