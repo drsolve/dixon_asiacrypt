@@ -44,9 +44,9 @@ This lattice path counting problem admits precise closed-form solutions through 
 		\item[(2)] %
 		If $a_i = i(d-1)$ for some constant $d$ and all $i=1,\ldots,n-1$, 
 		then the number of lattice paths such that the height $y_i$ of the $i$-th horizontal step is at most $a_i$ equals the Fuss--Catalan number with parameters $(n,d)$
-		\[
-		C_n^{(d)} := \frac{1}{(d-1)n+1}\binom{dn}{n}.
-		\]
+		\begin{equation}\label{eq:fuss_catalan}
+			C_n^{(d)} = \frac{1}{(d-1)n+1}\binom{dn}{n}.
+		\end{equation}
 		
 		\item[(3)] %
 		The number of lattice paths such that for every 
@@ -370,19 +370,19 @@ For Step~1, the most competitive models are sparse interpolation and cached expa
 
 With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed in Appendix~\ref{appendix:step_comparison}, and is also the empirical bottleneck. We therefore adopt $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems; Appendix~\ref{appendix:wellsq} gives the model-specific comparisons.
 
-
 \begin{remark}\label{rem:mixed_degree_complexity}
-	For general $(d_1,\ldots,d_n)$-systems with $k=1$, the same argument yields $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}\!\left(\big(\sum_{i=1}^n d_i\big)\,D(\mathcal{F})^{\omega}\right)$, with $D(\mathcal{F})$ given by Corollary~\ref{cor:three_bounds}(3).
+For mixed-degree systems, we bound $D(\mathcal F)$
+using the Hessenberg Bound of Corollary~\ref{cor:three_bounds}(3)
+and take the maximum cost over all stages.
+In particular, for $k=1$ and total-degree bounds $d_1,\ldots,d_n$,
+Step~4 costs $\widetilde{O}((\sum_i d_i)D(\mathcal F)^\omega)$
+and dominates in most cases.
+We omit a detailed mixed-degree analysis.
 \end{remark}
 
 \subsection{Comparison with Gr\"obner Basis Methods}\label{Subsection:Other_Comparison}
 
 Gr\"obner basis methods solve polynomial systems by computing a grevlex order basis via F4/F5~\cite{Faugere2004,Faugere2002} and then converting to lexicographic order via FGLM~\cite{DBLP:journals/jsc/FaugereGLM93}. We compare Dixon with these methods on $(n;d)$-systems.
-
-
-	
-	
-
 
 \begin{table}[!htb]
 	\centering
