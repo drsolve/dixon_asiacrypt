@@ -79,7 +79,7 @@ We developed a comprehensive, open-source C implementation of the Dixon resultan
 
 
 \paragraph{Experimental results.}
-Dixon resultants are well suited to parametric elimination, while Gr\"obner bases are particularly effective for overdetermined solving. We therefore focus our benchmarks on well-determined systems, retaining one variable as a parameter in Dixon elimination.
+As discussed in Section~\ref{Subsection:Other_Comparison}, Dixon resultants are well suited to parametric elimination, while Gr\"obner bases are particularly effective for overdetermined solving. We therefore focus our benchmarks on well-determined systems, a common setting well suited to both methods.
 
 All benchmarks were performed on a dual-socket AMD EPYC 7302 server. We compared our Dixon implementation with the Gr\"obner basis solvers in Magma~\cite{magma}/msolve~\cite{msolve}, and with the high-performance Dixon implementation Fermat~\cite{fermat}. Jinadu--Monagan's Maple implementation is designed for $\mathbb{Q}$ and is not included in our finite-field benchmarks. As shown in Figure~\ref{fig:BenchmarkComparison}, the results reveal a clear trade-off: Magma performs best for systems with more variables and lower degrees, possibly benefiting from F4/F5 optimizations, while \drsolve performs best for systems with fewer variables and higher degrees.
 Our advantage over Fermat is primarily due to the efficient polynomial-matrix routines in FLINT/PML, in particular the HNF algorithm.

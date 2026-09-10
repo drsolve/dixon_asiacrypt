@@ -223,7 +223,10 @@ The size $D(\mathcal F)$ counts row and column monomials and upper-bounds $\rho=
 \quad\text{or}\quad
 \operatorname{char}(\mathbb K)>\prod_{i=2}^n d_i(i-1)^{d_i-1},
 \]
-because the product on the right is the sum of the absolute values of the integer coefficients in the specialized product above, and hence bounds each coefficient.
+because the product on the right is the sum of the absolute values of the integer coefficients in the specialized product above, and hence bounds each coefficient. In small characteristic, cancellations may shrink the support: for instance, 
+over $\mathbb F_2$,
+$(1+x_1)(1+x_1+x_2)=1+x_2+x_1^2+x_1x_2$,
+so the monomial $x_1$ disappears.
 \end{remark}
 
 \paragraph{From Polyhedral Constraints to Lattice Paths}
@@ -434,7 +437,8 @@ Gr\"obner basis methods are typically preferable here: the degree of regularity 
 
 \subsubsection{Underdetermined Systems ($m < n$)}
 
-For complete solving, the common cryptanalytic strategy is to guess $n-m$ variables and reduce to a (well- or over-)determined subsystem solved by Gr\"obner bases, and we do not propose Dixon as a replacement. From the viewpoint of elimination, however, Dixon removes several variables at once and produces explicit relations in fewer variables, which can then be combined with guessing or meet-in-the-middle decompositions; by contrast, changing term orders for positive-dimensional ideals typically requires Gr\"obner walks~\cite{DBLP:journals/jsc/CollartKM97}, whose complexity is hard to predict.
+For complete solving, a common cryptanalytic strategy is to guess $n-m$ variables and solve the resulting subsystem using Gr\"obner bases; we do not propose Dixon as a replacement. For elimination in this positive-dimensional setting, however, Dixon treats the retained variables as parameters and eliminates several variables at once, producing explicit relations that can be combined with guessing or meet-in-the-middle decompositions; by contrast, Gr\"obner-basis conversion in the same setting
+may use Gr\"obner walks~\cite{DBLP:journals/jsc/CollartKM97}, whose cost can be difficult to predict.
 
 \smallskip\noindent
 In summary, the two methods are complementary: Dixon and Gr\"obner basis are comparable on well-determined systems; Gr\"obner basis is typically preferable for overdetermined systems; Dixon is attractive for underdetermined systems as a determinant-based elimination method.
