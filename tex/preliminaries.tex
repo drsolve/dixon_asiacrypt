@@ -46,7 +46,7 @@ Resultants are classical tools in elimination theory used to determine whether a
 The Sylvester resultant~\cite{cox2005using} for two univariate polynomials of degrees $d_1,d_2$ produces a matrix of size $d_1+d_2$; the B\'ezout--Cayley resultant~\cite{painvin1874note,cox2005using} reduces this to $\max(d_1,d_2)$. The Macaulay resultant~\cite{macaulay1902some} generalizes this to several multivariate polynomials but can produce very large matrices. The Dixon construction~\cite{Dixon1909} is a multivariate extension of the B\'ezout-style approach: it preserves the compactness of the B\'ezout--Cayley matrix while extending it from two to $n$ polynomials, often yielding much smaller matrices than Macaulay.
 
 \begin{remark}\label{rem:projective_vs_affine}
-	For $k > 1$, $J$ need not be principal, and determinant-based methods compute a specific nonzero element $R \in J$. The affine determinantal construction is defined as the determinant of a maximal-rank submatrix of the Dixon matrix $\mathcal{M}$ of Section~\ref{dixon_step2} and vanishes on the projection of the affine solution set, but may include extraneous factors not essential for the projection. In this paper, we refer to this determinant $R$ as the resultant in a slightly informal sense, rather than as a projection polynomial.
+	For $k > 1$, $J$ need not be principal. Under suitable conditions,  determinant-based methods compute a specific nonzero polynomial $R$ that vanishes on the projection of the affine solution set, possibly with extraneous factors. In this paper, we refer to this determinant $R$ as the resultant in a slightly informal sense, rather than as a projection polynomial.
 \end{remark}
 
 \subsection{Dixon Resultant}\label{sec2.3:Dixon}
@@ -88,11 +88,7 @@ In practice, the Dixon matrix $\mathcal{M}$ is often rectangular or rank-deficie
 \begin{remark}
 The validity of using $\det(\mathcal M')$ relies on the
 KSY condition~\cite{DBLP:conf/issac/KapurSY94}, also called the RSC criterion~\cite{Albrecht2008}: there exists a column whose monomial label is nonzero on the solution set under consideration and whose deletion
-lowers the rank over $\mathbb K(\avec)$. Failures of this condition
-appear rare in practice~\cite{DBLP:conf/issac/KapurSY94},
-and Albrecht~\cite[Section~4.2.3]{Albrecht2008} addresses
-the nontermination issue in the RSC procedure through
-bounded retries and recursive specialization.
+lowers the rank over $\mathbb K(\avec)$. Failures of this condition appear rare with none observed in the cases tested in~\cite{DBLP:conf/issac/KapurSY94} or in this paper, and Albrecht~\cite[Section~4.2.3]{Albrecht2008} addresses the nontermination issue in the RSC procedure through recursive specialization.
 \end{remark}
 
 \subsubsection{Step 4: Compute the Dixon resultant.}\label{dixon_step4}

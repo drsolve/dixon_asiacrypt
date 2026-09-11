@@ -7,7 +7,7 @@ Although much of the preceding discussion is developed under genericity assumpti
 \end{remark}
 
 \subsection{Method 1: Direct elimination}\label{subsec:method1}
-Method~1 applies the Dixon resultant directly to a square polynomial system. Starting from $n$ equations in $n$ variables, we eliminate $n-1$ variables, solve the resulting elimination polynomial in the remaining parameter, and then back-substitute recursively. The whole algebraic burden is concentrated in one structured determinant, so the complexity analysis reduces to the matrix-size and determinant models from Section~\ref{Section: Estimate}. This is the classical Dixon solving workflow of~\cite{cryptoeprint:2005/312,Albrecht2008}, instantiated here with the bounds of Section~\ref{Section: Complexity} and the implementation of Section~\ref{Section: Improvements}.
+Method~1 applies the Dixon resultant directly to a square polynomial system. Starting from $n$ equations in $n$ variables, we eliminate $n-1$ variables, solve the resulting elimination polynomial in the remaining parameter, and then back-substitute recursively. We estimate the complexity based on the analysis in Section~\ref{Section: Estimate}. This is the classical Dixon solving workflow of~\cite{cryptoeprint:2005/312,Albrecht2008}, instantiated here with the bounds of Section~\ref{Section: Complexity} and the implementation of Section~\ref{Section: Improvements}.
 
 This method is best suited to Type~I (low-degree) primitives, whose CICO systems admit a dense but uniformly low-degree algebraic description, so that the first elimination dominates and the later back-substitution phases operate on lower-dimensional systems; we take \poseidon as the representative example.
 

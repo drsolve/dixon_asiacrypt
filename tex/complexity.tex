@@ -83,13 +83,13 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 		\begin{equation}\label{eq:fuss_catalan_bound}
 			D(\mathcal{F}) \leq C_n^{(d)} = \frac{1}{(d-1)n+1}\binom{dn}{n}.
 		\end{equation}
-		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(2), under the characteristic hypothesis of Lemma~\ref{lem:dixon_fc_bound}.
+		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(2), under the characteristic condition stated in Remark~\ref{rem:support_vs_rank}.
 		
 		\item[(3)] \textbf{Hessenberg Bound:} 
 		\begin{equation}\label{eq:hessenberg_bound}
 			D(\mathcal{F}) \leq \det_{1\leq i,j\leq n-1} \left( \binom{\sum_{k=1}^{i} (d_{n+1-k} - 1) + 1}{j - i + 1} \right).
 		\end{equation}
-		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(3), under the same hypothesis.
+		The bound is attained for generic systems by Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_path_formulas}(3), under the characteristic condition stated in Remark~\ref{rem:support_vs_rank}.
 		
 		
 	\end{enumerate}
@@ -100,7 +100,7 @@ By combining Theorem~\ref{thm:dixon_general_bound} and Lemma~\ref{lem:lattice_pa
 \end{remark}
 
 \paragraph{Outline of proof of Theorem~\ref{thm:dixon_general_bound}.}
-We describe the support of an Iterated-Simplex Polynomial by linear inequalities (Lemma~\ref{lem:fc_polytope}), bound the Dixon matrix size by its monomial count (Lemma~\ref{lem:dixon_fc_bound}), and count these monomials using lattice paths (Lemma~\ref{lem:lattice_path_count}).
+We use the Iterated-Simplex Polynomial to connect the Dixon matrix size to lattice path counting. Lemma~\ref{lem:fc_polytope} describes its support by linear inequalities. Lemma~\ref{lem:dixon_fc_bound} then bounds the Dixon matrix size by the monomial count of $I_{d_2-1,\ldots,d_n-1}$. Finally, Lemma~\ref{lem:lattice_path_count} counts these monomials via a bijection with lattice paths below a piecewise linear boundary.
 
 \begin{definition}[Iterated-Simplex Polynomial]
 	Let $n$ be a positive integer and $(d_1, d_2, \ldots, d_n)$ be a sequence of nonnegative integers. The Iterated-Simplex polynomial is defined as
@@ -250,19 +250,31 @@ Given a lattice point, set $\alpha_{n+1}=a_n-\sum_{i=1}^n\alpha_i$ and form the 
 \[
 U^{\alpha_1}R\,U^{\alpha_2}R\cdots U^{\alpha_n}R\,U^{\alpha_{n+1}},
 \]
-where $U$ and $R$ denote upward and rightward steps. This path has exactly $n$ horizontal steps, and its $k$-th horizontal step has height $\alpha_1+\cdots+\alpha_k\le a_k$. The final $\alpha_{n+1}$ upward steps bring it to $(n,a_n)$; they are allowed because the height constraint applies only to horizontal steps.
+where $U$ and $R$ denote upward and rightward steps. This path has exactly $n$ horizontal steps, and its $k$-th horizontal step has height $\alpha_1+\cdots+\alpha_k\le a_k$. The final $\alpha_{n+1}$ upward steps bring it to $(n,a_n)$.
 
 Conversely, given an admissible path, let $\alpha_i$ count the upward steps after the $(i-1)$-st horizontal step and before the $i$-th, taking the starting point when $i=1$. The height of the $k$-th horizontal step is then $\alpha_1+\cdots+\alpha_k$, so the required inequalities hold. The endpoint uniquely fixes the remaining upward steps. The two constructions are inverse to each other, giving the desired bijection.
 \qed
 \end{proof}
 
-
-To prove Theorem~\ref{thm:dixon_general_bound}, it remains by Lemma~\ref{lem:dixon_fc_bound} to count the monomials of $I_{d_2-1,\ldots,d_n-1}$. Applying Lemma~\ref{lem:fc_polytope} in $n-1$ variables, their exponent vectors satisfy
+\paragraph{proof of Theorem~\ref{thm:dixon_general_bound}.}
+By Lemma~\ref{lem:dixon_fc_bound}, it remains to count the
+monomials of $I_{d_2-1,\ldots,d_n-1}$.
+Applying Lemma~\ref{lem:fc_polytope} in $n-1$ variables,
+their exponent vectors satisfy
 \[
 \sum_{\ell=n-j}^{n-1}\alpha_\ell
-\le \sum_{i=1}^{j}(d_{n-i+1}-1),\qquad 1\le j<n.
+\le \sum_{i=1}^{j}(d_{n-i+1}-1),
+\qquad 1\le j<n.
 \]
-Reversing the coordinates via $\beta_i=\alpha_{n-i}$ turns these into the prefix constraints $\beta_1+\cdots+\beta_j\le a_j$. By Lemma~\ref{lem:lattice_path_count}, the resulting nonnegative lattice points correspond exactly to paths from $(0,0)$ to $(n-1,a_{n-1})$ whose $j$-th horizontal step has height at most $a_j$. This is the boundary in the theorem. Generic attainment follows from Lemma~\ref{lem:dixon_fc_bound}.
+Reversing the coordinates via $\beta_i=\alpha_{n-i}$ turns
+these inequalities into the prefix constraints
+$\beta_1+\cdots+\beta_j\le a_j$.
+By Lemma~\ref{lem:lattice_path_count}, the resulting
+nonnegative lattice points correspond exactly to paths from
+$(0,0)$ to $(n-1,a_{n-1})$ whose $j$-th horizontal step has
+height at most $a_j$. This is precisely the boundary stated
+in the theorem. Generic attainment follows from
+Lemma~\ref{lem:dixon_fc_bound}.
 \qed
 
 \subsubsection{Comparison with Existing Bounds}
