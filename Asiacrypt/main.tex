@@ -1,0 +1,136 @@
+\documentclass[runningheads]{llncs}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts,xspace} %
+\usepackage{autobreak}
+
+\usepackage{makeidx}  %
+\usepackage[english]{babel}
+\usepackage{multirow}
+\usepackage{latexsym}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{tabularx}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{algorithmic}
+\usepackage{float}
+\usepackage{marvosym}
+\usepackage[colorlinks, citecolor=blue]{hyperref} %
+
+\newcommand{\correspondingauthor}{\textsuperscript{(\Letter)}}
+
+\newtheorem{myrule}{Rule}
+\newtheorem{observation}{Observation}
+\newtheorem{hypothesis}{Heuristic}
+
+
+\newcommand{\tabincell}[2]{\begin{tabular}{@{}#1@{}}#2\end{tabular}}
+\newcommand{\mv}[1]{\boldsymbol{#1}}
+\newcommand{\Fn}{\mathbb{F}_2^n}
+\newcommand{\Fnn}{\mathbb{F}_{2^n}}
+\newcommand{\Fp}{\mathbb{F}_p}
+\newcommand{\Fq}{\mathbb{F}_q}
+\newcommand{\mb}[2]{\mathbf{#1}_{#2}}
+\newcommand{\mbb}[1]{\mathbf{#1}}
+\newcommand{\term}[1]{ {\pi_{\uvec^{(#1)}} ( {\boldsymbol{x}}^{(#1)} ) } }
+\newcommand{\F}{\ensuremath{\mathbb{F}}}
+\newcommand{\Mod}[1]{\ (\mathrm{mod}\ #1)}
+\newcommand{\bs}[1]{\boldsymbol{#1}}
+\newcommand\uvec{{\boldsymbol{u}}}
+\newcommand\vvec{{\boldsymbol{v}}}
+\newcommand\xvec{{\boldsymbol{x}}}
+\newcommand\yvec{{\boldsymbol{y}}}
+\newcommand\zvec{{\boldsymbol{z}}}
+\newcommand\avec{{\boldsymbol{a}}}
+\newcommand\Xvec{{\boldsymbol{X}}}
+\newcommand\Yvec{{\boldsymbol{Y}}}
+\newcommand\Zvec{{\boldsymbol{Z}}}
+\newcommand\Avec{{\boldsymbol{A}}}
+\newcommand\kvec{{\boldsymbol{k}}}
+\newcommand\rs{\rightsquigarrow}
+
+\newcommand\hull{\Join}
+\newcommand\nrs{\nrightsquigarrow}
+\newcommand\hs{\hookrightarrow}
+
+\newcommand{\mask}[1]{\bs \Gamma^{#1}}
+\newcommand\tf{ {\boldsymbol{f}}_{\mu, \eta, \theta, \gamma} }
+
+
+\newcommand{\etal}{{et al.}\xspace}
+\newcommand{\eg}{{e.g.}\xspace}
+\newcommand{\ie}{{i.e.}\xspace}
+\newcommand{\st}{{s.t.}\xspace}
+\newcommand{\Sbox}{S-box\xspace}
+\newcommand{\Sboxes}{S-boxes\xspace}
+
+\newcommand{\asmall}{\texttt{a}\xspace}
+\newcommand{\bsumzero}{\texttt{b}{\small 0}\xspace}
+\newcommand{\bsumone}{\texttt{b}{\small 1}\xspace}
+\newcommand{\csmall}{\texttt{c}\xspace}
+
+\newcommand{\gb}{Gr\"obner Basis\xspace}
+\newcommand{\poseidon}{\textsc{Poseidon}\xspace}
+\newcommand{\poseidonnew}{\textsc{Poseidon2}\xspace}
+\newcommand{\vision}{\texttt{Vision}\xspace}
+\newcommand{\xhash}{\texttt{XHash12}\xspace}
+\newcommand{\drsolve}{\texttt{DRSolve}\xspace}
+
+\title{Efficient Polynomial System Solving via Dixon Resultants: Applications to AO Primitives}
+\titlerunning{Efficient Polynomial System Solving via Dixon Resultants}
+
+\author{
+  Haohai Suo\inst{1,2,3} \and
+  Jiamin Cui\inst{1,2,3}\correspondingauthor
+}
+\authorrunning{H. Suo and J. Cui}
+
+\institute{
+  School of Cyber Science and Technology, Shandong University,
+  Qingdao, Shandong, China
+  \and
+  State Key Laboratory of Cryptography and Digital Economy Security,
+  Shandong University, Qingdao, 266237, Shandong, China
+  \and
+  Key Laboratory of Cryptologic Technology and Information Security,
+  Ministry of Education, Shandong University, Jinan, China\\
+  \email{haohai.suo@mail.sdu.edu.cn, cuijiamin@sdu.edu.cn}
+}
+
+   
+
+\begin{document}
+\sloppy
+\emergencystretch=3em
+         
+{\def \addcontentsline #1#2#3{} \maketitle} %
+\bibliographystyle{splncs04}
+
+\input{abstract}
+\input{introduction}
+\input{preliminaries}
+\input{complexity}
+\input{improvements}
+\input{application}
+\input{conclusion}
+
+\begin{credits}
+\subsubsection{\ackname}
+ 
+We would like to thank our advisors, Meiqin Wang and Kai Hu, for their guidance and support. We are grateful to all the anonymous reviewers for their valuable comments and suggestions. We thank Biran Lu for an elegant argument on the monomial-counting problem that inspired the proof in Section~\ref{Subsection:Matrix_Size}, particularly Lemma~\ref{lem:fc_polytope}. We also thank Robert H. Lewis, Michael Monagan, Ayoola Jinadu, and Guoqiang Deng for their helpful correspondence regarding the implementation of the Dixon resultant.
+
+This work is supported by the National Cryptologic Science Fund of China (Grant No. 2025NCSF01013), the National Key R\&D Program of China (Grant No. 2024YFA1013000), the National Natural Science Foundation of China (Grant No. U2336207), the Key R\&D Program of Shandong Province, China (Grant No. 2026CXPT037), and the Fundamental and Interdisciplinary Disciplines Breakthrough Plan of the Ministry of Education of China (Grant No. JYB2025XDXM114).
+
+Claude and ChatGPT were used to assist with the implementation of the DRSolve software and the language polishing of this paper. All proofs, algorithms, and mathematical derivations were developed by the authors. All AI-assisted code was reviewed and tested by the authors.
+
+\subsubsection{\discintname}
+The authors have no competing interests to declare that are relevant to the content of this article.
+\end{credits}
+
+\vspace{-10pt}
+\bibliography{refs}
+
+\end{document}

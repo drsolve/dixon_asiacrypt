@@ -6,7 +6,7 @@ Throughout this section, $D(\mathcal{F})$ is the size of the Dixon matrix $\math
 
 \subsection{A Refined Bound on the Size of the Dixon Matrix}\label{Subsection:Matrix_Size}
 
-We bound the Dixon matrix size for general $(d_1,\ldots,d_n)$-systems via a lattice path count. Background is given in Appendix~\ref{Appendix:A}.
+We bound the Dixon matrix size for general $(d_1,\ldots,d_n)$-systems via a lattice path count. The required background on polynomial supports, Newton polytopes, and lattice paths is reviewed in the full version~\cite{cryptoeprint:2026/1969}.
 
 \begin{theorem}[Lattice Path Bound]\label{thm:dixon_general_bound}
 	For a $(d_1, d_2, \ldots, d_n)$-system $\mathcal{F}$ with 
@@ -124,7 +124,7 @@ Now we characterize the support of the Iterated-Simplex polynomial in terms of l
 \end{equation}
 \end{lemma}
 
-The proof is given in Appendix~\ref{appendix:proof_lemma_fc}.
+A proof is given in the full version~\cite{cryptoeprint:2026/1969}.
 
 To compare different degree sequences, we establish a monotonicity property with respect to the trailing partial sums; it covers both reorderings and entry-wise decreases of the degrees.
 
@@ -285,7 +285,7 @@ Our bound refines the equal-degree volume estimate~\cite{DBLP:conf/stoc/KapurS96
 C_n^{(d)}=\frac1{n!}\prod_{j=0}^{n-2}(nd-j)
 \le\frac{(nd)^{n-1}}{n!},
 \]
-which also verifies the integer volume bound $B_{MH}$ in~\eqref{eq:Dixon_volume_bound}. Numerical comparisons and support-size experiments are given in Appendix~\ref{appendix:experimental_bound}.
+which also verifies the integer volume bound $B_{MH}$ in~\eqref{eq:Dixon_volume_bound}. Numerical comparisons and support-size experiments are reported in the full version~\cite{cryptoeprint:2026/1969}.
 
 \subsection{Complexity Estimates via Our Refined Bound}\label{Section: Estimate}
 
@@ -295,10 +295,10 @@ C_n^{(d)} = \frac{1}{n(d-1)+1}\binom{nd}{n}.
 \]
 Since $\rho\le D(\mathcal{F})$, the quantity $C_n^{(d)}$ also upper-bounds the size of the extracted submatrix $\mathcal{M}'$, so the estimates below are upper bounds on the actual cost. 
 
-We give a stage-by-stage outline of the relevant model choices below; here we consider the determinant methods with the lowest theoretical complexity or the fastest experimental performance. The detailed parameter derivations, complexity formulas for all five determinant models, and the full Step~1 vs Step~4 comparison are deferred to Appendix~\ref{appendix:stage_details}.
+We give a stage-by-stage outline of the relevant model choices below; here we consider the determinant methods with the lowest theoretical complexity or the fastest experimental performance. Detailed parameter derivations, complexity formulas for all five determinant models, and the full Step~1 vs Step~4 comparison are available in the full version~\cite{cryptoeprint:2026/1969}.
 
 \subsubsection{Step~1: Compute the cancellation determinant.}
-This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,C_n^{(d)})$ (full derivation in Appendix~\ref{appendix:stage_details}):
+This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,C_n^{(d)})$; their derivation appears in the full version~\cite{cryptoeprint:2026/1969}:
 \begin{equation}
 		\mu_1 \le \binom{n-1+k+d}{n-1+k},\;
 		S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k},\;
@@ -317,7 +317,7 @@ where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ i
 (the term $S_1\log q$ is dominated by $L_1S_1$ up to polylogarithmic factors). The sparse model saves a factor $2^n/n$ over expansion, but in all our experiments cached expansion by minors is faster, its constant factors being much smaller.
 
 \subsubsection{Step~2: Construct the Dixon matrix.}
-Extracting the Dixon matrix coefficients from the cancellation determinant is dominated by Step~1. The block recursion of Zhao and Fu~\cite{Zhao2005extfast} builds $\mathcal{M}$ directly; following Qin et al.~\cite{DBLP:journals/ijcm/QinWTJ17}, the resulting surrogate $T_{2}^{\mathrm{FDixon}}$ is attractive when few variables are eliminated and degrees are high, but its $(n!)^3$ factor (Appendix~\ref{appendix:stage_details}) makes it less competitive otherwise.
+Extracting the Dixon matrix coefficients from the cancellation determinant is dominated by Step~1. The block recursion of Zhao and Fu~\cite{Zhao2005extfast} builds $\mathcal{M}$ directly; following Qin et al.~\cite{DBLP:journals/ijcm/QinWTJ17}, the resulting surrogate $T_{2}^{\mathrm{FDixon}}$ is attractive when few variables are eliminated and degrees are high, but its $(n!)^3$ factor (derived in the full version~\cite{cryptoeprint:2026/1969}) makes it less competitive otherwise.
 
 \subsubsection{Step~3: Extract a maximal-rank submatrix.}
 Step~3 extracts a maximal-rank submatrix numerically after finite-field evaluation, with cost
@@ -362,7 +362,7 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 \subsubsection{Overall comparison.}
 Let $T_{1}^{\mathrm{best}}$ and $T_{4}^{\mathrm{best}}$ be the minimum cost across all considered models for Steps~1 and~4, respectively. Then
 $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
-At the idealized boundary $\omega=2$, both stages must be retained. For $\omega>2$, choosing the best applicable model at each stage makes Step~4 asymptotically dominant in the fixed-$d$ or fixed-$n$ regimes analyzed in Appendix~\ref{appendix:step_comparison}. It also dominates the running time in our experiments, so we use $T_{4}^{\mathrm{best}}$ as the asymptotic estimate.
+At the idealized boundary $\omega=2$, both stages must be retained. For $\omega>2$, choosing the best applicable model at each stage makes Step~4 asymptotically dominant in the fixed-$d$ or fixed-$n$ regimes analyzed in the full version~\cite{cryptoeprint:2026/1969}. It also dominates the running time in our experiments, so we use $T_{4}^{\mathrm{best}}$ as the asymptotic estimate.
 
 \subsubsection{Well-determined case.}
 For $k=1$, the final determinant is a $C_n^{(d)}\times C_n^{(d)}$ univariate polynomial matrix for which the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} is typically optimal:
@@ -381,7 +381,7 @@ For Step~1, the most competitive models are sparse interpolation and cached expa
 	\label{eq:dixon_complexity_well_step1_sparse}
 \end{equation}
 
-With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed in Appendix~\ref{appendix:step_comparison}, and is also the empirical bottleneck. We therefore adopt $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems; Appendix~\ref{appendix:wellsq} gives the model-specific comparisons.
+With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed in the full version~\cite{cryptoeprint:2026/1969}, and is also the empirical bottleneck. We therefore adopt $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems; the same reference gives the model-specific comparisons.
 
 \begin{remark}\label{rem:mixed_degree_complexity}
 For mixed-degree systems, we bound $D(\mathcal F)$
@@ -399,7 +399,7 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 
 \begin{table}[!htb]
 	\centering
-	\caption{Arithmetic cost bounds for well-determined $(n;d)$-systems, with $d_{\mathrm{reg}}=n(d-1)+1$, $d_{\mathcal I}=d^n$, and $t=\Theta(d^{n-1}/\sqrt n)$. Ratios omit logarithmic factors and use $n$ fixed, $d\to\infty$; Stirling bounds simplify the factorial coefficients to display $e^{-n\omega}$. These are order estimates, not uniform joint asymptotic equivalents (Appendix~\ref{Appendix:Derivation}).}
+	\caption{Arithmetic cost bounds for well-determined $(n;d)$-systems, with $d_{\mathrm{reg}}=n(d-1)+1$, $d_{\mathcal I}=d^n$, and $t=\Theta(d^{n-1}/\sqrt n)$. Ratios omit logarithmic factors and use $n$ fixed, $d\to\infty$; Stirling bounds simplify the factorial coefficients to display $e^{-n\omega}$. These are order estimates, not uniform joint asymptotic equivalents; detailed derivations are in the full version~\cite{cryptoeprint:2026/1969}.}
 	\label{tab:complexity_formulas}
 	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{lcc}
@@ -434,7 +434,7 @@ Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/to
 
 The Gr\"obner-based approach includes both the grevlex basis computation and the change to lexicographic order, so the relevant comparison is with the combined F4/F5$+$FGLM cost. In the high-degree regime of the table, the displayed Dixon bound is asymptotically smaller than this combined bound. We also include the HNF-based change-of-order algorithm of~\cite{BerthomieuNeigerSafey2022} as an alternative to FGLM.
 
-These Gr\"obner basis costs are upper bounds and do not fully capture practical F4/F5 optimizations. The ratios therefore compare theoretical estimates, while Section~\ref{Implementation} provides practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates the unsimplified cost expressions as $n$ varies, including the per-degree sum; further plots and ratio derivations are given in Appendices~\ref{appendix:complexity_plots} and~\ref{Appendix:Derivation}.
+These Gr\"obner basis costs are upper bounds and do not fully capture practical F4/F5 optimizations. The ratios therefore compare theoretical estimates, while Section~\ref{Implementation} provides practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates the unsimplified cost expressions as $n$ varies, including the per-degree sum; further plots and ratio derivations are given in the full version~\cite{cryptoeprint:2026/1969}.
 
 \begin{figure}[!htbp]
 	\centering

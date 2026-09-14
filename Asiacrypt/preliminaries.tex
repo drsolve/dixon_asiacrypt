@@ -129,7 +129,7 @@ In the absence of such factors and of excess multiplicities, the total degree of
 In the presence of extraneous factors, the degree of the eliminant may exceed the B\'ezout bound of the underlying system, both inflating computational costs and introducing spurious components unrelated to the actual solution set.
 
 \subsection{Polynomial Matrix Determinant Computation}\label{subsection:poly_mat_det}
-We summarize the determinant complexity models used in this paper; full details are in Appendix~\ref{appendix:determinant_methods}.
+We summarize the determinant complexity models used in this paper; full details are provided in the full version~\cite{cryptoeprint:2026/1969}.
 
 \subsubsection{Univariate determinants.}
 For $P(t)\in\mathbb{K}[t]^{m\times m}$, the Hermite normal form (HNF) method of~\cite{DBLP:journals/jc/LabahnNZ17} has deterministic cost $T^{\mathrm{HNF}}=\widetilde{O}(m^{\omega}\lceil \delta\rceil)$, where $\delta$ is the average column degree.
@@ -137,7 +137,7 @@ For $P(t)\in\mathbb{K}[t]^{m\times m}$, the Hermite normal form (HNF) method of~
 \subsubsection{Multivariate determinants.}
 For $P(\yvec)\in \mathbb{K}[y_1,\ldots,y_v]^{m\times m}$, no single method is universally best: different algorithms can lead to substantially different complexity estimates depending on the matrix size, the number of variables, and the sparsity structure of the entries. We therefore consider several alternatives. Besides direct symbolic expansion by minors~\cite{HorowitzSahni1975,GentlemanJohnson1976} and fraction-free Bareiss elimination~\cite{Bareiss1968}, one may reduce to the univariate case via Kronecker substitution~\cite{Li2007symbolic} and apply HNF, apply evaluation-interpolation on a tensor grid~\cite{HorowitzSahni1975}, or use sparse interpolation~\cite{DBLP:journals/jsc/Huang23}. The corresponding time and space costs are summarized in Table~\ref{tab:determinant_methods}.
 
-In the table notation, $b_i$ bounds $\deg_{y_i}\det(P)$ and fixes the Kronecker substitution base (chosen to avoid overflow in the encoded determinant); $B:=\max_i b_i$; $N:=\prod_{i=1}^{v}(b_i+1)$ is the tensor-grid size used by interpolation; $S$ bounds the number of nonzero terms of $\det(P)$; $U$ bounds the term count of intermediate minors; $L$ is the cost of one determinant probe; and $\mu\le \binom{v+d}{d}$ bounds the dense monomial count of an entry of total degree at most $d$. All complexities are reported in field operations over $\mathbb{F}_q$; derivations are given in Appendix~\ref{appendix:determinant_methods}.
+In the table notation, $b_i$ bounds $\deg_{y_i}\det(P)$ and fixes the Kronecker substitution base (chosen to avoid overflow in the encoded determinant); $B:=\max_i b_i$; $N:=\prod_{i=1}^{v}(b_i+1)$ is the tensor-grid size used by interpolation; $S$ bounds the number of nonzero terms of $\det(P)$; $U$ bounds the term count of intermediate minors; $L$ is the cost of one determinant probe; and $\mu\le \binom{v+d}{d}$ bounds the dense monomial count of an entry of total degree at most $d$. All complexities are reported in field operations over $\mathbb{F}_q$; the derivations are given in the full version~\cite{cryptoeprint:2026/1969}.
 
 \begin{table}[t]
 	\centering
