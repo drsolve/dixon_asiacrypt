@@ -160,7 +160,8 @@ Let $\mathcal F=\{f_1,\ldots,f_n\}\subset\mathbb K[x_1,\ldots,x_{n-1}]$ have tot
 Let $S=\operatorname{Supp}(I_{d_2-1,\ldots,d_n-1})$ over $\mathbb Z$, and write $N^*=|S|$. In the bilinear form $\Delta_{\mathcal F}=X\mathcal M\overline X^T$, the column and row labels are the monomials in $\bar\xvec$ and $\xvec$, respectively.
 
 \emph{Upper bound.}
-We use the support argument of~\cite[Lemma~3.3 and Theorem~3.4]{DBLP:conf/stoc/KapurS96} with the refined matrix~\eqref{eq:Dixon_polynomial_improve}. Its first row has no dual variables. For $i\ge2$, the entry $\widehat C_{i,j}$ involves only $\bar x_1,\ldots,\bar x_{i-1}$ and has dual degree at most $d_j-1$, since a difference quotient lowers the degree by one. Thus each determinant term satisfies
+We use the support argument of~\cite[Lemma~3.3 and Theorem~3.4]{DBLP:conf/stoc/KapurS96} with the refined matrix~\eqref{eq:Dixon_polynomial_improve}. Its first row has no dual variables. For $i\ge2$, the entry $\widehat C_{i,j}$ involves only $\bar x_1,\ldots,\bar x_{i-1}$ and has dual degree at most $d_j-1$, since a difference quotient lowers the degree by one. Write $\operatorname{Supp}_{\bar\xvec}$ for the set of dual-variable exponent vectors, treating $\xvec$ as coefficient variables. For each permutation $\sigma\in S_n$, the corresponding determinant term satisfies
+
 \[
 \operatorname{Supp}_{\bar\xvec}\!\left(\prod_{i=1}^n\widehat C_{i,\sigma(i)}\right)
 \subseteq\operatorname{Supp}(I_{d_{\sigma(2)}-1,\ldots,d_{\sigma(n)}-1})
@@ -212,7 +213,7 @@ Here the second equality is the difference-of-powers identity. Setting all $x_i=
 Each factor has degree at most $d_i-1$ and involves only the first $i-1$ dual variables. Conversely, fix a monomial of degree $q\le d_i-1$ in these variables. Taking $t=d_i-1-q$ and the constant term of $(1+s_{i-2})^t$ leaves $s_{i-1}^{q}$, whose multinomial expansion contains that monomial. The factor therefore has exactly the complete simplex support of degree $d_i-1$. All its coefficients are positive integers, so their products cannot cancel in characteristic zero or sufficiently large characteristic (Remark~\ref{rem:support_vs_rank}). Multiplying the factors gives precisely the support $S$ of $I_{d_2-1,\ldots,d_n-1}$. Since specializing $\xvec$ can only remove dual monomials, the unspecialized Dixon polynomial also attains the dual-monomial bound.
 
 \emph{Generic attainment.}
-Each coefficient just exhibited in $\Delta_{\mathcal F}(\mathbf1,\bar\xvec)$ is a polynomial in the input coefficients, nonzero at $\mathcal F^*$. The coefficient space over $\overline{\mathbb K}$ is an affine space and hence irreducible. The simultaneous nonvanishing of these finitely many coefficient polynomials defines a nonempty open set $U$, which is therefore dense; see~\cite[Chapter~3, \S5, Definition~(5.6), p.~115]{cox2005using}. Reversing the variable order permutes the input coefficients, so the corresponding set $U^{\mathrm{rev}}$ is also dense and open. On the nonempty intersection $U\cap U^{\mathrm{rev}}$, equation~\eqref{eq:tau_symmetry} gives $N^*$ monomials on both sides. Thus the matrix is generically square of size $N^*$.
+Each coefficient just exhibited in $\Delta_{\mathcal F}(\mathbf1,\bar\xvec)$ is a polynomial in the input coefficients, nonzero at $\mathcal F^*$. The coefficient space over $\overline{\mathbb K}$ is an affine space and hence irreducible. The simultaneous nonvanishing of these finitely many coefficient polynomials defines a nonempty open set $U$, which is therefore dense; see~\cite[Chapter~3, \S5, Definition~(5.6), p.~115]{cox2005using}. Reversing the variable order permutes the input coefficients, so $U^{\mathrm{rev}}:=\{\mathcal F:\mathcal F^{\mathrm{rev}}\in U\}$ is also dense and open. On $U\cap U^{\mathrm{rev}}$, equation~\eqref{eq:tau_symmetry} ensures that $\Delta_{\mathcal F}$ has exactly $N^*$ distinct monomials in each of $\xvec$ and $\bar\xvec$. Thus the matrix is generically square of size $N^*$.
 \qed
 \end{proof}
 
@@ -411,7 +412,7 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 		\midrule GB (F5)~\cite{DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22} & $\displaystyle \mathcal{O}\left(n \cdot d_{\text{reg}} \cdot \binom{n+d_{\text{reg}}-1}{d_{\text{reg}}}^{\omega}\right)$ & $\mathcal{O}\left(n^{\omega+1}\right)$ \\
 		\midrule
 		
-		GB (F5 refined)~\cite{DBLP:journals/jsc/BardetFS15} & $\displaystyle \mathcal{O}\left(
+		GB (rectangular)~\cite{DBLP:journals/jsc/BardetFS15,storjohann2000algorithms} & $\displaystyle \mathcal{O}\left(
 		n \cdot \binom{n + d_{\mathrm{reg}} - d}{n} \cdot \binom{n + d_{\mathrm{reg}}}{n}^{\omega - 1}
 		\right)$ & $\mathcal{O}\left(n^{\omega} d^{\omega-1}\right)$ \\
 		\midrule

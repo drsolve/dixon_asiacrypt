@@ -300,22 +300,22 @@ the ratio becomes
 \sim n^{\omega+1}.
 \end{align*}
 
-\paragraph{Gr\"obner Basis F5 Refined~\cite{DBLP:journals/jsc/BardetFS15}}
+\paragraph{Gr\"obner Basis rectangular~\cite{DBLP:journals/jsc/BardetFS15}}
 
 The bound comes from the Macaulay matrix at degree $d_{\mathrm{reg}}$. It has $r=n\binom{n+d_{\mathrm{reg}}-d}{n}$ rows and $c=\binom{n+d_{\mathrm{reg}}}{n}$ columns. Its row echelon form can be computed in $O(rc\varrho^{\omega-2})$ operations, where $\varrho\le c$ is the rank~\cite{storjohann2000algorithms}. Thus
 \[
-\mathcal T_{\mathrm{F5P}}
+\mathcal T_{\mathrm{rect}}
 =\mathcal O\!\left(n\binom{n+d_{\mathrm{reg}}-d}{n}
 \binom{n+d_{\mathrm{reg}}}{n}^{\omega-1}\right).
 \]
 After substituting $d_{\mathrm{reg}}=n(d-1)+1$, this becomes
 \[
-\mathcal T_{\mathrm{F5P}}
+\mathcal T_{\mathrm{rect}}
 =\mathcal O\!\left(n\binom{(n-1)d+1}{n}\binom{nd+1}{n}^{\omega-1}\right).
 \]
 Applying the same binomial identity as above gives
 \begin{align*}
-\frac{\widehat{\mathcal T}_{\mathrm{F5P}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
+\frac{\widehat{\mathcal T}_{\mathrm{rect}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
 &=\frac{n\binom{nd-d+1}{n}\binom{nd+1}{n}^{\omega-1}}{nd\left(\frac{1}{n(d-1)+1}\binom{nd}{n}\right)^\omega}\\
 &=\frac{\binom{nd-d+1}{n}}{\binom{nd}{n}}
 \frac{nd-n+1}{d}(nd+1)^{\omega-1}.
@@ -328,7 +328,7 @@ For $n$ fixed and $d\to\infty$,
 \]
 Consequently,
 \[
-\frac{\widehat{\mathcal T}_{\mathrm{F5P}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
+\frac{\widehat{\mathcal T}_{\mathrm{rect}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
 \sim\left(1-\frac1n\right)^n n^\omega d^{\omega-1}
 =\Theta\!\left(n^\omega d^{\omega-1}\right),
 \]
