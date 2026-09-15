@@ -40,21 +40,41 @@ drsolve poseidon3-0-3.dr
 ---
 
 ### 4. OtherTools
-The `OtherTools` directory contains various experimental utilities:
-- SageMath scripts for auxiliary testing and verification
-- A Dixon resultant implementation based on Magma, used for cross-validation and comparison.
+`OtherTools` contains the code and recorded inputs used to reproduce the
+paper's numerical tables and plots. Generated figures are written to
+`figures/`; notebooks do not store cell output in the repository.
 
-These tools are intended for research experimentation and validation.
+- `export_vector_figures.py` regenerates all 14 numerical plots as vector PDFs
+  without rerunning the solver benchmarks.
+- `Complexity_Comparision.ipynb` generates Figure 1 and every panel of Figure 6,
+  including the max-over-stages model in Figure 6(d).
+- `dixon_stage_models.py` is the shared Step 1/4 implementation used by Figures
+  6(d), 7, and 8; `comp_step1&4.ipynb` is the corresponding plotting notebook.
+- `AO_Complexity.ipynb` contains only the models and final plots for the
+  Poseidon2, Vision, and XHash applications (Figures 3--5).
+- `benchmark_DixonMagmaMsolve.ipynb`, `fermat_sage.py`, and the two recorded data
+  files reproduce Figure 2 without overwriting the recorded measurements.
+- `Bound_Comparion.ipynb` generates the values in Table 6.
+- `dixon_magma/` contains the Magma implementation used for cross-validation.
+
+With Python 3, NumPy, and Matplotlib installed, run from the repository root:
+
+```bash
+python3 OtherTools/export_vector_figures.py
+```
+
+The benchmark itself additionally requires SageMath, Magma, msolve, Fermat,
+and a compiled `drsolve`; those programs are not invoked by the command above.
 
 ---
 
 ### Additional note: Correspondence Between Paper Figures/Tables and Source Files
 
-- **Section 3.3, Figure 1** and **Appendix E, Figure 6** → `Complexity_Comparision.ipynb` (or the pure-Python `complexity_figs.py`, which writes the paper's file names directly)
-- **Section 4.2, Figure 2** → `benchmark_DixonMagmaMsolve.ipynb` and `fermat_sage.ipynb`
+- **Section 3.3, Figure 1** and **Appendix E, Figure 6** → `Complexity_Comparision.ipynb`
+- **Section 4.2, Figure 2** → `benchmark_DixonMagmaMsolve.ipynb`, `fermat_sage.py`, and the recorded timing data
 - **Section 5, Figures 3/4/5** → `AO_Complexity.ipynb`
 - **Appendix C, Table 6** → `Bound_Comparion.ipynb`
-- **Appendix H, Figures 7/8** → `comp_step1&4.ipynb`
+- **Appendix H, Figures 7/8** → `comp_step1&4.ipynb` and `dixon_stage_models.py`
 
 To verify that the Dixon matrix sizes reported in Table 6 match the theoretical predictions:
 

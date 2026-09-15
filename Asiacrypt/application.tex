@@ -189,9 +189,8 @@ This method is an improved attack on Type~II (equivalence-relation) primitives, 
 
 
 \paragraph{Application to \xhash.}
-We focus on \xhash~\cite{DBLP:journals/iacr/AshurKM23}; the full version~\cite{cryptoeprint:2026/1969} recalls the permutation and specifies the triangular model used here. Figure~\ref{fig:xhash_complexity} compares the direct Dixon method, the hybrid reduction-based strategy, and the corresponding generic Gr\"obner-basis estimate for each $k=1,2,3,4$. The hybrid method is excellent for CICO-1 and retains a small margin for CICO-2. For CICO-3 and CICO-4, however, the intermediate degrees make it worse than the direct elimination method.
 
-\begin{figure}[t]
+\begin{figure}[h]
   \centering
   \begin{minipage}[t]{0.48\textwidth}
     \centering
@@ -218,9 +217,10 @@ We focus on \xhash~\cite{DBLP:journals/iacr/AshurKM23}; the full version~\cite{c
   \label{fig:xhash_complexity}
 \end{figure}
 
-Table~\ref{tab:xhash_experimental} compares symbolic complexity estimates with recorded elimination times for small \texttt{XHash} polynomial systems. The special structure of these instances and implementation details can lead to discrepancies between generic complexity bounds and measured running times. A refined complexity analysis accounting for this structure is left for future work.
+We focus on \xhash~\cite{DBLP:journals/iacr/AshurKM23}; the full version~\cite{cryptoeprint:2026/1969} recalls the permutation and specifies the triangular model used here. Figure~\ref{fig:xhash_complexity} compares the direct Dixon method, the hybrid reduction-based strategy, and the corresponding generic Gr\"obner-basis estimate for each $k=1,2,3,4$. The hybrid method is excellent for CICO-1 and retains a small margin for CICO-2. For CICO-3 and CICO-4, however, the intermediate degrees make it worse than the direct elimination method.
 
-\begin{table}[!htbp]
+
+\begin{table}[h]
 \centering
 \caption{Elimination times and symbolic complexity estimates for small \texttt{XHash} polynomial systems. The tuples specify $(\alpha,\mathrm{State},\mathrm{step})$: the exponent, state width, and number of steps. Comp. denotes $\log_2$ field operations with $\omega=2.81$.}
 \label{tab:xhash_experimental}
@@ -236,3 +236,5 @@ Method 1+3 & 18.6 & 0.04s & 29.6 & 200.4s & 31.2 & 413.2s \\
 \bottomrule
 \end{tabular}
 \end{table}
+
+Table~\ref{tab:xhash_experimental} compares symbolic complexity estimates with recorded elimination times for small \texttt{XHash} polynomial systems. The special structure of these instances and implementation details can lead to discrepancies between generic complexity bounds and measured running times. A refined complexity analysis accounting for this structure is left for future work.

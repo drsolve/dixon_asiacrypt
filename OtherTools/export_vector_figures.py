@@ -8,7 +8,6 @@ Figure 6(d) and XHash use the stage models specified in the paper.
 
 import argparse
 import ast
-import csv
 import io
 import json
 from pathlib import Path
@@ -16,6 +15,21 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+try:
+    from OtherTools.dixon_stage_models import (
+        degree_sweep_data,
+        plot_step1_step4_vs_degree,
+        plot_step1_step4_vs_variables,
+        variable_sweep_data,
+    )
+except ModuleNotFoundError:  # Direct execution from inside OtherTools.
+    from dixon_stage_models import (
+        degree_sweep_data,
+        plot_step1_step4_vs_degree,
+        plot_step1_step4_vs_variables,
+        variable_sweep_data,
+    )
 
 HERE = Path(__file__).resolve().parent
 TEX = HERE.parent / "figures"
@@ -26,15 +40,12 @@ def cell_source(name, index):
     return "".join(notebook["cells"][index]["source"])
 
 
-def load_cell(name, index, namespace=None, stop_at=None):
+def load_cell(name, index, namespace=None):
     """Load plotting definitions without running notebook demo/main blocks."""
     namespace = namespace if namespace is not None else {"__name__": "figure_export"}
     tree = ast.parse(cell_source(name, index))
     body = []
     for node in tree.body:
-        if stop_at and isinstance(node, ast.Assign) and any(
-                isinstance(t, ast.Name) and t.id == stop_at for t in node.targets):
-            break
         if isinstance(node, ast.If) and "__name__" in ast.unparse(node.test):
             continue
         body.append(node)
@@ -44,38 +55,13 @@ def load_cell(name, index, namespace=None, stop_at=None):
     return namespace
 
 
-def stage_models():
-    return load_cell("comp_step1&4.ipynb", 0, stop_at="rows_d")
-
-
 def export_fig6d(output_dir=TEX):
-    """Single authoritative entry point for the corrected omega=2.37 panel."""
+    """Export the Figure 6(d) implementation owned by the complexity notebook."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     with plt.rc_context():
         ns = load_cell("Complexity_Comparision.ipynb", 0)
-        stages = stage_models()
-        rows = [stages["equal_degree_report"](m=4, d=d, s=1, omega=2.37, q=257)
-                for d in range(2, 20)]
-        lookup = {r["d"]: r["overall"] for r in rows}
-        original_models = list(ns["MODELS"])
-        label, _, color = ns["MODELS"][0]
-        ns["MODELS"][0] = (label, lambda n, d, omega: lookup[d], color)
-        ns["plot_vs_d"](output_dir / "complexity_vs_degree_n5w237.pdf", n=5, omega=2.37)
-        columns = ["n", "d", "omega", "step1_best_method", "step1_best_log2",
-                   "step4_best_method", "step4_best_log2", "dixon_max_log2",
-                   "previous_step4_log2", "increase_log2"]
-        columns += [label for label, _, _ in original_models[1:]]
-        with (HERE / "fig6d_recomputed.csv").open("w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(columns)
-            for r in rows:
-                old = original_models[0][1](5, r["d"], 2.37)
-                writer.writerow([5, r["d"], 2.37, r["step1_best_method"], r["step1_best"],
-                                 r["step4_best_method"], r["step4"], r["overall"],
-                                 old, r["overall"] - old] +
-                                [model(5, r["d"], 2.37) for _, model, _ in original_models[1:]])
-    return rows
+        ns["plot_fig6d"](output_dir / "complexity_vs_degree_n5w237.pdf")
 
 
 def export_complexity():
@@ -87,13 +73,14 @@ def export_complexity():
         ns["plot_vs_d"](TEX / "complexity_vs_degree_n5.pdf", n=5, omega=2.81)
     export_fig6d()
     with plt.rc_context():
-        ns = stage_models()
-        rows_d = ns["degree_sweep_data"](m=2, d_min=2, d_max=50, s=1, q=257)
-        rows_m = ns["variable_sweep_data"](d=3, m_min=2, m_max=20, s=1, q=257)
-        for suffix, rows in [("degree", rows_d), ("variables", rows_m)]:
-            fig, _ = ns["plot_step1_step4_vs_" + suffix](rows, show=False)
-            fig.savefig(TEX / ("plot_step1_step4_vs_" + suffix + ".pdf"))
-            plt.close(fig)
+        rows_d = degree_sweep_data(m=2, d_min=2, d_max=50, s=1, q=257)
+        rows_m = variable_sweep_data(d=3, m_min=2, m_max=20, s=1, q=257)
+        fig, _ = plot_step1_step4_vs_degree(rows_d, show=False)
+        fig.savefig(TEX / "plot_step1_step4_vs_degree.pdf")
+        plt.close(fig)
+        fig, _ = plot_step1_step4_vs_variables(rows_m, show=False)
+        fig.savefig(TEX / "plot_step1_step4_vs_variables.pdf")
+        plt.close(fig)
 
 
 def export_ao():
@@ -102,35 +89,17 @@ def export_ao():
         for i in range(3):
             ns = load_cell("AO_Complexity.ipynb", i, ns)
         ns["plot_poseidon"](TEX / "poseidon_complexity.pdf", omega=2.81)
-        for i, stem in [(3, "vision_complexity")]:
-            load_cell("AO_Complexity.ipynb", i, ns)
-            with (TEX / (stem + ".pdf")).open("wb") as handle:
-                plt.gcf().savefig(handle, format="pdf")
-            plt.close()
-    export_xhash()
+        ns["plot_vision"](TEX / "vision_complexity.pdf")
+        ns["plot_xhash"](TEX / "xhash_complexity.pdf")
 
 
 def export_xhash():
-    """Export the XHash figure and its numerical series from the same models."""
+    """Export the XHash figure from the AO notebook's authoritative model."""
     with plt.rc_context():
-        ns = load_cell("AO_Complexity.ipynb", 0)
-        load_cell("AO_Complexity.ipynb", 4, ns)
-        plt.gcf().savefig(TEX / "xhash_complexity.pdf", format="pdf")
-        plt.close()
-        with (HERE / "xhash_complexity_data.csv").open("w", newline="", encoding="utf-8") as f:
-            writer = csv.writer(f)
-            writer.writerow(["steps", "k", "alpha", "omega", "direct_step1",
-                             "direct_step3", "direct_step4", "direct_total",
-                             "hybrid_route", "P1", "P2", "P3", "hybrid_total"])
-            for s in ns["steps"]:
-                for k in (1, 2, 3, 4):
-                    direct = ns["xhash_dixon_stages"](12 * s + k, 7, 2.81)
-                    hybrid = ns["xhash_method3"](12 * s, k, 7, 2.81, D0=7) if k > 1 else None
-                    writer.writerow([s, k, 7, 2.81] +
-                                    [direct[key] for key in ("step1", "step3", "step4", "total")] +
-                                    ["P1/P2/P3" if hybrid else "optimized two-polynomial"] +
-                                    [hybrid[key] if hybrid else "" for key in ("P1", "P2", "P3")] +
-                                    [ns["m3"][k][s - 1]])
+        ns = None
+        for i in range(3):
+            ns = load_cell("AO_Complexity.ipynb", i, ns)
+        ns["plot_xhash"](TEX / "xhash_complexity.pdf")
 
 
 def recorded_fermat_log():
@@ -181,7 +150,7 @@ def main():
     TEX.mkdir(exist_ok=True)
     if args.xhash_only:
         export_xhash()
-        print("Exported XHash vector PDF and numerical series.")
+        print("Exported XHash vector PDF.")
     elif args.fig6d_only:
         export_fig6d()
     elif args.benchmarks_only:
