@@ -1,8 +1,8 @@
-\section{Optimized Implementation of the Dixon Resultant}\label{Section: Improvements}
+\section{Optimized Implementation of the Dixon Resultant}\label{Section:Improvements}
 
 While the theoretical complexity analysis highlights the advantages of Dixon resultant methods, bridging the gap to practical efficiency requires overcoming several significant hurdles. Currently, off-the-shelf computer algebra systems offer limited support: Dixon resultants are not natively implemented in advanced solvers such as Magma~\cite{magma}, and although implementations exist in Fermat~\cite{fermat} and through Jinadu--Monagan's packages in Maple~\cite{DBLP:conf/casc/JinaduM22,JinaduMonagan2025}, their performance is often unsatisfactory at scale. Beyond software limitations, extraneous factors must be carefully controlled or the classical B\'ezout bound becomes inapplicable, and large-scale polynomial-matrix operations must be handled efficiently. This section addresses these issues.
 
-\subsection{Eliminating Extraneous Factors via Degree-Aware Submatrix Selection}
+\subsection{Reducing Extraneous Factors via Degree-Aware Submatrix Selection}
 \label{Subsection:Extraneous}
 
 The primary challenge in implementing the Dixon resultant arises from the \emph{extraneous factors} in Definition~\ref{def:extra_factor}, which do not correspond to actual solutions of the original system and can substantially inflate the resultant degree beyond the B\'ezout bound (Theorem~\ref{thm:bezout_bound}). Without extraneous factors, the degree is controlled by the ideal degree and hence by B\'ezout, providing both theoretical elegance and computational efficiency.
@@ -10,11 +10,11 @@ The primary challenge in implementing the Dixon resultant arises from the \emph{
 Chtcherba and Kapur reduce extraneous degree through support translations and dialytic multiplier selection~\cite[Section~9]{ChtcherbaKapur2004Bivariate}. Qin et al.~\cite{DBLP:journals/jsc/QinZYC22} proposed a method based on parameter specialization and regular-chain computation; however, the regular-chain step incurs additional overhead. Our strategy selects low-degree maximal-rank submatrices of the original Dixon matrix. Our experimental results show that the proposed greedy selection algorithm reduces redundant factors, and in most cases the resulting Dixon determinants remain at or below the B\'ezout bound.
 
 \subsubsection{Degree-aware submatrix selection strategy.}
-A naive constant-evaluation rank test ignores the degree structure of the resulting submatrix. We develop a degree-aware selection strategy that employs a greedy approach to prioritize rows and columns with lower degrees. Following the determinant degree estimation framework of Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17}, for any nonsingular polynomial matrix $A$,
+Following the determinant degree estimation framework of Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17}, for any nonsingular polynomial matrix $A$,
 \begin{equation*}
-	\deg(\det(A)) \leq \min(|\text{rdeg}(A)|, |\text{cdeg}(A)|),
+	\deg(\det(A)) \leq \min(|\mathrm{rdeg}(A)|, |\mathrm{cdeg}(A)|),
 \end{equation*}
-where $|\text{rdeg}(A)|$ and $|\text{cdeg}(A)|$ denote the sum of row degrees and column degrees, respectively. Our method is based on the following working hypothesis:
+where $|\mathrm{rdeg}(A)|$ and $|\mathrm{cdeg}(A)|$ denote the sum of row degrees and column degrees, respectively. Our method is based on the following working hypothesis:
 
 \begin{hypothesis}[Degree Minimization Heuristic]\label{hyp:deg_mini_hypo}
 	For two maximal-rank square submatrices $A$ and $B$ of the same Dixon matrix, if
@@ -30,13 +30,13 @@ where $|\text{rdeg}(A)|$ and $|\text{cdeg}(A)|$ denote the sum of row degrees an
 The intuition is that a smaller row/column-sum degree bound tends to indicate a smaller determinant degree, motivating our greedy strategy to favor low-degree maximal-rank submatrices and thereby potentially reduce extraneous factors.
 
 \begin{remark}
-	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also used a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. we use row/column weights computable in $\mathcal{O}(n^2)$ as a cheaper but coarser guide to submatrix selection.
+	Labahn et al.~\cite{DBLP:journals/jc/LabahnNZ17} also used a refined bound $\deg(\det(A)) \le \max_{\pi \in S_n} \sum_{i} \deg(a_{i,\pi(i)})$, where $S_n$ is the symmetric group on $\{1,\ldots,n\}$. For a given matrix, this bound can be computed in $\mathcal{O}(n^3)$ by maximum-weight bipartite matching. We use row/column weights computable in $\mathcal{O}(n^2)$ as a cheaper but coarser guide to submatrix selection.
 \end{remark}
 
 \subsubsection{Degree-aware selection algorithm.}
-Based on Heuristic~\ref{hyp:deg_mini_hypo}, we design a greedy algorithm that combines rank verification with degree-aware ordering of rows and columns. The core idea is to assign degree weights to rows and columns of the Dixon matrix and prioritize those with lower degrees during Gaussian elimination, ensuring the selected submatrix has maximal rank while heuristically favoring a low determinant degree. The full pseudocode is in Appendix~\ref{appendix:algorithms}.
+Based on Heuristic~\ref{hyp:deg_mini_hypo}, we design a greedy algorithm that combines rank verification with degree-aware ordering of rows and columns. The core idea is to assign degree weights to rows and columns of the Dixon matrix and prioritize those with lower degrees during Gaussian elimination, preserving the rank at the evaluation point while heuristically favoring a low determinant degree. The full pseudocode is in Appendix~\ref{appendix:algorithms}.
 
-The rank test is performed at a random evaluation point, so the identified rank equals the true symbolic rank only with high probability; by the Schwartz--Zippel lemma~\cite{schwartz1980fast,zippel1979probabilistic}, the failure probability is negligible, and a complete analysis in the same setting can be found in~\cite{Jinadu2023,JinaduMonagan2025}.
+If each coordinate is sampled independently and uniformly from a finite set $A\subseteq\mathbb K$, the probability of rank loss is at most $\min\{1,\deg(h)/|A|\}$ for any fixed nonzero maximal-rank minor $h$, by the Schwartz--Zippel lemma~\cite{schwartz1980fast,zippel1979probabilistic}. See also~\cite{Jinadu2023,JinaduMonagan2025}.
 
 \begin{hypothesis}\label{hyp:bezout_attainment}
 	Let $\mathcal{P} = \{p_1, \ldots, p_n\}$ be a generic polynomial system with degrees $d_1, \ldots, d_n$, and $\mathcal{M}$ its Dixon matrix. The submatrix selected by Algorithm~\ref{alg:degree_optimal_selection} yields a resultant $R$ satisfying $\deg(R) \le \prod_{i=1}^{n} d_i$.
@@ -68,7 +68,7 @@ This is supported by computational experiments (Appendix~\ref{appendix:degree_op
 	\label{fig:BenchmarkComparison}
 \end{figure}
 
-We developed a comprehensive, open-source C implementation of the Dixon resultant method, \drsolve, built upon the high-performance \texttt{FLINT}~\cite{flint} and \texttt{PML}~\cite{pml,HyunNeigerSchost2019} libraries, available at \url{https://github.com/drsolve/drsolve} (with AI coding assistance). It supports operations over prime fields $\Fp$ of arbitrary size, general finite fields $\Fq$, and $\mathbb{Q}$. It incorporates most Dixon construction techniques from~\cite{Lewis2017,Zhao2005extfast,JinaduMonagan2025} and most polynomial-matrix determinant techniques from~\cite{DBLP:journals/jc/LabahnNZ17,DBLP:journals/jsc/Huang23,HorowitzSahni1975,Li2007symbolic}. It provides:
+We developed a comprehensive, open-source C implementation of the Dixon resultant method, \drsolve, built upon the high-performance \texttt{FLINT}~\cite{flint} and \texttt{PML}~\cite{pml,HyunNeigerSchost2019} libraries, available at \url{https://github.com/drsolve/drsolve}. It supports operations over prime fields $\Fp$ of arbitrary size, general finite fields $\Fq$, and $\mathbb{Q}$. It incorporates most Dixon construction techniques from~\cite{Lewis2017,Zhao2005extfast,JinaduMonagan2025} and most polynomial-matrix determinant techniques from~\cite{DBLP:journals/jc/LabahnNZ17,DBLP:journals/jsc/Huang23,HorowitzSahni1975,Li2007symbolic}. It provides:
 
 \begin{itemize}
 	\item \textbf{Elimination and solving:} Eliminate $n-1$ variables from $n$ polynomials, and compute all solutions of zero-dimensional systems.

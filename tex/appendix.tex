@@ -1,7 +1,7 @@
 \newpage
 \section{Background on Algebraic Geometry and Combinatorics}\label{Appendix:A}
 
-In this appendix, we provide essential background on convex geometry, polynomial support structures, and lattice path enumeration that facilitate understanding of the complexity analysis in Section~\ref{Section: Complexity}. For a detailed introduction to these topics, please refer to~\cite{cox2005using,sturmfels2002solving,bona2015handbook}.
+In this appendix, we provide essential background on convex geometry, polynomial support structures, and lattice path enumeration that facilitate understanding of the complexity analysis in Section~\ref{Section:Complexity}. For a detailed introduction to these topics, please refer to~\cite{cox2005using,sturmfels2002solving,bona2015handbook}.
 
 
 \begin{definition}[Generic Property~\cite{cox2005using}]\label{def:generic}
@@ -65,7 +65,7 @@ Equivalently, the property holds whenever a suitable nonzero polynomial in the i
 \end{proposition}
 
 \begin{proposition}[Newton Polytope of Products {\cite[Fact~3.2]{DBLP:conf/stoc/KapurS96}}]\label{prop:newton-product}
-	For polynomials $f, g \in \mathbb{K}[x_1, \ldots, x_n]$:
+	For nonzero polynomials $f, g \in \mathbb{K}[x_1, \ldots, x_n]$:
 	\[\text{NP}(fg) = \text{NP}(f) + \text{NP}(g).\]
 \end{proposition}
 
@@ -139,7 +139,7 @@ Equivalently, the property holds whenever a suitable nonzero polynomial in the i
 	\paragraph{Inclusion $Q_n \subseteq P_1 + \cdots + P_n$.}
 	The strategy is to construct the decomposition by greedily moving mass from the last coordinates of $\alpha$ into $P_n$ (which can absorb up to $d_n$ units of total mass), while keeping the prefix $(\alpha_1',\ldots,\alpha_{n-1}',0)$ inside $Q_{n-1}$. We proceed by induction on $n$. For $n = 1$, clearly $P_1 = Q_1$.
 	
-	Assume $n \geq 2$ and $P_1 + \cdots + P_{n-1} = Q_{n-1}$, where $Q_{n-1}$ is the set attached to the truncated sequence $(d_1,\ldots,d_{n-1})$, viewed as a subset of $\mathbb{Z}_{\geq 0}^{n-1} \times \{0\}$. (Note that the statement of the lemma makes no assumption on the ordering of the $d_i$, so applying it to the truncated sequence is legitimate and the induction is not circular.)
+	Assume $n \geq 2$ and $P_1 + \cdots + P_{n-1} = Q_{n-1}$, where $Q_{n-1}$ is the set attached to the truncated sequence $(d_1,\ldots,d_{n-1})$, viewed as a subset of $\mathbb{Z}_{\geq 0}^{n-1} \times \{0\}$.
 	Let $(\alpha_1, \ldots, \alpha_n) \in Q_n$. We construct a decomposition
 	\begin{equation*}
 		(\alpha_1, \ldots, \alpha_n) = (\alpha_1', \ldots, \alpha_{n-1}', 0) + (\alpha_1'', \ldots, \alpha_n'')
@@ -181,12 +181,7 @@ Equivalently, the property holds whenever a suitable nonzero polynomial in the i
 		(\alpha_1, \ldots, \alpha_n) \in Q_{n-1} + P_n \subseteq P_1 + \cdots + P_n.
 	\end{equation*}
 	
-	\paragraph{Conclusion.}
-	Combining both inclusions, we obtain
-	\begin{equation*}
-		\operatorname{Supp}(I_{d_1, d_2, \ldots, d_n}) = P_1 + \cdots + P_n = Q_n.
-	\end{equation*}
-	establishing the claimed characterization.
+Combining the two inclusions gives $\operatorname{Supp}(I_{d_1,\ldots,d_n})=P_1+\cdots+P_n=Q_n$.
     \qed
 \end{proof}
 
@@ -242,7 +237,7 @@ We provide numerical comparisons between our Fuss--Catalan bound (FC Bound, Coro
 \section{Detailed Derivation of Complexity Ratios in Table~\ref{tab:complexity_formulas}}
 \label{Appendix:Derivation}
 
-This appendix gives the step-by-step derivation of the ``Ratio to Dixon'' column in Table~\ref{tab:complexity_formulas}, for $n\ge2$ fixed and $d\to\infty$. In the ratios below, $\widehat{\mathcal T}_M$ denotes the expression inside the displayed cost bound for method $M$, with logarithmic factors omitted.
+This appendix gives the step-by-step derivation of the ``Ratio to Dixon'' column in Table~\ref{tab:complexity_formulas}. The three Gr\"obner-basis ratios have the same orders whether $n\ge2$ is fixed and $d\to\infty$, or $d\ge2$ is fixed and $n\to\infty$. The change-of-order ratios depend on the direction of growth, so we give both estimates for FGLM below. In the ratios, $\widehat{\mathcal T}_M$ denotes the expression inside the displayed cost bound for method $M$, with logarithmic factors omitted.
 
 For a well-determined $(n;d)$-system, we use the Dixon resultant complexity as the baseline:
 \[
@@ -332,7 +327,16 @@ Consequently,
 \sim\left(1-\frac1n\right)^n n^\omega d^{\omega-1}
 =\Theta\!\left(n^\omega d^{\omega-1}\right),
 \]
-where $1/4\le(1-1/n)^n<e^{-1}$ for $n\ge2$. The three Gr\"obner ratio rows also retain these orders for other growth directions: the binomial quotient above is between $(1-1/n)^n$ and $1$ for all $n,d\ge2$.
+where $1/4\le(1-1/n)^n<e^{-1}$ for $n\ge2$. More generally, the binomial quotient above is between $(1-1/n)^n$ and $1$ for all $n,d\ge2$. Combining this uniform bound with the exact expressions for the classical and F5 ratios gives
+\[
+\frac{\widehat{\mathcal T}_{\mathrm{GB}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
+=\Theta\!\left((nd)^{\omega-1}\right),\qquad
+\frac{\widehat{\mathcal T}_{\mathrm{F5}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
+=\Theta\!\left(n^{\omega+1}\right),\qquad
+\frac{\widehat{\mathcal T}_{\mathrm{rect}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
+=\Theta\!\left(n^\omega d^{\omega-1}\right).
+\]
+Thus the three Gr\"obner-basis rows retain exactly the orders displayed in Table~\ref{tab:complexity_formulas} in either standard direction of growth. Their leading constants may differ between the two directions; the statement is an order comparison, not a uniform joint asymptotic equivalence.
 
 \paragraph{FGLM~\cite{DBLP:journals/jsc/FaugereGLM93,DBLP:journals/tosc/KoschatkoLR24}}
 
@@ -391,16 +395,18 @@ Using~\eqref{eq:fc_high_degree} and then~\eqref{eq:factorial_coefficient}, the r
 \end{align*}
 BNS takes the grevlex basis as input and reads its polynomial-matrix representation directly under the stability assumptions.
 
-\paragraph{Other asymptotic directions.}
-For $d\ge2$ fixed and $n\to\infty$, equation~\eqref{eq:fc_stirling} instead gives $C_n^{(d)}=\Theta_d(\gamma_d^n/n^{3/2})$. Writing $\eta_d=d/\gamma_d=((d-1)/d)^{d-1}$, we obtain
+\paragraph{FGLM for fixed degree and growing dimension.}
+For $d\ge2$ fixed and $n\to\infty$, equation~\eqref{eq:fc_stirling} instead gives $C_n^{(d)}=\Theta_d(\gamma_d^n/n^{3/2})$. Writing $\eta_d=d/\gamma_d=((d-1)/d)^{d-1}<1$, the second FGLM estimate is
 \[
 \frac{\widehat{\mathcal T}_{\mathrm{FGLM}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
-=\Theta_d\!\left(n^{3\omega/2}\eta_d^{n\omega}\right),
-\qquad
+=\Theta_d\!\left(n^{3\omega/2}\eta_d^{n\omega}\right).
+\]
+Thus the FGLM ratio grows as $\Theta_n(d^{\omega-1})$ when $n$ is fixed and $d\to\infty$, as displayed in Table~\ref{tab:complexity_formulas}, but decreases exponentially when $d$ is fixed and $n\to\infty$. Under the corresponding generic estimate for $t$, BNS similarly satisfies
+\[
 \frac{\widehat{\mathcal T}_{\mathrm{BNS}}}{\widehat{\mathcal T}_{\mathrm{Dixon}}}
 =\Theta_d\!\left(n^{\omega-1/2}\eta_d^{n\omega}\right).
 \]
-These change-of-order ratios decrease exponentially in this regime. The high-degree simplifications in Table~\ref{tab:complexity_formulas} therefore require the stated growth direction; the plots use the unsimplified cost expressions.
+The plots use the unsimplified cost expressions in order to cover both regimes.
 
 \paragraph{Other elimination algorithms.}
 For two bivariate polynomials, eliminating one variable, structured Sylvester-resultant algorithms such as Villard's~\cite{Villard2018} have a better asymptotic complexity, even though the Dixon construction works with a smaller matrix. On the AO systems of Section~\ref{Section:Application}, the relevant Gr\"obner competitors also include FreeLunch~\cite{DBLP:conf/crypto/BariantBLAOPR24} and CheapLunch~\cite{DBLP:journals/iacr/BakBBBOP25}, for which the grevlex basis is essentially free and change of order dominates. Their comparison with Dixon therefore depends on the number of variables and the degrees; the full F4/F5-plus-change-of-order model does not describe this special structure.
@@ -445,7 +451,7 @@ for the selection strategy described in Section~\ref{Subsection:Extraneous}.
 	\label{alg:degree_optimal_selection}
 	\begin{algorithmic}[1]
 		\STATE \textbf{Input:} Polynomial matrix $\mathcal{M} \in \mathbb{K}[t_1, \ldots, t_m]^{r \times c}$ (possibly rectangular or rank-deficient)
-		\STATE \textbf{Output:} Row indices $\mathcal{R}$ and column indices $\mathcal{C}$ with $|\mathcal{R}|=|\mathcal{C}|$ such that $\mathcal{M}[\mathcal{R}, \mathcal{C}]$ has maximal rank and minimal degree estimate
+		\STATE \textbf{Output:} Row indices $\mathcal{R}$ and column indices $\mathcal{C}$ with $|\mathcal{R}|=|\mathcal{C}|$ such that $\mathcal{M}(\alpha)[\mathcal{R}, \mathcal{C}]$ is nonsingular of order $\operatorname{rank}\mathcal{M}(\alpha)$, with selection guided by degree weights
 		\STATE Initialize $\mathcal{R} \leftarrow \emptyset$, $\mathcal{C} \leftarrow \emptyset$
 		\STATE Choose concrete evaluation point $\alpha = (\alpha_1, \ldots, \alpha_m) \in \mathbb{F}^m$
 		\STATE Evaluate $\mathcal{M}_{\text{const}} \leftarrow \mathcal{M}(\alpha_1, \ldots, \alpha_m)$ \COMMENT{Constant matrix}
@@ -478,13 +484,13 @@ for the selection strategy described in Section~\ref{Subsection:Extraneous}.
 	\end{algorithmic}
 \end{algorithm}
 
-It is straightforward to observe that the computational cost of our algorithm essentially reduces to two Gaussian eliminations on constant matrices: one for row selection and the other for column selection. Compared with the complexity in Equation~\eqref{eq:complexity_step3}, this step incurs no additional asymptotic overhead. 
+The selected submatrix has the rank of the evaluated matrix; it has maximal polynomial-matrix rank when evaluation preserves rank. The degree weights guide the selection but do not guarantee a globally minimal determinant degree. After evaluation and weight computation, selection uses two Gaussian eliminations on constant matrices and sorting, within the bound in Equation~\eqref{eq:complexity_step3}. 
 
 
 \newpage
 \section{Experimental Results of Degree-Aware Submatrix Selection}\label{appendix:degree_optimal_exp}
 
-We present the experimental results of Algorithm~\ref{alg:degree_optimal_selection} to validate Heuristic~\ref{hyp:bezout_attainment}. 
+We present the experimental results of Algorithm~\ref{alg:degree_optimal_selection} to assess Heuristic~\ref{hyp:bezout_attainment}. 
 Table~\ref{tab:extraneous_factor_probability} compares the performance of our degree-aware selection strategy against naive random selection across various polynomial system configurations.
 
 \begin{table}[htbp]
@@ -515,11 +521,11 @@ $k$ denotes the number of parameters retained. We count cases with $\deg(\text{R
 \newpage
 \section{Detailed Stage-wise Complexity Parameters}\label{appendix:stage_details}
 
-This appendix provides the detailed parameter derivations and the full set of five determinant models (expansion, Bareiss, Kronecker$+$HNF, interpolation, sparse) for the two symbolic-determinant stages whose preferred models were summarized in Section~\ref{Section: Estimate}. We keep the notation of Section~\ref{Section: Estimate} throughout: $\mathcal{F}$ is an $(n;d)$-system in $n-1+k$ variables, $C_n^{(d)}$ is the generic Dixon-matrix size, and we use the determinant-method complexity templates from Appendix~\ref{appendix:determinant_methods}.
+This appendix provides the detailed parameter derivations and the full set of five determinant models (expansion, Bareiss, Kronecker$+$HNF, interpolation, sparse) for the two symbolic-determinant stages whose preferred models were summarized in Section~\ref{Section:Estimate}. We keep the notation of Section~\ref{Section:Estimate} throughout: $\mathcal{F}$ is an $(n;d)$-system in $n-1+k$ variables, $C_n^{(d)}$ is the generic Dixon-matrix size, and we use the determinant-method complexity templates from Appendix~\ref{appendix:determinant_methods}.
 
 \subsection{Step 1 Parameter Derivations}\label{appendix:step1}
 
-This subsection derives the four abstract parameters $(\mu_1,S_1,L_1,\delta_1)$ and the additional grid-size parameter $N_1$ used to instantiate the five Step~1 complexity models. The expressions for $(\mu_1,S_1,L_1)$ recover~\eqref{eq:step1_params} in Section~\ref{Section: Estimate}, and substituting them into the determinant templates of Table~\ref{tab:determinant_methods} reproduces~\eqref{eq:step1_minor}--\eqref{eq:step1_sparse}.
+This subsection derives the four abstract parameters $(\mu_1,S_1,L_1,\delta_1)$ and the additional grid-size parameter $N_1$ used to instantiate the five Step~1 complexity models. The expressions for $(\mu_1,S_1,L_1)$ recover~\eqref{eq:step1_params} in Section~\ref{Section:Estimate}, and substituting them into the determinant templates of Table~\ref{tab:determinant_methods} reproduces~\eqref{eq:step1_minor}--\eqref{eq:step1_sparse}.
 
 The refined construction of the cancellation matrix from~\eqref{eq:Dixon_polynomial_improve} lowers several \emph{dual}-variable degrees by one through the difference quotients in $x_i-\bar{x}_i$, but this affects only the eliminated and dual variables and not the retained parameters $\avec$. For the asymptotic estimates below we use uniform upper bounds that are simpler to state. The determinant in Step~1 involves $\ell=2n+k-2$ variables (the $n-1$ original variables, the $n-1$ dual variables, and the $k$ retained parameters), with each entry having parameter total degree at most $d$. Summing across the $n$ rows of the determinant, the parameter total degree of $\det(\widehat{C})$ is therefore at most
 \[
@@ -529,9 +535,9 @@ B_1 := \sum_{i=1}^{n} d = nd.
 \paragraph{Dense monomial-count proxy.}
 The expansion-by-minors model uses the dense monomial-count proxy
 \[
-\mu_1 \le \binom{n-1+k+d}{n-1+k},
+\mu_1 := \binom{n-1+k+d}{n-1+k},
 \]
-i.e.\ the number of dense monomials in the original $f_j$ when viewed as a polynomial in the $n-1+k$ variables of $\xvec$ and $\avec$ of total degree at most $d$. Explicitly expanding the difference-quotient entries would introduce a factor $\max\{1,d/(n+k)\}$ in the uniform entry-support bound. The theoretical expansion model avoids this factor by multiplying the undivided numerators of a difference-quotient row by the cached minors, summing the row expansion, and only then dividing exactly by the common linear factor $x_i-\bar{x}_i$. Each numerator has at most $2\mu_1$ terms, and this linear division is soft-linear in the input and output support sizes. Under the stated intermediate-support proxy $U:=S_1$, the cost therefore remains $\widetilde{O}(n2^n\mu_1S_1)$, as in~\eqref{eq:step1_minor}. This is an evaluation strategy for the same refined determinant, rather than a claim that expanded difference quotients have at most $\mu_1$ terms.
+i.e.\ the number of dense monomials in the original $f_j$ when viewed as a polynomial in the $n-1+k$ variables of $\xvec$ and $\avec$ of total degree at most $d$. Explicitly expanding the difference-quotient entries would introduce a factor $\max\{1,d/(n+k)\}$ in the uniform entry-support bound. The theoretical expansion model avoids this factor by multiplying the undivided numerators of a difference-quotient row by the cached minors, summing the row expansion, and only then dividing exactly by the common linear factor $x_i-\bar{x}_i$. Each numerator has at most $2\mu_1$ terms, and this linear division is soft-linear in the input and output support sizes. By Lemma~\ref{lem:intermediate_support}, with $U:=S_1$, the cost therefore remains $\widetilde{O}(n2^n\mu_1S_1)$, as in~\eqref{eq:step1_minor}.
 
 \paragraph{Variable-wise degree bounds.}
 The Kronecker$+$HNF model uses the variable-wise degree bounds derived from the refined cancellation-matrix structure. A row-by-row analysis of $\widehat{C}$ (the variable $x_i$ appears in rows $1,\ldots,i$ with degree $\leq d$, in row $i+1$ with degree $\leq d-1$ after the difference quotient, and is absent from rows $i+2,\ldots,n$ where it has been replaced by $\bar{x}_i$; an analogous count applies to $\bar{x}_i$) gives
@@ -561,9 +567,63 @@ L_1 = \widetilde{O}(n^\omega + n^2\mu_1).
 \paragraph{Sparse term bound.}
 The sparse model uses the structural term bound
 \[
-S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{B_1+k}{k},
+S_1 := \bigl(C_n^{(d)}\bigr)^2\binom{B_1+k}{k},
 \]
 where the factor $\bigl(C_n^{(d)}\bigr)^2$ comes from the bilinear Dixon support (each of $\xvec,\bar\xvec$ contributes at most $C_n^{(d)}$ distinct monomials by Lemma~\ref{lem:dixon_fc_bound}), and $\binom{B_1+k}{k}$ bounds the number of parameter monomials of total degree at most $B_1$ in the $k$ retained parameters $\avec$; see Appendix~\ref{appendix:determinant_methods} for the full derivation.
+
+\paragraph{Intermediate minors.}
+The same structural term bound controls all intermediate minors, not merely the final Dixon polynomial.
+\begin{lemma}\label{lem:intermediate_support}
+Let $n\ge2$, $d\ge2$, $k\ge1$, and $\deg_{\xvec,\avec}f_i\le d$.
+Every square minor $H$ of $\widehat C$ satisfies
+\[
+ \#\operatorname{Supp}(H)
+ \le\binom{nd+n+k-1}{2n+k-2}
+ \le \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k}=S_1.
+\]
+This holds over any field, without a genericity assumption.
+\end{lemma}
+\begin{proof}
+The first row of $\widehat C$ has total degree at most $d$; every other row has degree at most $d-1$. Thus a $j$-row minor has degree at most $j(d-1)+1\le n(d-1)+1$ in $2n+k-2$ variables, giving the first inequality.
+For the second, use $C_n^{(d)}=\binom{nd}{n-1}/n$ and put
+\[
+ R(n,m,k)=\frac{n^2\binom{m+n+k-1}{2n+k-2}}
+ {\binom{m}{n-1}^2\binom{m+k}{k}},\qquad m\ge2n.
+\]
+The ratios
+\[
+ \frac{R(n,m,k+1)}{R(n,m,k)}
+ =\frac{(m+n+k)(k+1)}{(2n+k-1)(m+k+1)}<1,
+\]
+\[
+ \frac{R(n,m+1,1)}{R(n,m,1)}
+ =1-\frac{n(n-1)}{(m+1)(m+2)}<1
+\]
+reduce the claim to $r_n:=R(n,2n,1)\le1$. Here $r_2=1$ and
+\[
+ \frac{r_{n+1}}{r_n}
+ =\frac{(3n+1)(3n+2)(3n+3)(n+2)}
+ {8n(2n+1)^2(2n+3)}\le1:
+\]
+the denominator minus numerator is
+$(n-1)(37n^3+89n^2+60n+12)\ge0$.
+Taking $m=nd$ proves the claim.\qed
+\end{proof}
+The bound concerns completed minors; temporary products in Bareiss updates may have $O(S_1^2)$ terms, as allowed by its cost model.
+
+\paragraph{A division-free program for sparse interpolation.}
+Huang's algorithm requires a division-free straight-line program (SLP), not only a scalar determinant black box~\cite[Definition~2 and Algorithm~9]{DBLP:journals/jsc/Huang23}.
+A dense Horner program for $f_j$ has length $O(\mu_1)$. For two consecutive evaluations $A,B$ differing only in $x_i$, propagate the values and the divided difference $Q(h)=(h(A)-h(B))/(x_i-\bar x_i)$ through that program using
+\[
+ Q(u+v)=Q(u)+Q(v),\qquad
+ Q(uv)=Q(u)v(A)+u(B)Q(v).
+\]
+The input differences are $0$ or $1$, so this computes each refined entry without division, including at $x_i=\bar x_i$. All entries cost $O(n^2\mu_1)$ operations. Composing with an $O(n^4)$ division-free determinant program~\cite{Rote2001DivisionFree} gives an SLP of length
+\[
+ O(n^2\mu_1+n^4)=O(n^2\mu_1),
+\]
+since $\mu_1\ge\binom{n+1}{2}$ for $d\ge2$.
+Consequently Huang~\cite[Theorem~12]{DBLP:journals/jsc/Huang23} gives the stated expected sparse cost with Monte Carlo correctness. A sufficient characteristic condition is $p>nd$; any extension needed to obtain enough interpolation points is accounted for as in that theorem.
 
 \paragraph{Step 1 complexity models.}
 Substituting these parameters into the determinant models of Table~\ref{tab:determinant_methods} yields the following five Step~1 complexity estimates (all in field operations over $\mathbb{F}_q$):
@@ -574,7 +634,7 @@ Substituting these parameters into the determinant models of Table~\ref{tab:dete
 	T_{1}^{\mathrm{eval}} &= \widetilde{O}\!\left(N_1(L_1+\ell B_1)\right),\\
 	T_{1}^{\mathrm{sparse}} &= \widetilde{O}(L_1S_1 + S_1\log q).
 \end{align*}
-In the expansion and Bareiss models, we use $S_1$ as the support proxy $U$ for intermediate minors, following the modeling convention in Appendix~\ref{appendix:determinant_methods}.
+In the expansion and Bareiss models, $U_1=S_1$ is justified by Lemma~\ref{lem:intermediate_support}; the cached-expansion formula uses the deferred linear division described above.
 
 \paragraph{FDixon recursive construction.}
 Besides the five determinant models, the direct recursive construction of Zhao and Fu~\cite{Zhao2005extfast} builds the Dixon matrix \emph{without} first forming the $n\times n$ cancellation determinant, so it replaces Steps~1 and~2 by a single block-recursive construction. Following the complexity model of Qin et al.~\cite[Theorem~3.1]{DBLP:journals/ijcm/QinWTJ17}, our implementation uses the surrogate
@@ -585,12 +645,12 @@ where the sorted surrogate degrees $m_i$ are the per-variable degree bounds sele
 
 \subsection{Step 4 Parameter Derivations}\label{appendix:step4}
 
-This subsection derives the abstract Step~4 parameters $(D_4,N_4,L_4,\delta_4,\mu_4,S_4)$ used to instantiate the five Step~4 complexity models. The expressions for $(D_4,N_4,L_4,\delta_4)$ recover~\eqref{eq:step4_params} in Section~\ref{Section: Estimate}, and substituting them into the determinant templates of Table~\ref{tab:determinant_methods} reproduces~\eqref{eq:step4_hnf}--\eqref{eq:step4_eval}.
+This subsection derives the abstract Step~4 parameters $(D_4,N_4,L_4,\delta_4,\mu_4,S_4)$ used to instantiate the five Step~4 complexity models. The expressions for $(D_4,N_4,L_4,\delta_4)$ recover~\eqref{eq:step4_params} in Section~\ref{Section:Estimate}, and substituting them into the determinant templates of Table~\ref{tab:determinant_methods} reproduces~\eqref{eq:step4_hnf}--\eqref{eq:step4_eval}.
 
-Step~4 computes a symbolic determinant of a $C_n^{(d)}\times C_n^{(d)}$ polynomial matrix in the $k$ retained parameters $\avec$. Let $E_4\le nd$ be an entry-wise parameter-degree bound for the Step~4 matrix and $D_4\le d^{\,n}$ be the B\'ezout total-degree bound for the elimination polynomial.
+Step~4 computes a symbolic determinant of a $C_n^{(d)}\times C_n^{(d)}$ polynomial matrix in the $k$ retained parameters $\avec$. Let $E_4\le nd$ be an entry-wise parameter-degree bound for the Step~4 matrix and $D_4\le d^{\,n}$ be the conditional B\'ezout total-degree bound for the determinantal output (Heuristic~\ref{hyp:bezout_attainment}).
 
 \paragraph{Parameter expressions.}
-Kronecker substitution must use a base $\geq C_n^{(d)}E_4+1$ to avoid overflow in the encoded determinant; the resulting univariate matrix has average column degree bounded by
+A Kronecker base $C_n^{(d)}E_4+1$ suffices to avoid overflow in the encoded determinant; the resulting univariate matrix has average column degree bounded by
 \[
 \delta_4 := E_4 \prod_{j=1}^{k-1}(C_n^{(d)} E_4+1),
 \]
@@ -598,18 +658,31 @@ which collapses to $\delta_4 = E_4 \le nd$ in the well-determined case $k=1$. Th
 \[
 N_4 \le (D_4+1)^k,\qquad
 S_4 \le \binom{D_4+k}{k},\qquad
-L_4 = \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\right).
+L_4 = \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega+\bigl(C_n^{(d)}\bigr)^2\mu_4\right).
 \]
 The dense monomial-count proxy for one matrix entry is
 \[
-\mu_4 \le \binom{k+E_4}{k}.
+\mu_4 := \binom{k+E_4}{k}.
 \]
+
+\paragraph{Intermediate-minor degree bound.}
+The final degree bound $D_4$ does not by itself bound intermediate minors.
+For the selected $\rho\times\rho$ matrix, let $a_{(1)}\le\cdots\le a_{(\rho)}$ and $b_{(1)}\le\cdots\le b_{(\rho)}$ be the sorted total degrees of its row and column monomial labels. Set $D_0=n(d-1)+1$. Since $\deg_{\avec}M_{uv}\le D_0-a_u-b_v$, every $j$-row minor has degree at most $jD_0-\sum_{i\le j}a_{(i)}-\sum_{i\le j}b_{(i)}$. Hence the certified choice
+\begin{equation}\label{eq:step4_minor_support}
+ H_4:=\max_{0\le j\le\rho}\left(jD_0-\sum_{i=1}^j a_{(i)}-\sum_{i=1}^j b_{(i)}\right),
+ \qquad U_4:=\binom{H_4+k}{k}
+\end{equation}
+controls all intermediate minors. Without label information one may use $U_4=\binom{\rho E_4+k}{k}$. For mixed total degrees, replace $D_0$ by $\sum_i d_i-(n-1)$.
+
+\paragraph{Probe cost and asymptotic effect.}
+The term $C^2\mu_4$, with $C=C_n^{(d)}$, accounts for matrix evaluation. It also suffices for the entry-circuit part of a simultaneous value-and-gradient probe; the determinant part costs $\widetilde O(C^\omega)$ as explained in Appendix~\ref{appendix:sparse_oracle}.
+Relative to the scalar determinant term, the added factor is $1+\mu_4/C^{\omega-2}$. For fixed $d,k$ and $\omega>2$, it tends to $1$ as $n\to\infty$. For fixed $n,k$ and $d\to\infty$, the ratio $\mu_4/C^{\omega-2}$ has order $d^{k-(n-1)(\omega-2)}$ when using $E_4=nd$. The HNF cost is unchanged.
 
 \paragraph{Step 4 complexity models.}
 The full set of five determinant models (all in field operations over $\mathbb{F}_q$) is:
 \begin{align*}
-	T_{4}^{\mathrm{minor}} &= \widetilde{O}\!\left(C_n^{(d)}2^{C_n^{(d)}}\mu_4S_4\right),\\
-	T_{4}^{\mathrm{Bareiss}} &= \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^3S_4^2\right),\\
+	T_{4}^{\mathrm{minor}} &= \widetilde{O}\!\left(C_n^{(d)}2^{C_n^{(d)}}\mu_4U_4\right),\\
+	T_{4}^{\mathrm{Bareiss}} &= \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^3U_4^2\right),\\
 	T_{4}^{\mathrm{HNF}} &= \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}\delta_4\right),\\
 	T_{4}^{\mathrm{eval}} &= \widetilde{O}\!\left(N_4(L_4+kD_4)\right),\\
 	T_{4}^{\mathrm{sparse}} &= \widetilde{O}(L_4S_4 + S_4\log q).
@@ -629,8 +702,8 @@ Table~\ref{tab:step14_models_full} collects all the formulas above.
 		\toprule
 		\textbf{Method} & \textbf{Step 1/2} & \textbf{Step 4} \\
 		\midrule
-		Expansion & $\widetilde{O}(n2^n\mu_1S_1)$ & $\widetilde{O}\!\left(C_n^{(d)}2^{C_n^{(d)}}\mu_4S_4\right)$ \\
-		Bareiss & $\widetilde{O}(n^3S_1^2)$ & $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^3S_4^2\right)$ \\
+		Expansion & $\widetilde{O}(n2^n\mu_1S_1)$ & $\widetilde{O}\!\left(C_n^{(d)}2^{C_n^{(d)}}\mu_4U_4\right)$ \\
+		Bareiss & $\widetilde{O}(n^3S_1^2)$ & $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^3U_4^2\right)$ \\
 		Kronecker & $\widetilde{O}(n^\omega \delta_1)$ & $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\delta_4\right)$ \\
 		Interpolation & $\widetilde{O}(N_1(L_1+\ell B_1))$ & $\widetilde{O}(N_4(L_4+kD_4))$ \\
 		Sparse & $\widetilde{O}(L_1S_1+S_1\log q)$ & $\widetilde{O}(L_4S_4+S_4\log q)$ \\
@@ -644,7 +717,7 @@ Table~\ref{tab:step14_models_full} collects all the formulas above.
 This subsection gives the detailed comparison behind the main-text statement that the symbolic cost is usually governed by the final determinant computation. We first compare the most favorable first-determinant estimate with the univariate HNF model for the final determinant, and then relate this theoretical picture to the trend plots used in the paper.
 
 \paragraph{Notation.}
-We keep the notation of Section~\ref{Section: Estimate} and the preceding subsections. In particular, the first determinant is modeled by
+We keep the notation of Section~\ref{Section:Estimate} and the preceding subsections. In particular, the first determinant is modeled by
 \[
 T_{1}^{\mathrm{minor}},\quad
 T_{1}^{\mathrm{Bareiss}},\quad
@@ -662,18 +735,8 @@ T_{4}^{\mathrm{eval}},\quad
 T_{4}^{\mathrm{sparse}}.
 \]
 
-\paragraph{Comparison of $T_{1}^{\mathrm{sparse}}$ and $T_{4}^{\mathrm{HNF}}$ as $n$ grows.}
-Assume the well-determined setting $k=1$ and keep $d$ fixed. Then
-\[
-\!T_{1}^{\mathrm{sparse}}
-=\widetilde{O}(L_1S_1 + S_1\log q)
-=\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^2\operatorname{poly}(n)\right),
-\]
-because $S_1\le \bigl(C_n^{(d)}\bigr)^2(B_1+1)=\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ for $k=1$, and one probe costs $L_1=\widetilde{O}(n^\omega+n^2\mu_1)$ with $\mu_1\le\binom{n+d}{n}$, hence $L_1=\widetilde{O}(\operatorname{poly}(n))$ for fixed $d$ (the $S_1\log q$ term is also absorbed by $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^2\operatorname{poly}(n)\right)$ since $\log q$ is polylogarithmic in the problem size). On the other hand,
-\[
-T_{4}^{\mathrm{HNF}}=\widetilde{O}\!\left(nd\,\bigl(C_n^{(d)}\bigr)^\omega\right).
-\]
-For fixed $d$, the Fuss--Catalan quantity satisfies $C_n^{(d)}=\Theta(\gamma_d^n/n^{3/2})$ for a constant $\gamma_d>1$. Hence $T_{1}^{\mathrm{sparse}}$ grows essentially like $\bigl(C_n^{(d)}\bigr)^2$ times a polynomial factor, while $T_{4}^{\mathrm{HNF}}$ grows like $\bigl(C_n^{(d)}\bigr)^\omega$ times a polynomial factor. For $\omega>2$ (which is the regime of all currently known fast linear-algebra algorithms, including the practically achievable $\omega\approx 2.81$ used in our timing tables), the dominant $C_n^{(d)}$-exponent of the final determinant is strictly larger, so the growth of $T_{4}^{\mathrm{HNF}}$ is asymptotically faster than that of $T_{1}^{\mathrm{sparse}}$ as $n$ increases. The borderline case $\omega=2$ makes the two $C_n^{(d)}$-exponents equal, so the two stages are of the same asymptotic order in $C_n^{(d)}$ and their relative dominance is determined by the polynomial-in-$(n,d)$ prefactors and implementation constants rather than by the asymptotics; this is precisely why we distinguish the two regimes.
+\paragraph{Fixed degree.}
+For $k=1$, fixed $d\ge2$, and $\omega>2$, sparse construction is asymptotically below the Step~4 HNF bound under the characteristic condition of Appendix~\ref{appendix:step1}. Cached expansion additionally requires~\eqref{eq:minor_threshold}. Appendix~\ref{appendix:wellsq} gives both ratios and the $\omega=2$ boundary case.
 
 \paragraph{Comparison of $T_{1}^{\mathrm{HNF}}$ and $T_{4}^{\mathrm{HNF}}$ as $d$ grows.}
 Fix $n$ and again take $k=1$. The variable-wise determinant degrees in the first determinant satisfy $b_i=\Theta(nd)$, with $\ell=2n-1$, and per-entry degree $\Theta(d)$, so (treating $n$ as fixed and letting $d\to\infty$)
@@ -690,27 +753,22 @@ T_{4}^{\mathrm{HNF}}=\widetilde{O}\!\left(nd\,\bigl(C_n^{(d)}\bigr)^\omega\right
 \]
 Since $\omega>2$, we have $\omega(n-1)+1>2n-1$ for every $n\ge 2$. Thus, for fixed $n$, the HNF complexity estimate for Step~4 has a strictly larger exponent in $d$ than that for Step~1. At the boundary $\omega=2$, the exponents coincide, so this comparison alone does not establish which stage dominates; the suppressed polylogarithmic factors and constants may affect their relative costs. In particular, the constants may depend strongly on $n$, which is held fixed in this analysis. For $\omega>2$, the comparison supports using Step~4 as the asymptotic bottleneck within the HNF model in the fixed-$n$, high-degree regime. This is consistent with our experiments, in which the final symbolic determinant dominates the running time. We treat $\omega=2$ as an idealized boundary used for the uniform-exponent security comparisons.
 
-\paragraph{Consequences for the overall comparison.}
-The two formula comparisons above explain the qualitative picture observed in the implementation and in the plots:
-Figures~\ref{fig:step14_vs_degree} and~\ref{fig:step14_vs_variables} illustrate the two regimes:
-\begin{enumerate}
-	\item for low-variable/high-degree systems, the final determinant is clearly the dominant symbolic cost;
-	\item for high-variable/low-degree systems, the first determinant rises sharply, and sparse interpolation is the only first-determinant model that can stay below the final determinant;
-	\item the numerical submatrix-selection phase remains below the symbolic final determinant throughout the parameter ranges considered in the paper.
-\end{enumerate}
-For $\omega>2$, with this method selection the first determinant never dominates: Kronecker$+$HNF controls it in the high-degree regime and cached expansion or sparse interpolation controls it in the high-variable regime. The dominance, however, is asymptotic: at moderate $(n,d)$ the polynomial prefactors of the Step-1 models can still exceed the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ gap, and at $\omega=2$ the conclusion is reversed altogether, since the $\Theta\!\left(\bigl(C_n^{(d)}\bigr)^2\right)$ coefficient positions of the Dixon polynomial already match the $C_n^{(d)}$-exponent of Step~4. This is why the $\omega=2.37$ panel of Figure~\ref{fig:complexity} reports the maximum over the two stages. This matches the measured runtimes, where the final symbolic determinant (Step~4) consumes the overwhelming majority of the time. Accordingly, the main text uses $T_{4}^{\mathrm{best}}$ as the overall symbolic term. The specialization to the well-determined case $k=1$, including the comparison of $T_{4}^{\mathrm{HNF}}$ with both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ used in Section~\ref{Section: Estimate}, is treated separately in Appendix~\ref{appendix:wellsq}.
+For any fixed $k\ge1$, the same comparison of construction and HNF bounds holds: at fixed $d$, sparse construction is $C^2\operatorname{poly}(n)$ while HNF is $C^{\omega+k-1}\operatorname{poly}(n)$. At fixed $n$, the respective Kronecker/HNF degree exponents are $2n+k-2$ and $(\omega+k-1)(n-1)+k$, differing by $(\omega+k-3)(n-1)>0$. The Step~4 interpolation bounds also grow faster than the corresponding construction bounds in these two regimes, under their output-degree hypotheses. These are comparisons of displayed bounds, not claims about the actual rank or running time. When sparse interpolation is unavailable, cached expansion requires the threshold~\eqref{eq:minor_threshold} in the fixed-$d$ regime.
+
+\paragraph{Overall comparison.}
+Construction is controlled by Kronecker$+$HNF in the fixed-$n$, high-degree regime, and by sparse interpolation or cached expansion in the fixed-$d$ regime under the conditions above. These comparisons are asymptotic; at moderate parameters the overall estimate retains both stages. Figures~\ref{fig:step14_vs_degree} and~\ref{fig:step14_vs_variables} show the individual cost models.
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_degree.pdf}
-	\caption{Comparison of the first and final determinant costs as the polynomial degree varies. The final determinant keeps the largest growth rate in the low-variable/high-degree regime.}
+	\caption{Comparison of the first and final determinant costs as the polynomial degree varies. The curves show the displayed cost models for $n=3$ and $k=1$.}
 	\label{fig:step14_vs_degree}
 \end{figure}
 
 \begin{figure}[!htbp]
 	\centering
 	\includegraphics[width=0.92\textwidth]{plot_step1_step4_vs_variables.pdf}
-	\caption{Comparison of the first and final determinant costs as the number of variables varies. In the low-degree/high-variable regime, sparse interpolation is the only first-determinant model that typically remains below the final determinant.}
+	\caption{Comparison of the first and final determinant costs as the number of variables varies ($k=1$). The sparse curve assumes sufficiently large characteristic; cached expansion obeys the threshold~\eqref{eq:minor_threshold}.}
 	\label{fig:step14_vs_variables}
 \end{figure}
 
@@ -733,8 +791,6 @@ Substituting $k=1$ into the Step~1 and Step~4 templates of Appendices~\ref{appen
 	= \widetilde{O}\!\bigl(n^2 d\,2^n\binom{n+d}{n}\bigl(C_n^{(d)}\bigr)^2\bigr),
 	\label{eq:wellsq_T1minor}
 \end{align}
-where, in~\eqref{eq:wellsq_T1sparse}, the factor $nd+1$ is combined with the $n^2$ probe-cost factor into the prefactor $n^3 d$ (this is the form used in the main text); the comparisons below are in any case insensitive to this $d$-factor, since it cancels against the $nd$ factor of~\eqref{eq:wellsq_T4HNF} when the ratio is formed.
-
 \paragraph{Asymptotic size of $C_n^{(d)}$.}
 For fixed $d\ge 2$ and $n\to\infty$, the Fuss--Catalan formula and Stirling's approximation give
 \begin{equation}\label{eq:fc_stirling}
@@ -775,17 +831,14 @@ This ratio tends to infinity as $n\to\infty$ \emph{iff} the base satisfies
 	\qquad\text{equivalently}\qquad
 	\omega \;>\; 2+\frac{\log 2}{\log \gamma_d}.
 \end{equation}
-The right-hand side of~\eqref{eq:minor_threshold} is strictly decreasing in $d$: for $d=2$ it equals $2+\tfrac{\log 2}{\log 4}=2.5$; for $d=3$ it equals $2+\tfrac{\log 2}{\log(27/4)}\approx 2.363$; and it tends to $2$ from above as $d\to\infty$. In particular, for the Strassen exponent $\omega\approx 2.81$ used in our timing tables and Sections~\ref{Section:Application}--\ref{Subsection:Other_Comparison}, condition~\eqref{eq:minor_threshold} is met for all $d\ge 2$ (e.g.\ $\gamma_2^{0.81}\approx 3.09>2$). Hence
+The right-hand side of~\eqref{eq:minor_threshold} is strictly decreasing in $d$: for $d=2$ it equals $2+\tfrac{\log 2}{\log 4}=2.5$; for $d=3$ it equals $2+\tfrac{\log 2}{\log(27/4)}\approx 2.363$; and it tends to $2$ from above as $d\to\infty$. In particular, for the Strassen exponent $\omega\approx 2.81$ used in our timing tables and Sections~\ref{Section:Application}--\ref{Subsection:Other_Comparison}, condition~\eqref{eq:minor_threshold} is met for all $d\ge 2$ (e.g.\ $\gamma_2^{0.81}\approx 3.07>2$). Hence
 \[
 T_{4}^{\mathrm{HNF}} \;\gg\; T_{1}^{\mathrm{minor}}\quad\text{asymptotically in }n,
 \]
 for every $\omega\ge 2.81$ and every $d\ge 2$ (and more generally whenever~\eqref{eq:minor_threshold} holds).
 
 \paragraph{Boundary case $\omega=2$.}
-At the idealized boundary $\omega=2$, the $C_n^{(d)}$-exponents of $T_{4}^{\mathrm{HNF}}$ and of both $T_{1}^{\mathrm{sparse}}$ and $T_{1}^{\mathrm{minor}}$ coincide, so the asymptotic dominance is determined by the polynomial-in-$(n,d)$ prefactors rather than by a $C_n^{(d)}$-exponent gap. The value $\omega=2$ is used in this paper only for \vision, for consistency with~\cite{DBLP:conf/asiacrypt/LiuMM24}; there it is applied identically to Dixon and to every competitor, so the comparison should be read as a ``uniform-$\omega$ ratio'' rather than as a literal asymptotic statement about any single method. For \vision this is why the reported cost is the maximum over \emph{all} stages of the chain rather than the Step~4 term alone (Appendix~\ref{appendix:vision}). For any $\omega>2$ already at infinitesimal margin, the $\bigl(C_n^{(d)}\bigr)^{\omega-2}$ factor reactivates and $T_{4}^{\mathrm{HNF}}$ dominates $T_{1}^{\mathrm{sparse}}$; condition~\eqref{eq:minor_threshold} then governs the comparison with $T_{1}^{\mathrm{minor}}$. The Strassen exponent $\omega\approx 2.81$ used in the timing tables comfortably sits in this regime.
-
-\paragraph{Consequence.}
-With the best applicable construction model, Step~4 is asymptotically dominant for $\omega>2$ in the regimes analyzed above, and is also the empirical bottleneck. We therefore use $T=T_{4}^{\mathrm{HNF}}$ as the asymptotic estimate for well-determined systems, as in~\eqref{eq:dixon_complexity_well}.
+For fixed $d$ and $\omega=2$, equations~\eqref{eq:ratio_4HNF_1sparse} and~\eqref{eq:ratio_4HNF_1minor} give ratios of order $1/(n^2\binom{n+d}{n})$ and $1/(n2^n\binom{n+d}{n})$, respectively, up to logarithmic factors. Thus these two construction bounds exceed the HNF bound for Step~4 as $n$ grows; cached expansion retains its additional $2^n$ factor. The value $\omega=2$ is used for the uniform-exponent comparison in \vision, where the overall estimate takes the maximum over all stages (Appendix~\ref{appendix:vision}). For $\omega>2$, the sparse comparison and the cached-expansion threshold~\eqref{eq:minor_threshold} apply under their stated hypotheses.
 
 \newpage
 \section{Alternative Determinant Computation Methods}\label{appendix:determinant_methods}
@@ -802,66 +855,57 @@ N = \prod_{i=1}^{v}(b_i+1),
 where $\delta$ bounds the entry degree, hence the average column degree, of the univariate matrix obtained after Kronecker substitution. Since $\sum_{i<v}b_i c_i=c_v-1$, we have $\delta\le(e_v+1)c_v-1<2e_vc_v$ when $e_v\ge1$; this yields the asymptotic cost $\widetilde{O}(m^\omega e_vc_v)$. If every entry has total degree at most $E$, the bound $\delta=Ec_v$ may be used instead. This gives the Step~1 and Step~4 specializations with $E=d$ and $E=E_4\le nd$, respectively.
 We also write $B:=\max_i b_i$, $L$ for the cost of one determinant probe, $S$ for a sparsity bound on $\det(P)$, $U$ for an upper bound on the support size of intermediate minors arising during a chosen evaluation strategy, $\mu$ for a dense monomial-count bound on one entry of $P$, and $\widetilde{M}(u)$ for soft-Oh multiplication at degree $u$.
 
-\paragraph{Intermediate-minor support proxy (modeling convention).}
-Several models (expansion, Bareiss) involve intermediate minors of $P$, and we take $U:=S$ for them. This is a \emph{modeling convention}, not a proved inequality: a $j\times j$ minor is in general not a sub-polynomial of $\det(P)$, since the Minkowski sum of $j$ row supports need not be contained in the Minkowski sum of all $s$ row supports (this would require the remaining supports to contain $0$), and $\operatorname{Supp}(\det P)$ is itself only contained in, not equal to, that Minkowski sum. What motivates the convention is that under our genericity assumption (Definition~\ref{def:generic}) every entry of $P$ has full support and no coefficient cancellation occurs, so the support of an intermediate minor is exactly the Minkowski sum of its row supports and is of the same order of magnitude as $\operatorname{Supp}(\det P)$ in all regimes considered here. The expansion and Bareiss estimates should accordingly be read as heuristics relative to this convention.
+\paragraph{Intermediate-minor support bounds.}
+The output support bound $S$ and the intermediate-minor bound $U$ serve different purposes. For Step~1, Lemma~\ref{lem:intermediate_support} proves $U_1=S_1$ is valid for the uniform total-degree setting. For Step~4, use~\eqref{eq:step4_minor_support}, or the coarser dense degree bound stated there; a bound on the final determinant degree alone does not justify $U_4=S_4$.
 
 \subsection{Expansion}
 A baseline model is expansion by minors~\cite{GentlemanJohnson1976,HorowitzSahni1975}. In the notation used in the code and plots, this is summarized by
 \[
 \mathcal{T}^{\mathrm{minor}} = \widetilde{O}(m2^m\mu U).
 \]
-The corresponding storage proxy is $\widetilde{O}(\binom{m}{m/2}U)$, since one keeps a full layer of minors rather than only the final determinant. This model is only competitive for very small matrices, but it is useful as a sanity check and as a lower-overhead baseline in the plots.
+
 
 \subsection{Bareiss}
 The fraction-free Bareiss elimination method~\cite{Bareiss1968} replaces cofactors by exact divisions inside a Gaussian-elimination style process. For symbolic polynomial entries, we use the coarse dense surrogate
 \[
 \mathcal{T}^{\mathrm{Bareiss}} = \widetilde{O}(m^3U^2).
 \]
-This captures the fact that the arithmetic count is cubic in the matrix size, while the dominant symbolic cost comes from multiplication/division on intermediate polynomials whose support is controlled, under genericity, by the structural support proxy $U$. The storage proxy is correspondingly $\widetilde{O}(m^2U)$.
+This captures the fact that the arithmetic count is cubic in the matrix size, while the dominant symbolic cost comes from multiplication/division on intermediate polynomials whose support is controlled by the chosen intermediate-minor bound $U$.
 
 \subsection{Kronecker}
-Kronecker substitution $y_i\mapsto t^{c_i}$ with $c_i=\prod_{j<i}(b_j+1)$ maps the multivariate determinant problem to a univariate one. The substitution base $b_j+1$ must be at least $\deg_{y_j}\det(P)+1$ to avoid monomial collisions in the encoded determinant; Li~\cite{Li2007symbolic} proves that under this condition the encoding is faithful, i.e.\ $\det(\Psi(P))=\Psi(\det(P))$ (Theorems~5 and~7). After substitution each \emph{entry} of $P$ has $t$-degree at most $\delta$ above, so applying the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} to the resulting univariate polynomial matrix gives
+Kronecker substitution $y_i\mapsto t^{c_i}$, with $c_i=\prod_{j<i}(b_j+1)$ and $b_i\ge\deg_{y_i}\det(P)$, is injective on the determinant support. Since substitution is a ring homomorphism,
 \[
-T^{\mathrm{HNF}} = \widetilde{O}(m^{\omega}\delta).
+ \Psi(\det P)=\det(\Psi(P)),\qquad
+ \det P=\Psi^{-1}(\det(\Psi(P))).
 \]
-For the univariate final determinant ($k=1$), this becomes the standard bound $\widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}E_4\right)$.
-
-\paragraph{Correctness of Kronecker$+$HNF.}
-Li~\cite{Li2007symbolic} proves that Kronecker substitution commutes with the determinant (Theorems~5 and~7): if the substitution base $c_i$ is chosen so that no monomial collisions can occur at the level of $\det(P)$, then
-\[
-\Psi(\det(P)) = \det(\Psi(P))
-\quad\text{and}\quad
-\det(P) = \Psi^{-1}\!\bigl(\det(\Psi(P))\bigr),
-\]
-where $\Psi$ denotes the Kronecker encoding and $\Psi^{-1}$ its inverse. Since $\det(\Psi(P))$ is a uniquely defined univariate polynomial, \emph{any} correct univariate determinant algorithm---including HNF~\cite{DBLP:journals/jc/LabahnNZ17}---produces the same output, regardless of which internal subroutines (kernel, column bases, etc.) it employs. We apply $\Psi^{-1}$ only to the \emph{final} univariate output, so the intermediate operations of HNF are immaterial to correctness. We have validated this experimentally on a wide range of mixed-degree systems: the Kronecker$+$HNF pipeline always produced the same determinant as expansion, Bareiss, and evaluation-interpolation.
+Thus HNF can be applied to the encoded matrix and only the final output needs decoding~\cite[Theorems~5 and~7]{Li2007symbolic}. Its cost is $\widetilde O(m^\omega\delta)$~\cite{DBLP:journals/jc/LabahnNZ17}; for Step~4 with $k=1$, this is $\widetilde O((C_n^{(d)})^\omega E_4)$.
 
 \subsection{Interpolation}
 Dense evaluation-interpolation~\cite{HorowitzSahni1975} evaluates the determinant on the full tensor grid of size $N$ and then reconstructs the polynomial variable by variable. The resulting model is
 \[
-\mathcal{T}^{\mathrm{eval}} = \widetilde{O}\!\left(NL + N\sum_{i=1}^{t}\widetilde{M}(b_i)\right)
+\mathcal{T}^{\mathrm{eval}} = \widetilde{O}\!\left(NL + N\sum_{i=1}^{v}\widetilde{M}(b_i)\right)
 \subseteq \widetilde{O}\!\left(N(L+vB)\right).
 \]
 The first term is the probe phase; the second is the tensor/Lagrange reconstruction phase. In the main text we use the simpler upper bound $\widetilde{O}(N(L+vB))$. This method is deterministic but becomes impractical as soon as the product grid $N$ grows too quickly.
 
-\subsection{Sparse}
-When the determinant is sparse, derivative-based sparse interpolation over finite fields can be significantly better. We use the soft-Oh model inspired by Huang~\cite{DBLP:journals/jsc/Huang23}:
+\subsection{Sparse}\label{appendix:sparse_oracle}
+Huang~\cite[Definition~2, Algorithm~9 and Theorem~12]{DBLP:journals/jsc/Huang23} interpolates a polynomial given by a division-free SLP of length $L\ge v$, with sparsity bound $S$ and strict partial-degree bound $D>\max_i\deg_{y_i}f$. For $\operatorname{char}(\mathbb F_q)\ge D$, the expected field-operation count in the proof is
 \[
-\mathcal{T}^{\mathrm{sparse}} = \widetilde{O}(LS + S\log q).
+ \widetilde O(LS+vS+S\log q)=\widetilde O(LS+S\log q).
 \]
-This is the \emph{field-operation} count (intermediate step of~\cite[Theorem~12]{DBLP:journals/jsc/Huang23}, before the final conversion to bit complexity); we use it because Steps~1--4 of the Dixon pipeline are uniformly counted in field operations over $\mathbb{F}_q$. The algorithm requires $\mathrm{char}(\mathbb{F}_q)\ge B$, $B$ being a partial-degree bound on the polynomial to be interpolated (Theorem~1 of~\cite{DBLP:journals/jsc/Huang23}); this precondition is satisfied by the large-prime fields used in \poseidon and \xhash but \emph{fails} for $\mathbb{F}_{2^\ell}$ as used by \vision, so the Sparse model is omitted from the \vision analysis.
-The $\log q$ factor is inherent to the algorithm: the term-locator polynomial of degree $\le S$ is recovered by equal-degree factorization, which is a Las Vegas procedure of expected cost $\widetilde{O}(S\log q)$ field operations over $\mathbb{F}_q$ (Huang~\cite{DBLP:journals/jsc/Huang23}, Theorem~12). Unlike the $\log q$ factor that appears when converting field operations to bit operations, this one is already present in the field-operation count and is not negligible for the large prime or extension fields typical of AO primitives (e.g.\ $q\approx 2^{64}$).
-The crucial input is the term bound $S$. In the first-determinant model we use
+The interpolation has Monte Carlo correctness; the root-finding subroutine is Las Vegas. Remark~13 of that paper describes a bounded-retry variant. If our inclusive degree bound is $B$, taking $D=B+1$ requires $p>B$. Extension fields supply additional points when necessary but do not change the characteristic, so this model is excluded for the binary-field \vision instances.
+
+Algorithm~9 uses the SLP only to obtain values of $f$ and $y_i\partial f/\partial y_i$ at field points. Thus the same proof applies to an oracle computing these simultaneously at cost $L\ge v$. For $f=\det P$, evaluate the entry circuits and the numerical adjugate, then propagate the cofactor sensitivities backwards through the entry circuits:
 \[
-S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{B_1+k}{k},
+ \frac{\partial f}{\partial y_i}
+ =\sum_{u,w}\operatorname{cof}_{uw}(P)\frac{\partial P_{uw}}{\partial y_i}.
 \]
-where $C_n^{(d)}$ is the Dixon-matrix size and $B_1=nd$ bounds the total parameter degree. This bound is structural: the bilinear Dixon representation $\Delta(\xvec,\bar\xvec)=\sum X_u M_{u,v} \bar X_v$ has at most $\bigl(C_n^{(d)}\bigr)^2$ coefficient positions (the supports in $\xvec$ and in $\bar\xvec$ are symmetric, each of size at most $C_n^{(d)}$ by Lemma~\ref{lem:dixon_fc_bound}), and each coefficient is a parameter polynomial of total degree at most $B_1$, hence carries at most $\binom{B_1+k}{k}$ monomials. For the final determinant, a dense monomial upper bound gives
-\[
-S_4 \le \binom{D_4+k}{k}.
-\]
-This is the key reason why sparse interpolation is the only first-determinant model that consistently stays below the final determinant in the high-variable/low-degree regime.
+The adjugate costs $\widetilde O(m^\omega)$ even at singular points: use $\det(P)P^{-1}$ at full rank, zero at rank at most $m-2$, and a nonsingular $(m-1)$-block and the left/right null vectors at rank $m-1$. Reverse propagation costs the entry-circuit length, giving $L=\widetilde O(m^\omega+m^2\mu+v)$. This is an implementation of the value-and-gradient queries, not an identification of scalar black-box cost with SLP length.
+
+For Step~1, Appendix~\ref{appendix:step1} supplies an actual division-free SLP of length $O(n^2\mu_1)$ and the structural output bound $S_1$. For Step~4, use $L_4$ and the output bound $S_4\le\binom{D_4+k}{k}$, with the stated hypothesis on $D_4$. The factor $S\log q$ comes from root finding and is already present in the field-operation count.
 
 \paragraph{Stage-specific instantiations.}
-For the first determinant we substitute $m=n$, $(\delta,N,S,L)=(\delta_1,N_1,S_1,L_1)$, and use $U=S_1$ as the intermediate-support proxy. For the final determinant we substitute $m=C_n^{(d)}$, $(\delta,N,S,L)=(\delta_4,N_4,S_4,L_4)$, and use $U=S_4$. This is exactly the convention used in the comparison plots and in the complexity-reporting code.
+Use $(m,\delta,N,S,L,U)=(n,\delta_1,N_1,S_1,L_1,S_1)$ for Step~1 and $(C_n^{(d)},\delta_4,N_4,S_4,L_4,U_4)$ for Step~4. In particular, the output and intermediate support bounds are not identified in the latter stage.
 
 \paragraph{Where the parameters come from.}
 The Kronecker bound $\delta_1$ is read from the cancellation-matrix structure. In the uniform-degree case, a row-by-row analysis of the refined matrix $\widehat{C}$ gives
@@ -935,7 +979,7 @@ where $\mathsf{M}$ is an MDS matrix with rows indexed by $1,\ldots,s$, the $C_j$
 \end{figure}
 
 \paragraph{MITM model used in Section~\ref{Section:Application}.}
-For the CICO problem with $s=2$, we follow the general MITM philosophy of~\cite{DBLP:conf/asiacrypt/LiuMM24} but use Dixon elimination instead of an overdefined-system Gr\"obner-basis attack. The detailed intermediate variables and equations are listed below because they are longer than the high-level discussion needed in the main text.
+For the CICO problem with $s=2$, we follow the general MITM philosophy of~\cite{DBLP:conf/asiacrypt/LiuMM24} but use Dixon elimination instead of an overdefined-system Gr\"obner-basis attack. The intermediate variables and equations are listed below.
 
 For $r$ rounds, we introduce intermediate variables $(w_{i,1}, w_{i,2})$ and $(z_{i,1}, z_{i,2})$ at round $i$ $(1 \leq i \leq r)$, so that the round-$1$ variables $w_{1,j}$ and $z_{1,1}$ occurring in the input constraint below are covered.
 The core equations are:
@@ -1019,6 +1063,13 @@ For fixed $e$, the $\widetilde{O}(D^3)$ factor-construction cost is
 included in Step~1.
 
 For \vision with $s=2$ the two local equations of a rung have block bidegree $(e,e)$ with $e=1$ for the $\deg=2$ rungs and $e=4$ for the $\deg=8$ rungs, so~\eqref{eq:rung_rank} reads $\rho\le 2D_{\mathrm{in}}+1$ and $\rho\le 14D_{\mathrm{in}}+22$ respectively, against a support dimension $D(\mathcal{F})=\Theta(D_{\mathrm{in}}^{2})$.
+
+\paragraph{Determinant model used in the tables.}
+An incoming relation involves only the eliminated block. Each of the two local equations has retained-block degree at most $e$, so a Dixon-matrix entry has retained degree at most $E=2e$. Conditional on the degree bound $D_{\mathrm{out}}$ for the actual determinantal output, put $b=\min\{\bar\rho E,D_{\mathrm{out}}\}$; otherwise use $b=\bar\rho E$. With two retained variables, Kronecker substitution followed by HNF costs
+\[
+ \widetilde O\!\left(\bar\rho^\omega E(b+1)\right).
+\]
+This expression gives the Step~4 entries below, including the first rung with $\bar\rho=2,E=2$. The final merge is univariate and uses $\widetilde O(d_{\max}^{\omega}(D_{\mathrm{fwd}}+D_{\mathrm{bwd}}))$. These HNF estimates do not use the point-evaluation interpolation model or its probe cost $L_4$.
 
 \paragraph{Stage-by-stage results.}
 Tables~\ref{tab:vision_stages_r4} and~\ref{tab:vision_stages_all} record the cost of every elimination carried out by Method~2, so that the claim of Section~\ref{subsec:method2} that the final merge dominates can be read off directly. For a rung we list the degree $d$ of the local block, the total degrees $D_{\mathrm{in}}$ and $D_{\mathrm{out}}$ of the incoming and outgoing relations, the support dimension $D(\mathcal{F})$ of the associated Dixon matrix, the rank bound $\bar\rho=\min\{D(\mathcal F),r_0\}$ used for Step~3, and the costs of Steps~1, 3 and~4; the cost of the rung is their maximum. Forward rungs are numbered $\mathrm{F}i$ and backward rungs $\mathrm{B}i$ according to their position in the ladder. All entries are $\log_2$ field operations at $\omega=2$. Step~1 uses the $\mathcal{O}(e^4D_{\mathrm{in}}^{3})$ term count above, with fixed-$e$ constants suppressed, which is far below the $\Theta(D(\mathcal{F})^2)$ coefficient positions of a dense Dixon polynomial. For Step~3 we use the rank-sensitive cost model $\widetilde{\mathcal{O}}(D(\mathcal{F})\bar\rho^{\omega-1})$; its estimate remains below Step~4 for the listed parameters. The first rung has no incoming relation $R$ and uses the ordinary two-polynomial bound $N=\bar\rho=2$ instead.
@@ -1107,4 +1158,25 @@ For an $s$-step instance, let $n=12s$ and write the system in triangular form
 \]
 with $\alpha=7$ for the standard \xhash instance. The complexity curves use $\bar D=\alpha$ for the output constraints and the degree bounds $D_i=\alpha^{n-i}\bar D$ before each successive elimination. For CICO-1, we instantiate~\eqref{eq:two_poly_complexity_main} with $d_{\mathcal I}=\alpha^n$. For $k\ge2$, we evaluate the sum in~\eqref{eq:successive_elim_cost} and bound the final relation degrees by $\alpha^n\bar D$. In both the direct and final hybrid Dixon computations, construction uses the cheaper of Kronecker$+$HNF and cached expansion, followed by rank extraction and univariate HNF; the reported estimate is the maximum over these stages.
 
-For CICO-1, the reduction method of~\cite{DBLP:conf/crypto/BariantBBHOR25} can be applied directly. For larger $k$, the hybrid strategy first derives reduced relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ from the triangular ideal and then performs a final Dixon elimination on these relations. The main text reports only the resulting complexities and timings because the qualitative conclusion is simple: the hybrid strategy is excellent for very small $k$, but the direct Dixon method remains the relevant estimate for the natural CICO-4 setting. The reference point for both is the direct Gr\"obner-basis attack of the designers~\cite{DBLP:journals/iacr/AshurKM23}; the same triangular model, with the power maps of $\mathcal{B}_i$ replaced accordingly, applies verbatim to \texttt{XHash8}.
+\subsection{Multivariate Reduction and Elimination Costs}\label{appendix:hybrid_cost_proof}
+Fix $\alpha\ge2$ and the number $k$ of retained variables $\mathcal X=(X_1,\ldots,X_k)$. Let $\mathcal P_i=\{z_j^\alpha-f_j:1\le j\le i\}$ be a reduced triangular system. Give each $X_j$ weight $1$ and choose nonnegative weights $w_i$ recursively so that $d_w(f_i)\le\alpha w_i$. Thus reduction cannot increase weighted degree, and the total degree in $\mathcal X$ is bounded by weighted degree. Assume $\deg_{z_i}h_j\le2\alpha-2$ and $\bar D=\max_j d_w(h_j)\ge1$. The estimates below have constants depending on the fixed $\alpha,k$.
+
+\emph{Reduction.}
+For a polynomial of weighted degree at most $D$ with $\deg_{z_j}\le2\alpha-2$, every intermediate retained-variable degree in \texttt{Reduce} is at most $D$. Products of reduced coefficients can be encoded in a box with at most $(D+1)^k(2\alpha-1)^{i-1}$ positions. Since $(D+1)^k=O_k(B_k(D))$, fast multiplication costs $\widetilde O_k(B_k(D)(2\alpha-1)^{i-1})$. The recurrence of~\cite[Proposition~3 and Lemma~1]{DBLP:conf/crypto/BariantBBHOR25} therefore becomes
+\[
+ C_i(D)\le(2\alpha-1)C_{i-1}(D)
+ +\widetilde O_{\alpha,k}\!\left(B_k(D)(2\alpha-1)^{i-1}\right),\qquad C_0(D)=0.
+\]
+Unfolding it gives $C_i(D)=\widetilde O_{\alpha,k}(B_k(D)(2\alpha-1)^i)$; the factor $i$ is logarithmic in the coefficient-box size. This proves~\eqref{eq:reduction_cost}. It also bounds multiplication followed by reduction, with $D$ the sum of the two input weighted-degree bounds.
+
+\emph{One resultant.}
+Let $h_i$ be reduced modulo $\mathcal P_i$ with $d_w(h_i)\le D_i$. Over $A=\mathbb K[\mathcal X,z_1,\ldots,z_{i-1}]/\langle\mathcal P_{i-1}\rangle$, multiplication by $h_i$ in the free rank-$\alpha$ algebra $A[z_i]/(z_i^\alpha-f_i)$ defines an $\alpha\times\alpha$ matrix. Its determinant equals $\operatorname{Res}_{z_i}(z_i^\alpha-f_i,h_i)$, and hence the resultant used in the text up to a nonzero sign. In the basis $1,z_i,\ldots,z_i^{\alpha-1}$, the entry in row $r$, column $c$ has weight at most $D_i+(c-r)w_i$. Each determinant term consequently has weight at most $\alpha D_i$. If $h_i$ depends on $z_i$, then $w_i\le D_i$, so a division-free determinant computation of this fixed-size matrix involves only weighted degrees $O_\alpha(D_i)$ and $O_\alpha(1)$ multiplications and reductions. If $h_i$ is independent of $z_i$, the determinant is simply $h_i^\alpha$. The reduction bound above gives, in either case,
+\[
+ \widetilde O_{\alpha,k}\!\left(B_k(D_i)(2\alpha-1)^{i+2}\right).
+\]
+This supplies the fixed-$\alpha,k$ multivariate counterpart of~\cite[Lemma~2]{DBLP:conf/crypto/BariantBBHOR25}, without requiring roots of unity in the base field.
+
+\emph{Successive stages.}
+The weight bound gives $d_w(h_{i-1})\le\alpha d_w(h_i)$, so $D_i=\alpha^{n-i}\bar D$ is valid, as in~\cite[Lemma~3]{DBLP:conf/crypto/BariantBBHOR25}. Summing the one-stage cost over $i$ and the $k$ constraints proves~\eqref{eq:successive_elim_cost}; the final relations have total degree at most $\alpha^n\bar D$. For $k=1$, successive terms in decreasing $i$ have ratio $\alpha/(2\alpha-1)<1$, so the first stage dominates, recovering~\cite[Proposition~7]{DBLP:conf/crypto/BariantBBHOR25}. For fixed $k\ge2$, $B_k(D_i)=\Theta_k(D_i^k)$ and $\alpha^k/(2\alpha-1)>1$, so the last stage dominates. The reduction cost is bounded by the $i=n$ term of the elimination sum.
+
+For CICO-1, the reduction method of~\cite{DBLP:conf/crypto/BariantBBHOR25} can be applied directly. For larger $k$, the hybrid strategy first derives reduced relations $R_1(\mathcal{X}),\ldots,R_k(\mathcal{X})$ from the triangular ideal and then performs a final Dixon elimination on these relations. The hybrid strategy is effective for very small $k$, while direct Dixon elimination gives the better estimate for CICO-4. The reference point for both is the direct Gr\"obner-basis attack of the designers~\cite{DBLP:journals/iacr/AshurKM23}; the same triangular model, with the power maps of $\mathcal{B}_i$ replaced accordingly, applies verbatim to \texttt{XHash8}.

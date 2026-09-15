@@ -21,15 +21,15 @@ All notation is summarized in Table~\ref{tab:notation}.
         $\mathcal{F}$ & Polynomial System $\mathcal{F}=\{f_1, \dots, f_n\} \subset \mathbb{K}[\avec][\xvec]$ \\
 		$\xvec$, $\overline{\xvec}$, $\avec$ & $n-1$ eliminated variables, their dual variables, $k$ retained parameters \\
         $X$, $\overline X$ & row vectors of monomials in $\xvec$ and $\overline{\xvec}$, respectively \\
-		$C$, $\widehat{C}$ & cancellation matrix~\eqref{eq:Cancellation Matrix} and its refined form~\eqref{eq:Dixon_polynomial_improve} \\
-		$\Delta_{\mathcal{F}}$, $\mathcal{M}$ & Dixon polynomial~\eqref{eq:Dixon_polynomial} and Dixon matrix (\hyperref[dixon_step2]{S2}), $\Delta_{\mathcal{F}}=X\mathcal{M}\overline{X}^{T}$ \\
+		$C$, $\widehat{C}$ & cancellation matrix~\eqref{eq:CancellationMatrix} and its refined form~\eqref{eq:Dixon_polynomial_improve} \\
+		$\Delta_{\mathcal{F}}$, $\mathcal{M}$ & Dixon polynomial~\eqref{eq:Dixon_polynomial} and Dixon matrix (\hyperref[dixon_step2]{Step~2}), $\Delta_{\mathcal{F}}=X\mathcal{M}\overline{X}^{T}$ \\
 		$D(\mathcal{F})$ & Dixon matrix size of $\mathcal{F}$: the maximum of its row and column counts \\
 		$\mathcal{M}'$, $\rho$ & maximal-rank square submatrix of $\mathcal{M}$, of size $\rho=\operatorname{rank}\mathcal{M}\le D(\mathcal{F})$ \\
 		$\mathcal{I}$, $J$, $d_{\mathcal{I}}$ & $\langle\mathcal{F}\rangle$; elimination ideal $\mathcal{I}\cap\mathbb{K}[\avec]$; degree of $\mathcal{I}$ \\
 		$I_{d_1,\ldots,d_n}$ & Iterated-Simplex polynomial~\eqref{eq:Iterated_Simplex_Polynomial} \\
         $C_n^{(d)}$ & Fuss--Catalan number~\eqref{eq:fuss_catalan} \\
         $\mathcal X$, $|\mathcal X|$ &
-        variable block and its cardinality (\hyperref[subsec:method2]{M2}) \\
+        variable block and its cardinality (\hyperref[subsec:method2]{Method~2}) \\
 		$\omega$ & matrix multiplication exponent, $2\le\omega<3$ \\
 		\bottomrule
 	\end{tabular}
@@ -40,7 +40,7 @@ All notation is summarized in Table~\ref{tab:notation}.
 Resultants are classical tools in elimination theory used to determine whether a polynomial system has a common solution. We use the projection-operators viewpoint of~\cite{DBLP:conf/issac/KapurS97}.
 
 \begin{definition}[Resultant~\cite{DBLP:conf/issac/KapurS97}]\label{Definition:Resultant}
-Let $\mathcal{F}={f_1,\dots,f_n}\subset\mathbb{K}[\avec,\xvec]$. Set $\mathcal{I}=\langle\mathcal{F}\rangle$ and $J=\mathcal{I}\cap\mathbb{K}[\avec]$. Elements of $J$ are called \emph{projection operators}: they vanish at parameter values for which $\mathcal{F}$ has a common solution over $\overline{\mathbb{K}}$. If $J$ is principal, its generator (up to a nonzero scalar) is called the \emph{resultant} of $\mathcal{F}$.
+Let $\mathcal{F}=\{f_1,\dots,f_n\}\subset\mathbb{K}[\avec,\xvec]$. Set $\mathcal{I}=\langle\mathcal{F}\rangle$ and $J=\mathcal{I}\cap\mathbb{K}[\avec]$. Elements of $J$ are called \emph{projection operators}: they vanish at parameter values for which $\mathcal{F}$ has a common solution over $\overline{\mathbb{K}}$. If $J$ is principal, its generator (up to a nonzero scalar) is called the \emph{resultant} of $\mathcal{F}$.
 \end{definition}
 
 
@@ -64,7 +64,7 @@ Introduce $n-1$ auxiliary variables $\overline{x}_1, \ldots, \overline{x}_{n-1}$
 		\vdots & \ddots & \vdots \\
 		f_1(\overline{x}_1, \overline{x}_2, \dots, \overline{x}_{n-1}) & \cdots & f_n(\overline{x}_1, \overline{x}_2, \dots, \overline{x}_{n-1})
 	\end{bmatrix}.
-	\label{eq:Cancellation Matrix}
+	\label{eq:CancellationMatrix}
 \end{equation}
 The Dixon polynomial is
 \begin{equation}
@@ -100,15 +100,15 @@ Under the KSY condition, it remains a valid projection polynomial for a singular
 \subsubsection{Size of the Dixon matrix.}
 The size of the Dixon matrix is a key parameter in the complexity analysis. A classical variable-wise upper bound~\cite{DBLP:conf/issac/KapurSY94,DBLP:journals/ijcm/QinWTJ17} is
 \begin{equation}
-	B_{var} = (n-1)! \prod_{i=1}^{n-1} m_i,
+	B_{\mathrm{var}} = (n-1)! \prod_{i=1}^{n-1} m_i,
 	\label{eq:Dixon_var_bound}
 \end{equation}
 where $m_i = \max_{1\leq j\leq n}\deg_{x_i}(f_j)$ is the maximum degree in $x_i$ over all polynomials in $\mathcal{F}$. Kapur and Saxena~\cite[Theorem~4.3]{DBLP:conf/stoc/KapurS96} give a volume-based asymptotic estimate for multi-homogeneous systems. In the equal-total-degree setting, their volume expression is $(dn)^{n-1}/n!$. We use its integer part as the comparison bound
 \begin{equation}
-	B_{MH} = \left\lfloor \frac{(dn)^{n-1}}{n!} \right\rfloor.
+	B_{\mathrm{MH}} = \left\lfloor \frac{(dn)^{n-1}}{n!} \right\rfloor.
 	\label{eq:Dixon_volume_bound}
 \end{equation}
-Section~\ref{Section: Complexity} derives exact generic support formulas for the total-degree setting and independently verifies the explicit inequality $D(\mathcal{F})\le B_{MH}$ from the Fuss--Catalan formula.
+Section~\ref{Section:Complexity} derives exact generic support formulas for the total-degree setting and independently verifies the explicit inequality $D(\mathcal{F})\le B_{\mathrm{MH}}$ from the Fuss--Catalan formula.
 
 \subsubsection{Influence of extraneous factors.}
 The determinantal output may contain factors unrelated to the affine solution set.
@@ -132,33 +132,33 @@ In the presence of extraneous factors, the degree of the eliminant may exceed th
 We summarize the determinant complexity models used in this paper; full details are provided in the full version~\cite{cryptoeprint:2026/1969}.
 
 \subsubsection{Univariate determinants.}
-For $P(t)\in\mathbb{K}[t]^{m\times m}$, the Hermite normal form (HNF) method of~\cite{DBLP:journals/jc/LabahnNZ17} has deterministic cost $T^{\mathrm{HNF}}=\widetilde{O}(m^{\omega}\lceil \delta\rceil)$, where $\delta$ is the average column degree.
+For $P(t)\in\mathbb{K}[t]^{m\times m}$, the Hermite normal form (HNF) method of~\cite{DBLP:journals/jc/LabahnNZ17} has deterministic cost $T^{\mathrm{HNF}}=\widetilde{O}(m^{\omega}\max\{1,\lceil\delta\rceil\})$, where $\delta$ is the average column degree.
 
 \subsubsection{Multivariate determinants.}
 For $P(\yvec)\in \mathbb{K}[y_1,\ldots,y_v]^{m\times m}$, no single method is universally best: different algorithms can lead to substantially different complexity estimates depending on the matrix size, the number of variables, and the sparsity structure of the entries. We therefore consider several alternatives. Besides direct symbolic expansion by minors~\cite{HorowitzSahni1975,GentlemanJohnson1976} and fraction-free Bareiss elimination~\cite{Bareiss1968}, one may reduce to the univariate case via Kronecker substitution~\cite{Li2007symbolic} and apply HNF, apply evaluation-interpolation on a tensor grid~\cite{HorowitzSahni1975}, or use sparse interpolation~\cite{DBLP:journals/jsc/Huang23}. The corresponding time and space costs are summarized in Table~\ref{tab:determinant_methods}.
 
-In the table notation, $b_i$ bounds $\deg_{y_i}\det(P)$ and fixes the Kronecker substitution base (chosen to avoid overflow in the encoded determinant); $B:=\max_i b_i$; $N:=\prod_{i=1}^{v}(b_i+1)$ is the tensor-grid size used by interpolation; $S$ bounds the number of nonzero terms of $\det(P)$; $U$ bounds the term count of intermediate minors; $L$ is the cost of one determinant probe; and $\mu\le \binom{v+d}{d}$ bounds the dense monomial count of an entry of total degree at most $d$. All complexities are reported in field operations over $\mathbb{F}_q$; the derivations are given in the full version~\cite{cryptoeprint:2026/1969}.
+In the table notation, $b_i$ bounds $\deg_{y_i}\det(P)$ and fixes the Kronecker substitution base (chosen to avoid overflow in the encoded determinant); $B:=\max_i b_i$; $N:=\prod_{i=1}^{v}(b_i+1)$ is the tensor-grid size used by interpolation; $S$ bounds the number of nonzero terms of $\det(P)$; $U$ bounds the term count of intermediate minors; $L$ includes matrix evaluation and determinant computation (and, for sparse interpolation, simultaneous first derivatives); and $\mu\le \binom{v+d}{d}$ bounds the dense monomial count of an entry of total degree at most $d$. All complexities are reported in field operations over $\mathbb{F}_q$; the derivations are given in the full version~\cite{cryptoeprint:2026/1969}.
 
 \begin{table}[t]
 	\centering
 	\small
-	\caption{Determinant computation models used in this paper. All complexities are in field operations over $\mathbb{F}_q$.}
+	\caption{Determinant computation models used in this paper. Time counts field operations; space bounds count field elements in the workspace.}
 	\label{tab:determinant_methods}
 	\setlength{\tabcolsep}{4pt}
 	\renewcommand{\arraystretch}{1.05}
-	\begin{tabular}{p{0.35\textwidth}p{0.29\textwidth}p{0.24\textwidth}}
+	\begin{tabular}{p{0.25\textwidth}p{0.28\textwidth}p{0.39\textwidth}}
 		\toprule
 		\textbf{Method} & \textbf{Time} & \textbf{Space} \\
 		\midrule
-		Expansion~\cite{GentlemanJohnson1976,HorowitzSahni1975} & $\widetilde{O}(m2^m \mu U)$ & $\widetilde{O}(\binom{m}{m/2}U)$ \\
-		Bareiss~\cite{Bareiss1968,GentlemanJohnson1976} & $\widetilde{O}(m^3U^2)$ & $\widetilde{O}(m^2U)$ \\
-		Kronecker~\cite{Li2007symbolic} & $\widetilde{O}(m^{\omega}\delta)$ & $\widetilde{O}(m^2\delta)$ \\
-		Interpolation~\cite{HorowitzSahni1975} & $\widetilde{O}\!\left(N(L+vB)\right)$ & $\widetilde{O}(N)$ \\
-		Sparse~\cite{DBLP:journals/jsc/Huang23}\footnotemark & $\widetilde{O}(LS + S\log q)$ & $\widetilde{O}(S)$ \\
+		Expansion~\cite{GentlemanJohnson1976,HorowitzSahni1975} & $\widetilde{O}(m2^m \mu U)$ & $\widetilde{O}\!\left(\binom{m}{\lfloor m/2\rfloor}U\right)$ \\
+		Bareiss~\cite{Bareiss1968,GentlemanJohnson1976} & $\widetilde{O}(m^3U^2)$ & $\widetilde{O}(m^2U+U^2)$ \\
+		Kronecker~\cite{Li2007symbolic} & $\widetilde{O}(m^{\omega}\delta)$ & $\widetilde{O}(m^\omega(\delta+1))$ \\
+		Interpolation~\cite{HorowitzSahni1975} & $\widetilde{O}\!\left(N(L+vB)\right)$ & $\widetilde{O}(N+L)$ \\
+		Sparse~\cite{DBLP:journals/jsc/Huang23}\footnotemark & $\widetilde{O}(LS + S\log q)$ & $\widetilde{O}(vS+L)$ \\
 		\bottomrule
 	\end{tabular}
 \end{table}
-\footnotetext{The sparse model also requires $\mathrm{char}(\mathbb{F}_q)\ge B$ (Huang~\cite[Theorem~1]{DBLP:journals/jsc/Huang23}); it therefore applies to large-prime fields but not to extension fields of the form $\mathbb{F}_{2^\ell}$.}
+\footnotetext{The sparse time bound is expected, with Monte Carlo correctness, and requires $\mathrm{char}(\mathbb{F}_q)>B$ (Huang~\cite[Algorithm~9 and Theorem~12]{DBLP:journals/jsc/Huang23}); it therefore applies to large-prime fields but not to extension fields of the form $\mathbb{F}_{2^\ell}$.}
 
 \subsection{Security of AO Primitives}
 The sponge construction~\cite{DBLP:conf/eurocrypt/BertoniDPA08} builds hash functions from permutations. The relevant task for algebraic attacks is the constrained-input constrained-output~\cite{bertoni2007sponge} (CICO) problem.

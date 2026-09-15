@@ -1,4 +1,4 @@
-\section{Improved Complexity Estimates for the Dixon Resultant}\label{Section: Complexity}
+\section{Improved Complexity Estimates for the Dixon Resultant}\label{Section:Complexity}
 
 Newton-polytope bounds for unmixed systems~\cite{DBLP:conf/stoc/KapurS96} and multivariate support methods for mixed systems~\cite{ChtcherbaKapur2004} provide the starting point for our analysis. We derive an explicit lattice-path bound from ordered total-degree bounds and prove that it is attained for generic systems in the corresponding coefficient space.
 
@@ -230,7 +230,7 @@ $(1+x_1)(1+x_1+x_2)=1+x_2+x_1^2+x_1x_2$,
 so the monomial $x_1$ disappears.
 \end{remark}
 
-\paragraph{From Polyhedral Constraints to Lattice Paths}
+\paragraph{From Polyhedral Constraints to Lattice Paths.}
 We now establish a bijection between lattice points satisfying the polyhedral constraints and lattice paths below a general boundary.
 
 \begin{lemma}\label{lem:lattice_path_count}
@@ -257,7 +257,7 @@ Conversely, given an admissible path, let $\alpha_i$ count the upward steps afte
 \qed
 \end{proof}
 
-\paragraph{proof of Theorem~\ref{thm:dixon_general_bound}.}
+\paragraph{Proof of Theorem~\ref{thm:dixon_general_bound}.}
 By Lemma~\ref{lem:dixon_fc_bound}, it remains to count the
 monomials of $I_{d_2-1,\ldots,d_n-1}$.
 Applying Lemma~\ref{lem:fc_polytope} in $n-1$ variables,
@@ -285,11 +285,11 @@ Our bound refines the equal-degree volume estimate~\cite{DBLP:conf/stoc/KapurS96
 C_n^{(d)}=\frac1{n!}\prod_{j=0}^{n-2}(nd-j)
 \le\frac{(nd)^{n-1}}{n!},
 \]
-which also verifies the integer volume bound $B_{MH}$ in~\eqref{eq:Dixon_volume_bound}. Numerical comparisons and support-size experiments are given in Appendix~\ref{appendix:experimental_bound}.
+which also verifies the integer volume bound $B_{\mathrm{MH}}$ in~\eqref{eq:Dixon_volume_bound}. Numerical comparisons and support-size experiments are given in Appendix~\ref{appendix:experimental_bound}.
 
-\subsection{Complexity Estimates via Our Refined Bound}\label{Section: Estimate}
+\subsection{Complexity Estimates via Our Refined Bound}\label{Section:Estimate}
 
-For clarity of exposition, we focus on $(n;d)$-systems where all polynomials have total degree $d$. Consider $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[\xvec,\avec]$ consisting of $n$ equations in $n-1+k$ variables, where $\xvec=(x_1,\ldots,x_{n-1})$ are the eliminated variables and $\avec$ the retained parameters. By Corollary~\ref{cor:three_bounds}(2), the generic Dixon matrix size is
+For clarity of exposition, we focus on $(n;d)$-systems with $n\ge2$, $d\ge2$, and $k\ge1$, where all polynomials have total degree $d$ in all variables. Consider $\mathcal{F} = \{f_1, \ldots, f_n\} \subset \mathbb{K}[\xvec,\avec]$ consisting of $n$ equations in $n-1+k$ variables, where $\xvec=(x_1,\ldots,x_{n-1})$ are the eliminated variables and $\avec$ the retained parameters. By Corollary~\ref{cor:three_bounds}(2), the generic Dixon matrix size is
 \[
 C_n^{(d)} = \frac{1}{n(d-1)+1}\binom{nd}{n}.
 \]
@@ -298,14 +298,14 @@ Since $\rho\le D(\mathcal{F})$, the quantity $C_n^{(d)}$ also upper-bounds the s
 We give a stage-by-stage outline of the relevant model choices below; here we consider the determinant methods with the lowest theoretical complexity or the fastest experimental performance. The detailed parameter derivations, complexity formulas for all five determinant models, and the full Step~1 vs Step~4 comparison are deferred to Appendix~\ref{appendix:stage_details}.
 
 \subsubsection{Step~1: Compute the cancellation determinant.}
-This step computes $\det$ of the $n\times n$ cancellation matrix~\eqref{eq:Cancellation Matrix}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,C_n^{(d)})$ (full derivation in Appendix~\ref{appendix:stage_details}):
+This step computes the determinant of the $n\times n$ refined cancellation matrix~\eqref{eq:Dixon_polynomial_improve}, whose entries are polynomials in $\ell=2n+k-2$ variables (the $n-1$ original variables, $n-1$ dual variables, and $k$ parameters), with total parameter-degree bounded by $B_1:=nd$. This is the \emph{many-variable, small-matrix} regime, where expansion by minors and sparse interpolation are most competitive. The abstract parameters governing these models admit the following explicit expressions in $(n,d,k,C_n^{(d)})$ (full derivation in Appendix~\ref{appendix:stage_details}):
 \begin{equation}
-		\mu_1 \le \binom{n-1+k+d}{n-1+k},\;
-		S_1 \le \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k},\;
+		\mu_1 := \binom{n-1+k+d}{n-1+k},\!
+		S_1 := \bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k},\,
 	L_1 = \widetilde{O}\!\left(n^2\binom{n-1+k+d}{n-1+k}\right),
 	\label{eq:step1_params}
 \end{equation}
-where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ in $n-1+k$ variables, the factor $\bigl(C_n^{(d)}\bigr)^2$ in $S_1$ comes from the Dixon bilinear support and $\binom{nd+k}{k}$ from the parameter monomials of degree at most $B_1$, and the constant-determinant cost inside $L_1$ is absorbed into the matrix-evaluation term. Substituting~\eqref{eq:step1_params} into the two preferred determinant models yields
+where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ in $n-1+k$ variables, the factor $\bigl(C_n^{(d)}\bigr)^2$ in $S_1$ comes from the Dixon bilinear support and $\binom{nd+k}{k}$ from the parameter monomials of degree at most $B_1$, and the constant-determinant cost inside $L_1$ is absorbed into the matrix-evaluation term. For these parameters, $S_1$ also bounds every intermediate minor, and the determinant admits a division-free straight-line program of length $O(n^2\mu_1)$; see Appendix~\ref{appendix:step1}. Substituting~\eqref{eq:step1_params} into the two preferred determinant models yields
 \begin{equation}
 	T_{1}^{\mathrm{minor}}  = \widetilde{O}(n2^n\mu_1S_1) = \widetilde{O}\!\left(n\,2^n\binom{n-1+k+d}{n-1+k}\bigl(C_n^{(d)}\bigr)^2\binom{nd+k}{k}\right),
 	\label{eq:step1_minor}
@@ -320,12 +320,12 @@ where $\mu_1$ counts the monomials of one dense polynomial of total degree $d$ i
 Extracting the Dixon matrix coefficients from the cancellation determinant is dominated by Step~1. The block recursion of Zhao and Fu~\cite{Zhao2005extfast} builds $\mathcal{M}$ directly; following Qin et al.~\cite{DBLP:journals/ijcm/QinWTJ17}, the resulting surrogate $T_{2}^{\mathrm{FDixon}}$ is attractive when few variables are eliminated and degrees are high, but its $(n!)^3$ factor (Appendix~\ref{appendix:stage_details}) makes it less competitive otherwise.
 
 \subsubsection{Step~3: Extract a maximal-rank submatrix.}
-Step~3 extracts a maximal-rank submatrix numerically after finite-field evaluation, with cost
+After evaluating the entries (a cost absorbed by Step~1), Step~3 extracts a maximal-rank submatrix numerically, with linear-algebra cost
 \begin{equation}
 	T_3 = \mathcal{O}\!\left(\bigl(C_n^{(d)}\bigr)^{\omega}\right).
 	\label{eq:complexity_step3}
 \end{equation}
-The degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by a single pass over the $\bigl(C_n^{(d)}\bigr)^2$ entries, dominated by~\eqref{eq:complexity_step3}.
+Given the entry degrees, the degree-aware weights of Section~\ref{Subsection:Extraneous} are computed by a single pass over the $\bigl(C_n^{(d)}\bigr)^2$ entries, dominated by~\eqref{eq:complexity_step3}.
 
 \subsubsection{Step~4: Compute the Dixon resultant.}
 
@@ -334,14 +334,14 @@ Under Heuristic~\ref{hyp:bezout_attainment}, the elimination polynomial satisfie
 $
 D_4 \le d^{\,n}.
 $
-The corresponding parameters are
+Put $C=C_n^{(d)}$ and $\mu_4=\binom{nd+k}{k}$. Including matrix evaluation, the corresponding parameters are
 \begin{equation}
-	N_4 \le (d^{\,n}+1)^k,\qquad
-	L_4 = \widetilde{O}\!\left(\bigl(C_n^{(d)}\bigr)^\omega\right),\qquad
-	\delta_4 = nd\,(C_n^{(d)}\cdot nd+1)^{k-1},
-	\label{eq:step4_params}
+ N_4\le(d^n+1)^k,\quad
+ L_4=\widetilde O(C^\omega+C^2\mu_4),\quad
+ \delta_4=nd(Cnd+1)^{k-1}.
+ \label{eq:step4_params}
 \end{equation}
-where $\delta_4$ denotes the average column degree after Kronecker substitution and reduces to $\delta_4=nd$ when $k=1$. Therefore,
+where $\delta_4$ bounds the average column degree after Kronecker substitution and reduces to $\delta_4=nd$ when $k=1$. Therefore,
 \begin{equation}
 	T_{4}^{\mathrm{HNF}}
 	=
@@ -355,14 +355,14 @@ where $\delta_4$ denotes the average column degree after Kronecker substitution 
 	=
 	\widetilde{O}\!\left(N_4(L_4+kD_4)\right)
 	=
-	\widetilde{O}\!\left((d^{\,n}+1)^k\left(\bigl(C_n^{(d)}\bigr)^\omega+k\,d^{\,n}\right)\right).
+	\widetilde{O}\!\left((d^{\,n}+1)^k\left(C^\omega+C^2\mu_4+k\,d^{\,n}\right)\right).
 	\label{eq:step4_eval}
 \end{equation}
 
 \subsubsection{Overall comparison.}
 Let $T_{1}^{\mathrm{best}}$ and $T_{4}^{\mathrm{best}}$ be the minimum cost across all considered models for Steps~1 and~4, respectively. Then
 $\mathcal{T}_{\mathrm{Dixon}} = \widetilde{O}(\max\{T_{1}^{\mathrm{best}},T_{4}^{\mathrm{best}}\}).$
-At the idealized boundary $\omega=2$, both stages must be retained. For $\omega>2$, choosing the best applicable model at each stage makes Step~4 asymptotically dominant in the fixed-$d$ or fixed-$n$ regimes analyzed in Appendix~\ref{appendix:step_comparison}. It also dominates the running time in our experiments, so we use $T_{4}^{\mathrm{best}}$ as the asymptotic estimate.
+At the idealized boundary $\omega=2$, both stages must be retained. For $\omega>2$ and fixed $k$, under the applicable field and degree hypotheses, Step~4 is asymptotically dominant among the displayed cost bounds in the fixed-$d$ or fixed-$n$ regimes analyzed in Appendix~\ref{appendix:step_comparison}. It also dominates the running time in our experiments, so we use $T_{4}^{\mathrm{best}}$ as the asymptotic estimate.
 
 \subsubsection{Well-determined case.}
 For $k=1$, the final determinant is a $C_n^{(d)}\times C_n^{(d)}$ univariate polynomial matrix for which the HNF algorithm of~\cite{DBLP:journals/jc/LabahnNZ17} is typically optimal:
@@ -399,7 +399,7 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 
 \begin{table}[!htb]
 	\centering
-	\caption{Arithmetic cost bounds for well-determined $(n;d)$-systems, with $d_{\mathrm{reg}}=n(d-1)+1$, $d_{\mathcal I}=d^n$, and $t=\Theta(d^{n-1}/\sqrt n)$. Ratios omit logarithmic factors and use $n$ fixed, $d\to\infty$; Stirling bounds simplify the factorial coefficients to display $e^{-n\omega}$. These are order estimates, not uniform joint asymptotic equivalents (Appendix~\ref{Appendix:Derivation}).}
+	\caption{Arithmetic cost bounds for well-determined $(n;d)$-systems, with $d_{\mathrm{reg}}=n(d-1)+1$, $d_{\mathcal I}=d^n$, and $t=\Theta(d^{n-1}/\sqrt n)$. Ratios omit logarithmic factors. The three displayed Gr\"obner-basis ratios (classical, F5, and rectangular) have the same orders in both standard asymptotic directions. The displayed FGLM and BNS ratios use $n$ fixed and $d\to\infty$. Complete derivations are given in Appendix~\ref{Appendix:Derivation}.}
 	\label{tab:complexity_formulas}
 	\resizebox{\textwidth}{!}{%
 	\begin{tabular}{lcc}
@@ -408,15 +408,15 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 		\midrule
 		Dixon Resultant & $\displaystyle \widetilde{\mathcal{O}}\left(nd \cdot \left(\frac{1}{n(d-1)+1}\binom{nd}{n}\right)^{\omega}\right)$ & $1$ \\
 		\midrule
-		GB (classical)~\cite{Faugere2004} & $\displaystyle \mathcal{O}\left(\binom{n+d_{\text{reg}}}{d_{\text{reg}}}^{\omega}\right)$ & $\mathcal{O}\left((nd)^{\omega-1}\right)$ \\
-		\midrule GB (F5)~\cite{DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22} & $\displaystyle \mathcal{O}\left(n \cdot d_{\text{reg}} \cdot \binom{n+d_{\text{reg}}-1}{d_{\text{reg}}}^{\omega}\right)$ & $\mathcal{O}\left(n^{\omega+1}\right)$ \\
+		GB (classical)~\cite{Faugere2004} & $\displaystyle \mathcal{O}\left(\binom{n+d_{\mathrm{reg}}}{d_{\mathrm{reg}}}^{\omega}\right)$ & $\mathcal{O}\left((nd)^{\omega-1}\right)$ \\
+		\midrule GB (F5)~\cite{DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22} & $\displaystyle \mathcal{O}\left(n \cdot d_{\mathrm{reg}} \cdot \binom{n+d_{\mathrm{reg}}-1}{d_{\mathrm{reg}}}^{\omega}\right)$ & $\mathcal{O}\left(n^{\omega+1}\right)$ \\
 		\midrule
 		
 		GB (rectangular)~\cite{DBLP:journals/jsc/BardetFS15,storjohann2000algorithms} & $\displaystyle \mathcal{O}\left(
 		n \cdot \binom{n + d_{\mathrm{reg}} - d}{n} \cdot \binom{n + d_{\mathrm{reg}}}{n}^{\omega - 1}
 		\right)$ & $\mathcal{O}\left(n^{\omega} d^{\omega-1}\right)$ \\
 		\midrule
-		GB (per-deg)~\cite{DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot \sum_{i=0}^{d_{\text{reg}}} \binom{n+i-d-1}{i-d}\binom{n+i-1}{i}^{\omega-1} \right)$ &  \multicolumn{1}{c}{\textemdash}  \\
+		GB (per-deg)~\cite{DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot \sum_{i=0}^{d_{\mathrm{reg}}} \binom{n+i-d-1}{i-d}\binom{n+i-1}{i}^{\omega-1} \right)$ &  \multicolumn{1}{c}{\textemdash}  \\
 		\midrule
 		FGLM~\cite{DBLP:journals/jsc/FaugereGLM93,DBLP:journals/tosc/KoschatkoLR24} & $\displaystyle \mathcal{O}\left(n \cdot d_{\mathcal{I}}^{\omega}\right)$ & $\mathcal{O}\!\left(n^{3\omega/2}d^{\omega-1}e^{-n\omega}\right)$ \\
 		\midrule
@@ -432,9 +432,8 @@ Gr\"obner basis methods solve polynomial systems by computing a grevlex order ba
 
 Numerous studies~\cite{Faugere2004,DBLP:journals/jsc/BardetFS15,DBLP:journals/tosc/BariantBLP22,DBLP:phd/hal/Spaenlehauer12,DBLP:journals/tosc/KoschatkoLR24} have established theoretical complexity bounds for Gr\"obner basis algorithms. Table~\ref{tab:complexity_formulas} summarizes these bounds and their ratios relative to Dixon.
 
-The Gr\"obner-based approach includes both the grevlex basis computation and the change to lexicographic order, so the relevant comparison is with the combined F4/F5$+$FGLM cost. In the high-degree regime of the table, the displayed Dixon bound is asymptotically smaller than this combined bound. We also include the HNF-based change-of-order algorithm of~\cite{BerthomieuNeigerSafey2022} as an alternative to FGLM.
-
-These Gr\"obner basis costs are upper bounds and do not fully capture practical F4/F5 optimizations. The ratios therefore compare theoretical estimates, while Section~\ref{Implementation} provides practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates the unsimplified cost expressions as $n$ varies, including the per-degree sum; further plots and ratio derivations are given in Appendices~\ref{appendix:complexity_plots} and~\ref{Appendix:Derivation}.
+The Gr\"obner-based approach includes both the grevlex basis computation and the change to lexicographic order, so the relevant comparison is with the combined F4/F5$+$FGLM cost. We also include the HNF-based change-of-order algorithm of~\cite{BerthomieuNeigerSafey2022} as an alternative to FGLM. In both asymptotic regimes considered, the displayed Dixon bound is asymptotically smaller than the combined bound.
+However, these Gr\"obner basis costs are upper bounds that do not fully capture practical F4/F5 optimizations. Finer estimates for F5~\cite{DBLP:journals/jsc/BardetFS15} and F4 Tracer~\cite{kouba2026complexityanalysisf4grobner} are available under additional assumptions and not included in our comparison. The ratios therefore compare general upper bounds, while Section~\ref{Implementation} provides practical comparisons. Figure~\ref{fig:complexity_comparison_d} evaluates the unsimplified cost expressions as $n$ varies, including the per-degree sum; further plots and ratio derivations are given in Appendices~\ref{appendix:complexity_plots} and~\ref{Appendix:Derivation}.
 
 \begin{figure}[!htbp]
 	\centering
